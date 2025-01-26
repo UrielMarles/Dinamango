@@ -1,6 +1,6 @@
 // app/layout.tsx
 import '../styles/globals.css';
-import Navbar from './components/navbar/navbar'; // Importa tu componente Navbar
+import Navbar from '../components/navbar/navbar'; // Importa tu componente Navbar
 import { ReactNode } from 'react';
 
 export const metadata = {
@@ -9,7 +9,7 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
-  const isLoggedIn = true;
+  const isLoggedIn = false;
   return (
     <html lang="en">
       <body>
