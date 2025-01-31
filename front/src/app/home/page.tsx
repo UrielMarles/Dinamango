@@ -1,6 +1,6 @@
 // app/home/page.tsx
-import Image from 'next/image';
-import styles from './home.module.css';
+// import Image from 'next/image';
+// import styles from './home.module.css';
 import '../../styles/globals.css';
 
 export const metadata = {
@@ -8,3 +8,8 @@ export const metadata = {
   description: 'Página de inicio de la aplicación',
 };
 
+export default function Home() {
+  return (
+    <div>Home Page</div>
+  );
+}

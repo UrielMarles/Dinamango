@@ -8,7 +8,7 @@ export const metadata = {
   description: 'Información sobre Moni',
 };
 
-export default function about() {
+export default function About() {
   return (
     <main>
       <div className={styles.container}>
