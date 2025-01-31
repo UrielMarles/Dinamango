@@ -58,7 +58,7 @@ export default function Navbar({ isLoggedIn }: { isLoggedIn: boolean }) {
                 { label: "Ver tareas", link: "/ver-tareas" },
                 { label: "Cómo Funciona", link: "/about" },
                 { label: "Registrarte", link: "/registrarte" },
-                { label: "Iniciar sesión", link: "/iniciar-sesion" },
+                { label: "Iniciar sesión", link: "/inicio_sesion" },
               ]
           ).map((option, index) => (
             <Link key={index} href={option.link} className={styles.link}>
