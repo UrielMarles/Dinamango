@@ -1,1 +1,52 @@
 .vs/
+
+# Archivos de compilación
+bin/
+obj/
+out/
+
+# Paquetes de dependencias
+*.nupkg
+*.snupkg
+*.nuspec
+packages/
+project.lock.json
+
+# Configuraciones de usuario y archivos temporales
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+.vscode/
+.idea/
+*.swp
+*.DS_Store
+Thumbs.db
+
+# Archivos de depuración
+*.pdb
+*.log
+*.tlog
+*.idx
+
+# Configuración de Visual Studio
+.vs/
+*.vcxproj.user
+*.aps
+
+# Archivos de Resharper y Rider
+*.DotSettings.user
+.idea/
+
+# Publicación y despliegue
+publish/
+app.publish/
+
+# Caché de NuGet
+.nuget/
+
+# Archivos generados por herramientas
+GeneratedFiles/
+TestResults/
+node_modules/
+dist/
