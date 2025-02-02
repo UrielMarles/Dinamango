@@ -20,9 +20,8 @@ export default function Navbar({ isLoggedIn }: { isLoggedIn: boolean }) {
     };
   }, []);
 
-  // Opciones móviles con íconos
   const mobileOptions = [
-    { label: "Búsqueda", icon: "/icons/lupa.png", link: "/busqueda" },
+    { label: "Búsqueda", icon: "/icons/lupa.png", link: "/tareas" },
     { label: "Contrata", icon: "/icons/hands.png", link: "/contrata" },
     { label: "Historia", icon: "/icons/doc.png", link: "/historia" },
     { label: "Soporte", icon: "/icons/call.png", link: "/soporte" },
@@ -46,7 +45,7 @@ export default function Navbar({ isLoggedIn }: { isLoggedIn: boolean }) {
         <div className={styles.navbarLinks}>
           {(isLoggedIn
             ? [
-                { label: "Búsqueda", link: "/busqueda" },
+                { label: "Búsqueda", link: "/tareas" },
                 { label: "Contrata", link: "/contrata" },
                 { label: "Categorías", link: "/categorias" },
                 { label: "Soporte", link: "/soporte" },
@@ -55,7 +54,7 @@ export default function Navbar({ isLoggedIn }: { isLoggedIn: boolean }) {
               ]
             : [
                 { label: "Publicar tarea", link: "/publicar-tarea" },
-                { label: "Ver tareas", link: "/ver-tareas" },
+                { label: "Ver tareas", link: "/tareas" },
                 { label: "Cómo Funciona", link: "/about" },
                 { label: "Registrarte", link: "/registrarte" },
                 { label: "Iniciar sesión", link: "/inicio_sesion" },
