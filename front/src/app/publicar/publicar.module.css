@@ -1,0 +1,14 @@
+.container {
+    display: flex;
+    justify-content: start;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 20px;
+    margin: 20px 20px;
+}
+
+.poster {
+    display: flex;
+    overflow: hidden;
+    gap: 10px;
+}
