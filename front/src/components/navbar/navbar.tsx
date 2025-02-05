@@ -56,7 +56,7 @@ export default function Navbar({ isLoggedIn }: { isLoggedIn: boolean }) {
                 { label: "Publicar tarea", link: "/publicar-tarea" },
                 { label: "Ver tareas", link: "/tareas" },
                 { label: "Cómo Funciona", link: "/about" },
-                { label: "Registrarte", link: "/registrarte" },
+                { label: "Registrarte", link: "/registro" },
                 { label: "Iniciar sesión", link: "/inicio_sesion" },
               ]
           ).map((option, index) => (
