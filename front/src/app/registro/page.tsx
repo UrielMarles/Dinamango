@@ -3,9 +3,8 @@
 
 import { TextField, Button, Box, Typography, Link } from "@mui/material";
 import { useForm } from "react-hook-form";
-// import Link from "next/link";
 
-export default function LoginForm() {
+export default function RegistroForm() {
     const {
         register,
         handleSubmit,
@@ -31,7 +30,25 @@ export default function LoginForm() {
                 borderRadius: 2
             }}
         >
-            <Typography variant="h5" textAlign="center">Iniciar Sesión</Typography>
+            <Typography variant="h5" textAlign="center">Registro</Typography>
+
+            {/* Campo de Nombre */}
+            <TextField
+                label="Nombre"
+                type="text"
+                {...register("nombre", { required: "El nombre es obligatorio" })}
+                error={!!errors.nombre}
+                fullWidth
+            />
+
+            {/* Campo de Apellido */}
+            <TextField
+                label="Apellido"
+                type="text"
+                {...register("apellido", { required: "El apellido es obligatorio" })}
+                error={!!errors.apellido}
+                fullWidth
+            />
 
             {/* Campo de Email */}
             <TextField
@@ -51,11 +68,20 @@ export default function LoginForm() {
                 fullWidth
             />
 
-            {/* Botón de Enviar */}
-            <Button type="submit" variant="contained" color="primary" fullWidth>Iniciar Sesión</Button>
+             {/* Repetir Campo de Contraseña */}
+             <TextField
+                label="Repetir Contraseña"
+                type="password"
+                {...register("password", { required: "Las contraseñas deben ser iguales" })}
+                error={!!errors.password}
+                fullWidth
+            />
 
-            {/* Si no esta registrado */}
-            <Link href="../registro">Registrarse</Link>
+            {/* Botón de Enviar */}
+            <Button type="submit" variant="contained" color="primary" fullWidth>Registrarse</Button>
+
+            {/* Si ya esta registrado */}
+            <Link href="../inicio_sesion">Iniciar Sesión</Link>
         </Box>
     );
 }

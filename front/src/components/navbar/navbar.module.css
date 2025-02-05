@@ -7,7 +7,7 @@
   color: #fff; /* Texto blanco para contraste */
   padding: 0;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-  position: fixed;
+  position: sticky;
   width: 100%;
   z-index: 1000;
 }

@@ -3,6 +3,13 @@ body, h1, p, ul, li, a, button {
   padding: 0;
   box-sizing: border-box;
   font-family: Arial, sans-serif;
+  position: relative;
+}
+
+body, html {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 body {
@@ -12,7 +19,6 @@ body {
 }
 
 .main-content {
-  margin-bottom: 20px;
   padding: 20px;
 }
 
