@@ -53,11 +53,11 @@ export default function Navbar({ isLoggedIn }: { isLoggedIn: boolean }) {
                 { label: "Perfil", link: "/perfil" },
               ]
             : [
-                { label: "Publicar tarea", link: "/publicar-tarea" },
+                { label: "Publicar tarea", link: "/publicar" }, //
                 { label: "Ver tareas", link: "/tareas" },
-                { label: "Cómo Funciona", link: "/about" },
-                { label: "Registrarte", link: "/registro" },
-                { label: "Iniciar sesión", link: "/inicio_sesion" },
+                { label: "Cómo Funciona", link: "/about" }, //
+                { label: "Registrarte", link: "/registro" }, //
+                { label: "Iniciar sesión", link: "/inicio_sesion" }, //
               ]
           ).map((option, index) => (
             <Link key={index} href={option.link} className={styles.link}>
