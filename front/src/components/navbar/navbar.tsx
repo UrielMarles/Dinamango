@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import styles from "./navbar.module.css";
 import Link from "next/link";
+import Image from 'next/image';
 
 export default function Navbar({ isLoggedIn }: { isLoggedIn: boolean }) {
   const [isMobile, setIsMobile] = useState(false);
@@ -54,17 +55,22 @@ export default function Navbar({ isLoggedIn }: { isLoggedIn: boolean }) {
                 { label: "Perfil", link: "/perfil" },
               ]
             : [
+                { img: "/gpt_logo.png", label: "Inicio", link: "/" }, //
                 { label: "Publicar tarea", link: "/publicar" }, //
-                { label: "Ver tareas", link: "/ver-tareas" },
+                { label: "Ver tareas", link: "/tareas" },
                 { label: "Cómo Funciona", link: "/about" }, //
                 { label: "Registrarte", link: "/registro" }, //
                 { label: "Iniciar sesión", link: "/inicio_sesion" }, //
               ]
           ).map((option, index) => (
             <Link key={index} href={option.link} className={styles.link}>
-              {option.label}
+              {option.img ? (
+                <Image src={option.img} alt={option.label} width={30} height={30} />
+              ) : (
+                option.label
+              )}
             </Link>
-          ))}
+        ))}
         </div>
       )}
     </nav>
