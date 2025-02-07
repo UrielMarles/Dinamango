@@ -5,7 +5,7 @@ import Footer from '../components/footer/footer'; // Importa tu componente Foote
 import { ReactNode } from 'react';
 
 export const metadata = {
-  title: 'Diamango',
+  title: 'Dinamango',
   description: 'Aplicación Next.js con barra de navegación adaptable',
 };
 

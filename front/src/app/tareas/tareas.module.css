@@ -1,0 +1,12 @@
+.container {
+    display: grid;
+    margin-left: 150px;
+}
+
+.poster {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Espaciado entre la imagen y el título */
+
+    border: 1px solid black;
+}

@@ -16,15 +16,24 @@
 .navbarLinks {
   display: flex;
   gap: 15px;
+  align-items: center;
 }
 
 .link {
-  color: #fff; /* Texto blanco */
-  text-decoration: none; /* Sin subrayado */
+  color: #fff;
+  text-decoration: none;
   font-weight: bold;
   padding: 10px 15px;
   border-radius: 5px;
+  display: flex;
+  align-items: center; /* Alinea el texto dentro del enlace */
+  justify-content: center;
+  height: 50px;
   transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.link img {
+  border: 3px solid red;
 }
 
 .link:hover {

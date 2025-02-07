@@ -3,7 +3,8 @@
 
 import { TextField, Button, Box, Typography, Link } from "@mui/material";
 import { useForm } from "react-hook-form";
-// import Link from "next/link";
+import { FcGoogle } from "react-icons/fc";
+import style from "./login.module.css";
 
 export default function LoginForm() {
     const {
@@ -15,6 +16,11 @@ export default function LoginForm() {
     const onSubmit = (data: any) => {
         console.log("Datos enviados:", data);
     };
+
+    const handleGoogleSignIn = async () => {
+        // Aquí puedes integrar NextAuth.js o Firebase para autenticar con Google
+        console.log("Iniciar sesión con Google");
+      };
 
     return (
         <Box
@@ -54,6 +60,24 @@ export default function LoginForm() {
             {/* Botón de Enviar */}
             <Button type="submit" variant="contained" color="primary" fullWidth>Iniciar Sesión</Button>
 
+            {/* Botón de Iniciar Sesión Google */}
+            <Button
+                variant="outlined"
+                fullWidth
+                onClick={handleGoogleSignIn}
+                sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    gap: 1,
+                    textTransform: "none",
+                    borderColor: "#ccc",
+                }}
+                >
+                <FcGoogle size={24} />
+                Continuar con Google
+            </Button>
+            
             {/* Si no esta registrado */}
             <Link href="../registro">Registrarse</Link>
         </Box>
