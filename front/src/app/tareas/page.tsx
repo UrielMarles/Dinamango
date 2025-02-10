@@ -2,10 +2,12 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
+// import Link from 'next/link';
 import styles from "./tareas.module.css";
 
 import api from '../../jsonPrueba/pruebaApi.json';
 interface Publicacion {
+    id: number;
     titulo: string;
     dinero: number;
     descripcion: string;
@@ -24,7 +26,7 @@ export default function Tareas() {
         <main>
             {publicaciones.map((publicacion, index) => (
                 <div key={index} className={styles.container}>
-                    <a href="#">
+                    <a href={`./pagina_publicacion?id=${publicacion.id}`}>
                         <div className={styles.poster}>
                             <Image
                                 src="/gpt_logo.png"

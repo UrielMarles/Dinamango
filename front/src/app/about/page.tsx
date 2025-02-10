@@ -5,7 +5,7 @@ import '../../styles/globals.css';
 
 export const metadata = {
   title: 'Sobre Nosotros',
-  description: 'Información sobre Moni',
+  description: 'Información sobre Dinamango',
 };
 
 export default function About() {
