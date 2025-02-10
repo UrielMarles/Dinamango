@@ -1,0 +1,92 @@
+[
+    {
+        "id": 1,
+        "titulo": "Viaje a Marte",
+        "dinero": 5000000,
+        "descripcion": "Una misión espacial de lujo para turistas aventureros."
+    },
+    {
+        "id": 2,
+        "titulo": "Startup de Inteligencia Artificial",
+        "dinero": 120000,
+        "descripcion": "Desarrollo de una IA que automatiza tareas administrativas."
+    },
+    {
+        "id": 3,
+        "titulo": "Restaurante Submarino",
+        "dinero": 300000,
+        "descripcion": "Experiencia gastronómica única bajo el mar con vista a la vida marina."
+    },
+    {
+        "id": 4,
+        "titulo": "Colección de NFTs",
+        "dinero": 50000,
+        "descripcion": "Arte digital exclusivo basado en mitología griega."
+    },
+    {
+        "id": 5,
+        "titulo": "Caza de Tesoros en el Caribe",
+        "dinero": 75000,
+        "descripcion": "Expedición para encontrar barcos hundidos con riquezas ocultas."
+    },
+    {
+        "id": 6,
+        "titulo": "Resort en la Antártida",
+        "dinero": 2500000,
+        "descripcion": "Un lujoso hotel ecológico en el corazón del hielo."
+    },
+    {
+        "id": 7,
+        "titulo": "Academia de Esports",
+        "dinero": 100000,
+        "descripcion": "Entrenamiento profesional para jugadores competitivos de videojuegos."
+    },
+    {
+        "id": 8,
+        "titulo": "Granja de Energía Solar",
+        "dinero": 500000,
+        "descripcion": "Proyecto sostenible para generar electricidad con paneles solares."
+    },
+    {
+        "id": 9,
+        "titulo": "Tienda de Ropa Inteligente",
+        "dinero": 80000,
+        "descripcion": "Ropa con sensores que monitorean la temperatura y la salud."
+    },
+    {
+        "id": 10,
+        "titulo": "Festival de Música Virtual",
+        "dinero": 200000,
+        "descripcion": "Conciertos en realidad aumentada con artistas internacionales."
+    },
+    {
+        "id": 11,
+        "titulo": "Cine al Aire Libre",
+        "dinero": 50000,
+        "descripcion": "Ciclo de proyecciones en parques y playas con pantalla gigante."
+    },
+    {
+        "id": 12,
+        "titulo": "Juego de Realidad Virtual",
+        "dinero": 150000,
+        "descripcion": "Videojuego inmersivo basado en mundos de ciencia ficción."
+    },
+    {
+        "id": 13,
+        "titulo": "Biblioteca Digital Global",
+        "dinero": 90000,
+        "descripcion": "Acceso ilimitado a libros y artículos de todo el mundo."
+    },
+    {
+        "id": 14,
+        "titulo": "Robot Asistente Doméstico",
+        "dinero": 350000,
+        "descripcion": "Un dispositivo que ayuda con tareas del hogar y asistencia personal."
+    },
+    {
+        "id": 15,
+        "titulo": "Turismo Espacial Económico",
+        "dinero": 10000000,
+        "descripcion": "Vuelos accesibles al espacio para turistas de todo el mundo."
+    }
+]
