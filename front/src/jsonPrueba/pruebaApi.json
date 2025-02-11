@@ -88,5 +88,95 @@
         "titulo": "Turismo Espacial Económico",
         "dinero": 10000000,
         "descripcion": "Vuelos accesibles al espacio para turistas de todo el mundo."
+    },
+    {
+        "id": 16,
+        "titulo": "Proyecto Solar",
+        "dinero": 50000,
+        "descripcion": "Instalación de paneles solares en una comunidad rural."
+    },
+    {
+        "id": 17,
+        "titulo": "Beca de Estudios",
+        "dinero": 10000,
+        "descripcion": "Financiamiento para estudiantes universitarios de bajos recursos."
+    },
+    {
+        "id": 18,
+        "titulo": "Programa de Reciclaje",
+        "dinero": 20000,
+        "descripcion": "Implementación de un sistema de reciclaje en una ciudad."
+    },
+    {
+        "id": 19,
+        "titulo": "Investigación Médica",
+        "dinero": 150000,
+        "descripcion": "Financiamiento para la investigación de nuevas terapias contra el cáncer."
+    },
+    {
+        "id": 20,
+        "titulo": "Parque Infantil",
+        "dinero": 30000,
+        "descripcion": "Construcción de un parque infantil en un barrio marginal."
+    },
+    {
+        "id": 21,
+        "titulo": "Capacitación Laboral",
+        "dinero": 12000,
+        "descripcion": "Cursos de formación para desempleados en nuevas tecnologías."
+    },
+    {
+        "id": 22,
+        "titulo": "Refugio Animal",
+        "dinero": 25000,
+        "descripcion": "Creación de un refugio para animales abandonados."
+    },
+    {
+        "id": 23,
+        "titulo": "Proyecto de Huertos Urbanos",
+        "dinero": 18000,
+        "descripcion": "Promoción de la agricultura urbana en zonas residenciales."
+    },
+    {
+        "id": 24,
+        "titulo": "Festival Cultural",
+        "dinero": 40000,
+        "descripcion": "Organización de un festival para promover la diversidad cultural."
+    },
+    {
+        "id": 25,
+        "titulo": "Programa de Alfabetización",
+        "dinero": 15000,
+        "descripcion": "Clases de alfabetización para adultos en comunidades rurales."
+    },
+    {
+        "id": 26,
+        "titulo": "Infraestructura Escolar",
+        "dinero": 80000,
+        "descripcion": "Mejora de instalaciones en escuelas públicas."
+    },
+    {
+        "id": 27,
+        "titulo": "Proyecto de Energía Eólica",
+        "dinero": 200000,
+        "descripcion": "Instalación de aerogeneradores en una zona costera."
+    },
+    {
+        "id": 28,
+        "titulo": "Biblioteca Comunitaria",
+        "dinero": 22000,
+        "descripcion": "Construcción de una biblioteca para el acceso público a libros."
+    },
+    {
+        "id": 29,
+        "titulo": "Programa de Salud Mental",
+        "dinero": 35000,
+        "descripcion": "Apoyo psicológico gratuito para personas en situación de vulnerabilidad."
+    },
+    {
+        "id": 30,
+        "titulo": "Proyecto de Conservación Ambiental",
+        "dinero": 50000,
+        "descripcion": "Protección y restauración de ecosistemas naturales."
     }
 ]
