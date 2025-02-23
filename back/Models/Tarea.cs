@@ -34,6 +34,10 @@ namespace MangoDB.Models
 
         [ForeignKey("IdCreador")]
         public User Creador { get; set; }
+
+        // Relación con Ofertas
+        public List<Oferta> Ofertas { get; set; } = new List<Oferta>();
     }
+
 
 }

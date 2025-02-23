@@ -2,13 +2,14 @@
     Id UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWID(),
     Email NVARCHAR(255) UNIQUE NOT NULL,
     PasswordHash NVARCHAR(255) NOT NULL,
-    Salt NVARCHAR(255) NOT NULL, -- Nuevo campo para almacenar el salt
-    FullName NVARCHAR(255) NOT NULL,
+    Salt NVARCHAR(255) NOT NULL,
+    Nombre NVARCHAR(255) NOT NULL,
+    Apellido NVARCHAR(255) NOT NULL,
+    ProfilePictureUrl NVARCHAR(500) NULL, -- URL de la imagen de perfil
     Role NVARCHAR(50) NOT NULL DEFAULT 'User',
     CreatedAt DATETIME DEFAULT GETDATE(),
     UpdatedAt DATETIME NULL
 );
-
 
 CREATE TABLE UserTokens (
     Id UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWID(),

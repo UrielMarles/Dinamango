@@ -15,4 +15,5 @@
         public decimal? MaxDinero { get; set; }
         public int? Cantidad { get; set; }
     }
+
 }

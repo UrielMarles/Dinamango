@@ -12,19 +12,19 @@ namespace MangoDB.Controllers
     public class TareaController : ControllerBase
     {
         private readonly MangoDBcontext _context;
-        private readonly UserService _authService;
+        private readonly UserService _userService;
 
         public TareaController(MangoDBcontext context, UserService authService)
         {
             _context = context;
-            _authService = authService;
+            _userService = authService;
         }
 
         // Crear una nueva tarea
         [HttpPost]
         public async Task<IActionResult> CreateTarea([FromHeader(Name = "Authorization")] string token, [FromBody] TareaDTO request)
         {
-            var user = await _authService.ValidateToken(token);
+            var user = await _userService.ValidateToken(token);
             if (user == null)
                 return Unauthorized(new { message = "Token inválido" });
 
@@ -79,12 +79,12 @@ namespace MangoDB.Controllers
             return Ok(new { message = "Tarea eliminada exitosamente" });
         }
 
-        // Listar tareas con filtros y cantidad de resultados
         [HttpGet]
         public async Task<IActionResult> GetTareas([FromQuery] GetTareasDTO filters)
         {
             var query = _context.Tareas
                 .Include(t => t.Creador)
+                .Include(t => t.Ofertas) // 🔹 Incluir la relación con Ofertas
                 .AsQueryable();
 
             if (filters.MinDinero.HasValue)
@@ -111,15 +111,16 @@ namespace MangoDB.Controllers
                     Creador = new
                     {
                         t.Creador.Id,
-                        t.Creador.FullName,
+                        t.Creador.Nombre,
+                        t.Creador.Apellido,
                         t.Creador.Email
-                    }
+                    },
+                    CantidadOfertas = t.Ofertas.Count // 🔹 Se agrega el contador de ofertas
                 })
                 .ToListAsync();
 
             return Ok(tareas);
         }
-
 
     }
 

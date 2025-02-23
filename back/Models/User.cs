@@ -14,10 +14,15 @@ namespace MangoDB.Models
         public string PasswordHash { get; set; }
 
         [Required]
-        public string Salt { get; set; } // Nuevo campo para almacenar el salt
+        public string Salt { get; set; }
 
         [Required]
-        public string FullName { get; set; }
+        public string Nombre { get; set; }
+
+        [Required]
+        public string Apellido { get; set; }
+
+        public string? ProfilePictureUrl { get; set; } // URL de la imagen de perfil
 
         [Required]
         public string Role { get; set; } = "User";
@@ -28,5 +33,6 @@ namespace MangoDB.Models
         public List<UserToken> UserTokens { get; set; } = new List<UserToken>();
         public List<Tarea> Tareas { get; set; } = new List<Tarea>();
     }
+
 
 }
