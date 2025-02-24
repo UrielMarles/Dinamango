@@ -54,7 +54,7 @@ export default function Navbar({ isLoggedIn }: { isLoggedIn: boolean }) {
                 { label: "Perfil", link: "/perfil" },
               ]
             : [
-                { img: "/gpt_logo.png", label: "Inicio", link: "/" }, //
+                { img: "/sin_fondo_blanco.png", label: "Inicio", link: "/" }, //
                 { label: "Publicar tarea", link: "/publicar" }, //
                 { label: "Ver tareas", link: "/tareas" },
                 { label: "Cómo Funciona", link: "/about" }, //
@@ -64,7 +64,7 @@ export default function Navbar({ isLoggedIn }: { isLoggedIn: boolean }) {
           ).map((option, index) => (
             <Link key={index} href={option.link} className={styles.link}>
               {option.img ? (
-                <Image src={option.img} alt={option.label} width={30} height={30} />
+                <Image src={option.img} alt={option.label} width={220} height={40} />
               ) : (
                 option.label
               )}

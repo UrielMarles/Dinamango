@@ -27,7 +27,7 @@ namespace MangoDB.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] RegisterRequest request)
         {
-            var user = await _userService.Register(request.Email, request.Password, request.FullName);
+            var user = await _userService.Register(request.Email, request.Password, request.Nombre, request.Apellido);
             if (user == null)
                 return BadRequest(new { message = "El usuario ya existe" });
 

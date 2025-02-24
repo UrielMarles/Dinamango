@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import Image from "next/image";
 
@@ -13,16 +13,16 @@ interface Publicacion {
     descripcion: string;
 }
 
-export default function PaginaPublicacion() {
+function ContenidoPaginaPublicacion() {
     const searchParams = useSearchParams();
     const id = searchParams.get("id");
 
-    const [publicacion, setPublicacion] = useState<Publicacion>();
+    const [publicacion, setPublicacion] = useState<Publicacion | null>(null);
 
     useEffect(() => {
         if (id) {
             const pub = api.find((item) => item.id === Number(id));
-            setPublicacion(pub);
+            setPublicacion(pub || null);
         }
     }, [id]);
 
@@ -42,5 +42,13 @@ export default function PaginaPublicacion() {
             <p>Precio: ${publicacion.dinero}</p>
             <p>{publicacion.descripcion}</p>
         </div>
+    );
+}
+
+export default function PaginaPublicacion() {
+    return (
+        <Suspense fallback={<div>Cargando página...</div>}>
+            <ContenidoPaginaPublicacion />
+        </Suspense>
     );
 }
