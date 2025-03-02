@@ -58,7 +58,11 @@ namespace MangoDB.Services
         }
 
         // Registrar un nuevo usuario con contraseña hasheada
+<<<<<<< HEAD
         public async Task<User?> Register(string email, string password, string name, string lastName, string role = "User")
+=======
+        public async Task<User?> Register(string email, string password, string nombre, string apellido, string role = "User")
+>>>>>>> 2ef0f83c00854a1cad5e9881f0ef649c5fa7d615
         {
             if (await _context.Users.AnyAsync(u => u.Email == email))
                 return null; // Usuario ya existe
@@ -71,8 +75,13 @@ namespace MangoDB.Services
                 Email = email,
                 PasswordHash = hashedPassword,
                 Salt = salt, // Guardamos el salt
+<<<<<<< HEAD
                 Nombre = name,
                 Apellido = lastName,
+=======
+                Nombre = nombre,
+                Apellido = apellido,
+>>>>>>> 2ef0f83c00854a1cad5e9881f0ef649c5fa7d615
                 Role = role
             };
 

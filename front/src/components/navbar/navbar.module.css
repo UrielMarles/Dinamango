@@ -32,10 +32,6 @@
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.link img {
-  border: 3px solid red;
-}
-
 .link:hover {
   background-color: #008F00; /* Hover para navegador */
 }
