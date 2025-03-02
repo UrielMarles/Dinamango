@@ -9,12 +9,32 @@ import api from '../../jsonPrueba/pruebaApi.json';
 interface Publicacion {
     id: number;
     titulo: string;
-    dinero: number;
+    dineroOfrecido: number;
+    descripcion: string;   
+}
+
+interface PublicacionDB {
+    id: number;
+    titulo: string;
+    dineroOfrecido: number;
     descripcion: string;
 }
 
 export default function Tareas() {
+    // const [publicaciones, setPublicaciones] = useState<PublicacionDB[]>([]);
     const [publicaciones, setPublicaciones] = useState<Publicacion[]>([]);
+
+    // useEffect(() => {
+    //     fetch("http://localhost:5057/api/tareas")
+    //         .then(response => {
+    //             if (!response.ok) {
+    //                 throw new Error(`HTTP error! Status: ${response.status}`);
+    //             }
+    //             return response.json();
+    //         })
+    //         .then(data => setPublicaciones(data))
+    //         .catch(error => console.error("Error al obtener publicaciones:", error));
+    // }, []);
 
     useEffect(() => {
         setPublicaciones(api as Publicacion[]);
@@ -26,26 +46,24 @@ export default function Tareas() {
         <main>
             {publicaciones.map((publicacion, index) => (
                 <div key={index} className={styles.container}>
-                    <a href={`./pagina_publicacion?id=${publicacion.id}`}>
-                        <div className={styles.poster}>
-                            <Image
-                                src="/gpt_logo.png"
-                                alt="Logo de la aplicación"
-                                width={200}
-                                height={200}
-                            />
-                            <div className={styles.titulo}>
-                                <div key={index}>
-                                    <h2 className={styles.tituloPublicacion}>{publicacion.titulo}</h2>
-                                    <p>${publicacion.dinero}</p>
-                                    <br></br>
-                                    <p>{publicacion.descripcion}</p>
-                                </div>
+                    <div className={styles.poster}>
+                        <Image
+                            src="/gpt_logo.png"
+                            alt="Logo de la aplicación"
+                            width={200}
+                            height={200}
+                        />
+                        <div className={styles.titulo}>
+                            <div key={index}>
+                                <h2>{publicacion.titulo}</h2>
+                                <p>${publicacion.dineroOfrecido}</p>
+                                <br></br>
+                                <p>{publicacion.descripcion}</p>
                             </div>
                         </div>
-                    </a>
+                    </div>
                 </div>
-            ))};
+            ))}
         </main>
         </>
     );

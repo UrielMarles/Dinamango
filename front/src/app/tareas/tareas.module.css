@@ -2,10 +2,6 @@
     display: grid;
     margin-left: 100px;
 }
-.container a{
-    text-decoration: none;
-    color: black;
-}
 
 .poster {
     display: flex;
@@ -13,9 +9,4 @@
     gap: 10px;
 
     border: 1px solid black;
-}
-
-.tituloPublicacion {
-    top: 0;
-    position: absolute;
 }
