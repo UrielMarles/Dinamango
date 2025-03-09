@@ -28,6 +28,18 @@ namespace MangoDB
             // Inyectar UserService
             builder.Services.AddScoped<UserService>();
 
+            // Habilitar CORS
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowFrontend",
+                   policy =>
+                   {
+                       policy.WithOrigins("http://localhost:3000") // Cambia esto por la URL de tu frontend
+                             .AllowAnyMethod()
+                             .AllowAnyHeader();
+                   });
+            });
+
             var app = builder.Build();
             Configuration = app.Configuration;
 
@@ -37,6 +49,7 @@ namespace MangoDB
                 app.UseSwaggerUI();
             }
 
+            app.UseCors("AllowFrontend");
             app.UseHttpsRedirection();
             app.UseAuthorization();
             app.MapControllers();

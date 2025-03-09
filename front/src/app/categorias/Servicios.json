@@ -1,0 +1,442 @@
+[
+    {
+        "id": 1,
+        "descripcion": "Alquiler de payasos"
+    },
+    {
+        "id": 2,
+        "descripcion": "Animadores infantiles"
+    },
+    {
+        "id": 3,
+        "descripcion": "Asistentes personales"
+    },
+    {
+        "id": 4,
+        "descripcion": "Barberos a domicilio"
+    },
+    {
+        "id": 5,
+        "descripcion": "Baristas"
+    },
+    {
+        "id": 6,
+        "descripcion": "Bartenders"
+    },
+    {
+        "id": 7,
+        "descripcion": "Calefaccion y refrigeracion"
+    },
+    {
+        "id": 8,
+        "descripcion": "Chef privado"
+    },
+    {
+        "id": 9,
+        "descripcion": "Colgado de cuadros"
+    },
+    {
+        "id": 10,
+        "descripcion": "Compañero de gimnasio"
+    },
+    {
+        "id": 11,
+        "descripcion": "Contratistas de limpieza de terrenos"
+    },
+    {
+        "id": 12,
+        "descripcion": "Contratistas de mantenimiento del hogar"
+    },
+    {
+        "id": 13,
+        "descripcion": "Contratistas de ventilacion de techos"
+    },
+    {
+        "id": 14,
+        "descripcion": "Contratistas de zocalos"
+    },
+    {
+        "id": 15,
+        "descripcion": "Contadores"
+    },
+    {
+        "id": 16,
+        "descripcion": "Cuidadores de aves"
+    },
+    {
+        "id": 17,
+        "descripcion": "Decoradores de pasteles"
+    },
+    {
+        "id": 18,
+        "descripcion": "Depilacion a domicilio"
+    },
+    {
+        "id": 19,
+        "descripcion": "Diseñadores graficos"
+    },
+    {
+        "id": 20,
+        "descripcion": "Diseñadores web"
+    },
+    {
+        "id": 21,
+        "descripcion": "Distribucion de catalogos"
+    },
+    {
+        "id": 22,
+        "descripcion": "Electricistas para redes NBN"
+    },
+    {
+        "id": 23,
+        "descripcion": "Eliminacion de maleza"
+    },
+    {
+        "id": 24,
+        "descripcion": "Eliminacion de residuos domesticos"
+    },
+    {
+        "id": 25,
+        "descripcion": "Ensambladores de armarios"
+    },
+    {
+        "id": 26,
+        "descripcion": "Ensambladores de muebles de Fantastic Furniture"
+    },
+    {
+        "id": 27,
+        "descripcion": "Ensambladores de sistemas de aro de baloncesto"
+    },
+    {
+        "id": 28,
+        "descripcion": "Ensambladores de trampolines"
+    },
+    {
+        "id": 29,
+        "descripcion": "Ensambladores de trampolines Springfree"
+    },
+    {
+        "id": 30,
+        "descripcion": "Ensambladores de trampolines Vuly"
+    },
+    {
+        "id": 31,
+        "descripcion": "Entrenador personal a domicilio"
+    },
+    {
+        "id": 32,
+        "descripcion": "Entrenadores personales"
+    },
+    {
+        "id": 33,
+        "descripcion": "Entrega de leche"
+    },
+    {
+        "id": 34,
+        "descripcion": "Entrega de productos de IKEA"
+    },
+    {
+        "id": 35,
+        "descripcion": "Especialistas en depilacion con hilo para cejas"
+    },
+    {
+        "id": 36,
+        "descripcion": "Especialistas en Google AdWords"
+    },
+    {
+        "id": 37,
+        "descripcion": "Especialistas en aire acondicionado movil para autos"
+    },
+    {
+        "id": 38,
+        "descripcion": "Especialistas en recarga de aire acondicionado para autos"
+    },
+    {
+        "id": 39,
+        "descripcion": "Expertos en corte de vidrio"
+    },
+    {
+        "id": 40,
+        "descripcion": "Expertos en recuperacion de datos"
+    },
+    {
+        "id": 41,
+        "descripcion": "Instructores de boxeo"
+    },
+    {
+        "id": 42,
+        "descripcion": "Instructores de natacion"
+    },
+    {
+        "id": 43,
+        "descripcion": "Instructores de yoga"
+    },
+    {
+        "id": 44,
+        "descripcion": "Instalacion de alfombras"
+    },
+    {
+        "id": 45,
+        "descripcion": "Instalacion de cesped artificial"
+    },
+    {
+        "id": 46,
+        "descripcion": "Instalacion de cobertizos de Bunnings"
+    },
+    {
+        "id": 47,
+        "descripcion": "Instalacion de tendederos"
+    },
+    {
+        "id": 48,
+        "descripcion": "Instalacion y reparacion de lavadoras"
+    },
+    {
+        "id": 49,
+        "descripcion": "Instaladores de barras de cortinas"
+    },
+    {
+        "id": 50,
+        "descripcion": "Instaladores de barras de luz"
+    },
+    {
+        "id": 51,
+        "descripcion": "Instaladores de bajantes"
+    },
+    {
+        "id": 52,
+        "descripcion": "Instaladores de cables de datos"
+    },
+    {
+        "id": 53,
+        "descripcion": "Instaladores de cercas"
+    },
+    {
+        "id": 54,
+        "descripcion": "Instaladores de defensas para autos"
+    },
+    {
+        "id": 55,
+        "descripcion": "Instaladores de puertas"
+    },
+    {
+        "id": 56,
+        "descripcion": "Instaladores de gas"
+    },
+    {
+        "id": 57,
+        "descripcion": "Instaladores de paneles de yeso (Gyprock)"
+    },
+    {
+        "id": 58,
+        "descripcion": "Instaladores de radios UHF"
+    },
+    {
+        "id": 59,
+        "descripcion": "Instaladores de secadoras"
+    },
+    {
+        "id": 60,
+        "descripcion": "Instaladores de sistemas de aspersion"
+    },
+    {
+        "id": 61,
+        "descripcion": "Instaladores de tanques de agua"
+    },
+    {
+        "id": 62,
+        "descripcion": "Instaladores de televisores"
+    },
+    {
+        "id": 63,
+        "descripcion": "Instaladores de timbres Ring"
+    },
+    {
+        "id": 64,
+        "descripcion": "Instaladores de unidades principales (estereos de auto)"
+    },
+    {
+        "id": 65,
+        "descripcion": "Inspeccion previa a la compra"
+    },
+    {
+        "id": 66,
+        "descripcion": "Limpieza de aticos"
+    },
+    {
+        "id": 67,
+        "descripcion": "Limpieza de jardines"
+    },
+    {
+        "id": 68,
+        "descripcion": "Limpieza de techos"
+    },
+    {
+        "id": 69,
+        "descripcion": "Limpiadores de campanas extractoras"
+    },
+    {
+        "id": 70,
+        "descripcion": "Limpiadores para mudanzas"
+    },
+    {
+        "id": 71,
+        "descripcion": "Limpiadores de techos"
+    },
+    {
+        "id": 72,
+        "descripcion": "Mantenimiento de jardines"
+    },
+    {
+        "id": 73,
+        "descripcion": "Mudanzas de casas"
+    },
+    {
+        "id": 74,
+        "descripcion": "Niñeras"
+    },
+    {
+        "id": 75,
+        "descripcion": "Nivelacion de jardines"
+    },
+    {
+        "id": 76,
+        "descripcion": "Orden y organizacion de jardines"
+    },
+    {
+        "id": 77,
+        "descripcion": "Pedicura a domicilio"
+    },
+    {
+        "id": 78,
+        "descripcion": "Peluqueros de gatos"
+    },
+    {
+        "id": 79,
+        "descripcion": "Peluqueros especializados en rastas"
+    },
+    {
+        "id": 80,
+        "descripcion": "Pintores de casas"
+    },
+    {
+        "id": 81,
+        "descripcion": "Pintores de gabinetes de cocina"
+    },
+    {
+        "id": 82,
+        "descripcion": "Planificadores de negocios"
+    },
+    {
+        "id": 83,
+        "descripcion": "Reemplazo de bombillas de faros"
+    },
+    {
+        "id": 84,
+        "descripcion": "Reemplazo de sensores de estacionamiento"
+    },
+    {
+        "id": 85,
+        "descripcion": "Reparacion de aire acondicionado"
+    },
+    {
+        "id": 86,
+        "descripcion": "Reparacion de bicicletas electricas"
+    },
+    {
+        "id": 87,
+        "descripcion": "Reparacion de ciclomotores"
+    },
+    {
+        "id": 88,
+        "descripcion": "Reparacion de computadoras"
+    },
+    {
+        "id": 89,
+        "descripcion": "Reparacion de puertas corredizas"
+    },
+    {
+        "id": 90,
+        "descripcion": "Reparacion de generadores"
+    },
+    {
+        "id": 91,
+        "descripcion": "Reparacion de maquinas de cafe"
+    },
+    {
+        "id": 92,
+        "descripcion": "Reparacion de neumaticos"
+    },
+    {
+        "id": 93,
+        "descripcion": "Reparacion de neumaticos de bicicleta"
+    },
+    {
+        "id": 94,
+        "descripcion": "Reparacion de pavimento"
+    },
+    {
+        "id": 95,
+        "descripcion": "Reparacion de peceras"
+    },
+    {
+        "id": 96,
+        "descripcion": "Reparacion de pinchazos de neumaticos"
+    },
+    {
+        "id": 97,
+        "descripcion": "Reparacion de refrigeradores Samsung"
+    },
+    {
+        "id": 98,
+        "descripcion": "Reparacion de sillones reclinables"
+    },
+    {
+        "id": 99,
+        "descripcion": "Reparacion de sofas"
+    },
+    {
+        "id": 100,
+        "descripcion": "Reparacion de sistemas de riego"
+    },
+    {
+        "id": 101,
+        "descripcion": "Reparacion de volantes"
+    },
+    {
+        "id": 102,
+        "descripcion": "Reparacion de tapiceria"
+    },
+    {
+        "id": 103,
+        "descripcion": "Retiro de lavadoras"
+    },
+    {
+        "id": 104,
+        "descripcion": "Retiro de pianos"
+    },
+    {
+        "id": 105,
+        "descripcion": "Retiro de refrigeradores"
+    },
+    {
+        "id": 106,
+        "descripcion": "Retiro de tanques de agua"
+    },
+    {
+        "id": 107,
+        "descripcion": "Servicio de organizacion y despeje"
+    },
+    {
+        "id": 108,
+        "descripcion": "Servicio para autos Seat"
+    },
+    {
+        "id": 109,
+        "descripcion": "Tecnicos en WiFi"
+    },
+    {
+        "id": 110,
+        "descripcion": "Acortamiento de prendas"
+    }
+]

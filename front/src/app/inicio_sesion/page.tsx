@@ -4,7 +4,8 @@
 import { TextField, Button, Box, Typography, Link } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { FcGoogle } from "react-icons/fc";
-import style from "./login.module.css";
+
+const API = process.env.NEXT_PUBLIC_API;
 
 export default function LoginForm() {
     const {
@@ -13,14 +14,45 @@ export default function LoginForm() {
         formState: { errors },
     } = useForm();
 
-    const onSubmit = (data: any) => {
-        console.log("Datos enviados:", data);
+    const onSubmit = async (data: any) => {
+        // console.log(JSON.stringify(data));
+
+        try {
+            const response = await fetch(`${API}/user/login`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(data)
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                console.log(errorData)
+                return;
+            }
+
+            const responseData = await response.json();
+            const token = responseData.token;
+
+            if (token) {
+                sessionStorage.setItem("authToken", token);
+                console.log("Token guardado en sessionStorage");
+            } else {
+                console.error("No se recibió token de autenticación");
+            }
+
+            console.log("Inicio de sesion correcta!");
+
+        } catch (error) {
+            console.error("Error al registrar usuario:", error);
+            alert("Hubo un problema con el registro");
+        }
     };
 
     const handleGoogleSignIn = async () => {
-        // Aquí puedes integrar NextAuth.js o Firebase para autenticar con Google
         console.log("Iniciar sesión con Google");
-      };
+    };
 
     return (
         <Box
@@ -34,7 +66,11 @@ export default function LoginForm() {
                 margin: "auto",
                 padding: 3,
                 boxShadow: 3,
-                borderRadius: 2
+                borderRadius: 2,
+                position: "absolute",
+                top: "50%",
+                left: "50%",
+                transform: "translate(-50%, -50%)"
             }}
         >
             <Typography variant="h5" textAlign="center">Iniciar Sesión</Typography>

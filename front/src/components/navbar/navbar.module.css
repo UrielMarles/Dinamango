@@ -3,7 +3,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #00A800; /* Verde clarito */
+  /* background-color: #00A800; Verde clarito */
+  background-color: #0acc0a;
   color: #fff; /* Texto blanco para contraste */
   padding: 0;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);

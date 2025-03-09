@@ -7,10 +7,10 @@ export const metadata: Metadata = {
   description: "La plataforma que te ayuda con lo que necesitas",
 };
 
+// Sesion cerrada!
 export default function Home() {
   return (
     <>
-<<<<<<< HEAD
     <main className={style.main}>
       <section className={style.contenidoInicial}>
         <div className={style.textoInicial}>
@@ -27,6 +27,9 @@ export default function Home() {
         </div>
       </section>
       <section className={style.contenidoMitad}>
+      <div>
+          <Image className={style.img} src="/img/hombreFeliz.webp" alt="Logo de la aplicación" width={450} height={450} objectFit="cover" />
+        </div>
         <div className={style.textoMitad}>
           <p>Tu proxima oportunidad, con seguridad y confianza</p>
           <p>
@@ -42,10 +45,7 @@ export default function Home() {
             <Image src="/icons/check.webp" alt="Check" width={40} height={40} objectFit="cover" />
             Podés contratar el seguro para tener cubierta de cualquier eventualidad.
           </p>
-          <button>Publica tu Proyecto</button>
-        </div>
-        <div>
-          <Image className={style.img} src="/img/hombreFeliz.webp" alt="Logo de la aplicación" width={450} height={450} objectFit="cover" />
+          <a href="./registro"><button>Publica tu Proyecto</button></a>
         </div>
       </section>
       <section className={style.contenidoFinal}>
@@ -53,7 +53,7 @@ export default function Home() {
           <p>Se tu propio jefe</p>
           <p>
             <Image src="/icons/check.webp" alt="Check" width={40} height={40} objectFit="cover" />
-            Seas carpintero experto o un oficinista aplicadom encontra tu proxima aventura con Diamango.
+            Seas carpintero experto o un oficinista aplicadom encontra tu proxima aventura con Dinamango.
           </p>
           <p>
             <Image src="/icons/check.webp" alt="Check" width={40} height={40} objectFit="cover" />
@@ -61,7 +61,7 @@ export default function Home() {
           </p>
           <p>
             <Image src="/icons/check.webp" alt="Check" width={40} height={40} objectFit="cover" />
-            Sin suscripciones omovimientos fuera de la aplicacion.
+            Sin suscripciones o movimientos fuera de la aplicacion.
           </p>
           <p>
             <Image src="/icons/check.webp" alt="Check" width={40} height={40} objectFit="cover" />
@@ -71,50 +71,14 @@ export default function Home() {
             <Image src="/icons/check.webp" alt="Check" width={40} height={40} objectFit="cover" />
             Crece laboralmente y mejora tu red de contactos.
           </p>
-          <button>Gana con Dinamango</button>
+          <a href="./registro"><button>Gana con Dinamango</button></a>
         </div>
         <div>
           <Image className={style.img} src="/img/trabajador.webp" alt="Trabajador" width={500} height={500} objectFit="cover" />
         </div>
       </section>
+      
     </main>
-=======
-      <div className={style.header}>
-        <h1>Bienvenidos a Dinamango</h1>
-        <h3>La plataforma que te ayuda con lo que necesitas</h3>
-      </div>
-      <main className={style.container}>
-        <div className={style.card}>
-          <div className={`${style.text} ${style.left}`}>
-            <p>Emprende gratis</p>
-            <p>compartiendo tu proyecto</p>
-            <p>sin costo</p>
-          </div>
-          <div className={`${style.image} ${style.right}`}>
-            <Image
-              src="/gpt_logo.png"
-              alt="Logo de la aplicación"
-              width={450}
-              height={450}
-            />
-          </div>
-        </div>
-        <div className={style.card}>
-          <div className={`${style.image} ${style.left}`}>
-            <Image
-              src="/gpt_logo.png"
-              alt="Logo de la aplicación"
-              width={450}
-              height={450}
-            />
-          </div>
-          <div className={`${style.text} ${style.right}`}>
-            <p>Publica lo que vos quieras</p>
-            <p>en segundos</p>
-          </div>
-        </div>
-      </main>
->>>>>>> 2ef0f83c00854a1cad5e9881f0ef649c5fa7d615
     </>
   );
 }

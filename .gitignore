@@ -6,5 +6,6 @@ yarn.lock
 .next/
 dist/
 build/
+.env.local
 iniciar.txt
-Dinamango boceto paint.png
+Dinamango boceto paint sesion iniciada.png
