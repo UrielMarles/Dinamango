@@ -4,8 +4,7 @@
 import { TextField, Button, Box, Typography, Link } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { FcGoogle } from "react-icons/fc";
-
-const API = process.env.NEXT_PUBLIC_API;
+import { apiService } from "@/services/apiService";
 
 export default function LoginForm() {
     const {
@@ -15,38 +14,21 @@ export default function LoginForm() {
     } = useForm();
 
     const onSubmit = async (data: any) => {
-        // console.log(JSON.stringify(data));
-
         try {
-            const response = await fetch(`${API}/user/login`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(data)
-            });
-
-            if (!response.ok) {
-                const errorData = await response.json();
-                console.log(errorData)
-                return;
-            }
-
-            const responseData = await response.json();
+            const responseData = await apiService.login(data);
             const token = responseData.token;
-
+    
             if (token) {
                 sessionStorage.setItem("authToken", token);
                 console.log("Token guardado en sessionStorage");
             } else {
                 console.error("No se recibió token de autenticación");
             }
-
-            console.log("Inicio de sesion correcta!");
-
+    
+            console.log("Inicio de sesión correcto!");
+            
         } catch (error) {
-            console.error("Error al registrar usuario:", error);
-            alert("Hubo un problema con el registro");
+            alert("Hubo un problema con el inicio de sesión");
         }
     };
 

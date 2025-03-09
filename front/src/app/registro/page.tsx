@@ -4,8 +4,7 @@
 import { TextField, Button, Box, Typography, Link } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { FcGoogle } from "react-icons/fc";
-
-const API = process.env.NEXT_PUBLIC_API;
+import { apiService } from "@/services/apiService";
 
 export default function RegistroForm() {
     const {
@@ -16,24 +15,9 @@ export default function RegistroForm() {
 
     const onSubmit = async (data: any) => {
         try {
-            const response = await fetch(`${API}/user/register`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(data)
-            });
-
-            if (!response.ok) {
-                const errorData = await response.json();
-                console.log(errorData)
-                return;
-            }
-
+            await apiService.register(data);
             console.log("Usuario registrado correctamente");
-
         } catch (error) {
-            console.error("Error al registrar usuario:", error);
             alert("Hubo un problema con el registro");
         }
     };
