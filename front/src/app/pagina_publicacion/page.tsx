@@ -21,7 +21,7 @@ function ContenidoPaginaPublicacion() {
 
     useEffect(() => {
         if (id) {
-            const pub = api.find((item) => item.id === Number(id));
+            let pub = api.find((item) => item.id === Number(id));
             setPublicacion(pub || null);
         }
     }, [id]);
