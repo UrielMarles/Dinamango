@@ -4,7 +4,7 @@
 import { TextField, Button, Box, Typography, Link } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { FcGoogle } from "react-icons/fc";
-import { apiService } from "@/services/apiService";
+import { apiService } from "@/helper/apiService";
 
 export default function RegistroForm() {
     const {
@@ -28,93 +28,100 @@ export default function RegistroForm() {
 
     return (
         <Box
-            component="form"
-            onSubmit={handleSubmit(onSubmit)}
             sx={{
                 display: "flex",
-                flexDirection: "column",
-                gap: 2,
-                width: "300px",
-                margin: "auto",
-                padding: 3,
-                boxShadow: 3,
-                borderRadius: 2,
-                position: "absolute",
-                top: "50%",
-                left: "50%",
-                transform: "translate(-50%, -50%)"
+                justifyContent: "center",
+                alignItems: "center",
+                flex: 1,
+                minHeight: "80vh",
             }}
         >
-            <Typography variant="h5" textAlign="center">Registro</Typography>
-
-            {/* Campo de Nombre */}
-            <TextField
-                label="Nombre"
-                type="text"
-                {...register("nombre", { required: "El nombre es obligatorio" })}
-                error={!!errors.nombre}
-                fullWidth
-            />
-
-            {/* Campo de Apellido */}
-            <TextField
-                label="Apellido"
-                type="text"
-                {...register("apellido", { required: "El apellido es obligatorio" })}
-                error={!!errors.apellido}
-                fullWidth
-            />
-
-            {/* Campo de Email */}
-            <TextField
-                label="Email"
-                type="email"
-                {...register("email", { required: "El email es obligatorio" })}
-                error={!!errors.email}
-                fullWidth
-            />
-
-            {/* Campo de Contraseña */}
-            <TextField
-                label="Contraseña"
-                type="password"
-                {...register("password", { required: "La contraseña es obligatoria" })}
-                error={!!errors.password}
-                fullWidth
-            />
-
-            {/* Repetir Campo de Contraseña */}
-            <TextField
-                label="Repetir Contraseña"
-                type="password"
-                {...register("password", { required: "Las contraseñas deben ser iguales" })}
-                error={!!errors.password}
-                fullWidth
-            />
-
-            {/* Botón de Enviar */}
-            <Button type="submit" variant="contained" color="primary" fullWidth>Registrarse</Button>
-
-            {/* Botón de Iniciar Sesión Google */}
-            <Button
-                variant="outlined"
-                fullWidth
-                onClick={handleGoogleSignIn}
+            <Box
+                component="form"
+                onSubmit={handleSubmit(onSubmit)}
                 sx={{
                     display: "flex",
-                    alignItems: "center",
                     justifyContent: "center",
-                    gap: 1,
-                    textTransform: "none",
-                    borderColor: "#ccc",
+                    flexDirection: "column",
+                    gap: 2,
+                    width: "300px",
+                    padding: 3,
+                    boxShadow: 3,
+                    borderRadius: 2,
+                    backgroundColor: "white",
                 }}
             >
-                <FcGoogle size={24} />
-                Continuar con Google
-            </Button>
+                <Typography variant="h5" textAlign="center">Registro</Typography>
 
-            {/* Si ya esta registrado */}
-            <Link href="../inicio_sesion">Iniciar Sesión</Link>
+                {/* Campo de Nombre */}
+                <TextField
+                    label="Nombre"
+                    type="text"
+                    {...register("nombre", { required: "El nombre es obligatorio" })}
+                    error={!!errors.nombre}
+                    fullWidth
+                />
+
+                {/* Campo de Apellido */}
+                <TextField
+                    label="Apellido"
+                    type="text"
+                    {...register("apellido", { required: "El apellido es obligatorio" })}
+                    error={!!errors.apellido}
+                    fullWidth
+                />
+
+                {/* Campo de Email */}
+                <TextField
+                    label="Email"
+                    type="email"
+                    {...register("email", { required: "El email es obligatorio" })}
+                    error={!!errors.email}
+                    fullWidth
+                />
+
+                {/* Campo de Contraseña */}
+                <TextField
+                    label="Contraseña"
+                    type="password"
+                    {...register("password", { required: "La contraseña es obligatoria" })}
+                    error={!!errors.password}
+                    fullWidth
+                />
+
+                {/* Repetir Campo de Contraseña */}
+                <TextField
+                    label="Repetir Contraseña"
+                    type="password"
+                    {...register("password", { required: "Las contraseñas deben ser iguales" })}
+                    error={!!errors.password}
+                    fullWidth
+                />
+
+                {/* Botón de Enviar */}
+                <Button type="submit" variant="contained" color="primary" fullWidth>Registrarse</Button>
+
+                {/* Botón de Iniciar Sesión Google */}
+                <Button
+                    variant="outlined"
+                    fullWidth
+                    onClick={handleGoogleSignIn}
+                    sx={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        gap: 1,
+                        textTransform: "none",
+                        borderColor: "#ccc",
+                    }}
+                >
+                    <FcGoogle size={24} />
+                    Continuar con Google
+                </Button>
+
+                {/* Si ya esta registrado */}
+                <Link href="../inicio_sesion">Iniciar Sesión</Link>
+            </Box>
         </Box>
     );
 }
