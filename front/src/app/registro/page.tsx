@@ -10,15 +10,18 @@ export default function RegistroForm() {
     const {
         register,
         handleSubmit,
+        watch,
         formState: { errors },
     } = useForm();
 
     const onSubmit = async (data: any) => {
         try {
             await apiService.register(data);
-            console.log("Usuario registrado correctamente");
+
+            window.location.href = "./inicio_sesion";
+
         } catch (error) {
-            alert("Hubo un problema con el registro");
+            console.log("Hubo un problema con el registro");
         }
     };
 
@@ -61,6 +64,11 @@ export default function RegistroForm() {
                     error={!!errors.nombre}
                     fullWidth
                 />
+                {errors.nombre && (
+                    <Typography variant="body2" color="error">
+                        {String(errors.nombre.message)}
+                    </Typography>
+                )}
 
                 {/* Campo de Apellido */}
                 <TextField
@@ -70,6 +78,11 @@ export default function RegistroForm() {
                     error={!!errors.apellido}
                     fullWidth
                 />
+                {errors.apellido && (
+                    <Typography variant="body2" color="error">
+                        {String(errors.apellido.message)}
+                    </Typography>
+                )}
 
                 {/* Campo de Email */}
                 <TextField
@@ -79,6 +92,11 @@ export default function RegistroForm() {
                     error={!!errors.email}
                     fullWidth
                 />
+                {errors.email && (
+                    <Typography variant="body2" color="error">
+                        {String(errors.email.message)}
+                    </Typography>
+                )}
 
                 {/* Campo de Contraseña */}
                 <TextField
@@ -88,18 +106,33 @@ export default function RegistroForm() {
                     error={!!errors.password}
                     fullWidth
                 />
+                {errors.password && (
+                    <Typography variant="body2" color="error">
+                        {String(errors.password.message)}
+                    </Typography>
+                )}
 
                 {/* Repetir Campo de Contraseña */}
                 <TextField
                     label="Repetir Contraseña"
                     type="password"
-                    {...register("password", { required: "Las contraseñas deben ser iguales" })}
-                    error={!!errors.password}
+                    {...register("repeatPassword", { 
+                        required: "Debes repetir la contraseña",
+                        validate: value => value === watch("password") || "Las contraseñas no coinciden"
+                    })}
+                    error={!!errors.repeatPassword}
                     fullWidth
                 />
+                {errors.repeatPassword && (
+                    <Typography variant="body2" color="error">
+                        {String(errors.repeatPassword.message)}
+                    </Typography>
+                )}
 
                 {/* Botón de Enviar */}
-                <Button type="submit" variant="contained" color="primary" fullWidth>Registrarse</Button>
+                <Button type="submit" variant="contained" color="primary" fullWidth>
+                    Registrarse
+                </Button>
 
                 {/* Botón de Iniciar Sesión Google */}
                 <Button
@@ -119,7 +152,7 @@ export default function RegistroForm() {
                     Continuar con Google
                 </Button>
 
-                {/* Si ya esta registrado */}
+                {/* Si ya está registrado */}
                 <Link href="../inicio_sesion">Iniciar Sesión</Link>
             </Box>
         </Box>

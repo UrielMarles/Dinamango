@@ -7,7 +7,6 @@ export const metadata: Metadata = {
   description: "La plataforma que te ayuda con lo que necesitas",
 };
 
-// Sesion cerrada!
 export default function Home() {
   return (
     <>

@@ -2,33 +2,40 @@
 "use client";
 
 import { TextField, Button, Box, Typography, Link } from "@mui/material";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { FcGoogle } from "react-icons/fc";
 import { apiService } from "@/helper/apiService";
 
 export default function LoginForm() {
+    const [serverError, setServerError] = useState("");
+
     const {
         register,
         handleSubmit,
         formState: { errors },
+        setError
     } = useForm();
 
     const onSubmit = async (data: any) => {
+        setServerError("");
+        
         try {
             const responseData = await apiService.login(data);
             const token = responseData.token;
     
             if (token) {
                 sessionStorage.setItem("authToken", token);
-                console.log("Token guardado en sessionStorage");
-            } else {
-                console.error("No se recibió token de autenticación");
+
+                window.location.href = "./";
             }
     
-            console.log("Inicio de sesión correcto!");
-            
-        } catch (error) {
-            alert("Hubo un problema con el inicio de sesión");
+        } catch (error: any) {
+            console.error("Error al iniciar sesión:", error);
+    
+            if (error.status === 401) {
+                setError("password", { type: "manual", message: "Email o contraseña incorrectos" });
+            }
         }
     };
 
@@ -71,6 +78,11 @@ export default function LoginForm() {
                     error={!!errors.email}
                     fullWidth
                 />
+                {errors.email && (
+                    <Typography variant="body2" color="error">
+                        {String(errors.email.message)}
+                    </Typography>
+                )}
 
                 {/* Campo de Contraseña */}
                 <TextField
@@ -80,6 +92,11 @@ export default function LoginForm() {
                     error={!!errors.password}
                     fullWidth
                 />
+                {errors.password && (
+                    <Typography variant="body2" color="error">
+                        {String(errors.password.message)}
+                    </Typography>
+                )}
 
                 {/* Botón de Enviar */}
                 <Button type="submit" variant="contained" color="primary" fullWidth>Iniciar Sesión</Button>

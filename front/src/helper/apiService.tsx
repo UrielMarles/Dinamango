@@ -1,33 +1,43 @@
-import { request } from "http";
-
 const API = process.env.NEXT_PUBLIC_API;
 
 interface RequestOptions {
     method: string;
     body?: any;
+    header?: Record<string, string>;
+    includeToken?: boolean;
 }
 
 export const apiService = {
-    async request(endpoint: string, options: RequestOptions, header: Record<string, string> = {}) {
+    async request(endpoint: string, options: RequestOptions) {
         try {
+            const headers: Record<string, string> = {
+                "Content-Type": "application/json",
+                ...(options.header || {}),
+            };
+
+            if (options.includeToken) {
+                const token = sessionStorage.getItem("authToken");
+                if (token) {
+                    headers.Authorization = `Bearer ${token}`;
+                }
+            }
+
             const response = await fetch(`${API}${endpoint}`, {
                 method: options.method,
-                headers: {
-                    "Content-Type": "application/json",
-                    ...header,
-                },
+                headers,
                 body: options.body ? JSON.stringify(options.body) : undefined,
             });
 
+            const responseData = await response.json();
+
             if (!response.ok) {
-                const errorData = await response.json();
-                console.log(errorData.message);
+                throw { status: response.status, message: responseData.message || "Error desconocido" };
             }
 
-            return await response.json();
+            return responseData
 
         } catch (error) {
-            console.error(`Error en ${options.method} ${endpoint}:`, error);
+            console.error(`Error en ${options.method} ${endpoint}:`, error); // Borrar despues
             throw error;
         }
     },
@@ -42,34 +52,41 @@ export const apiService = {
     },
 
     userValidate() {
-        return this.request("/user/validate", { method: "GET" });
+        return this.request("/user/validate", { method: "GET", includeToken: true });
     },
 
     logout(data: any) {
-        return this.request("/user/logout", { method: "POST", body: data });
+        return this.request("/user/logout", { method: "POST", body: data, includeToken: true });
     },
 
     profilePicture(data: any) {
-        return this.request("/user/profile-picture", { method: "POST", body: data });
+        return this.request("/user/profile-picture", { method: "POST", body: data, includeToken: true });
     },
 
     // Tareas
-    addTareas(data: any) {
-        return this.request("/tareas", { method: "POST", body: data });
-    },
-
     getTareas() {
         return this.request("/tareas", { method: "GET" });
     },
 
+    addTareas(data: any) {
+        return this.request("/tareas", { method: "POST", body: data, includeToken: true });
+    },
+
     updateTareas(id: number, data: any) {
-        return this.request(`/tareas/${id}`, { method: "PUT", body: data });
+        return this.request(`/tareas/${id}`, { method: "PUT", body: data, includeToken: true });
     },
 
-    deleteTareas(id: number, data: any) {
-        return this.request(`/tareas/${id}`, { method: "DELETE", body: data });
+    deleteTareas(id: number) {
+        return this.request(`/tareas/${id}`, { method: "DELETE", includeToken: true });
     },
 
-    
+    // Ofertas
+    mandarOferta(id:number, data: any) {
+        return this.request(`/ofertas/${id}`, { method: "POST", body: data, includeToken: true });
+    },
+
+    getOfertas(id: number) {
+        return this.request(`/ofertas/${id}`, { method: "GET" });
+    }
 
 };
