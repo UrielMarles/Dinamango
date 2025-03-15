@@ -10,7 +10,6 @@ export const metadata: Metadata = {
 export default function Home() {
   return (
     <>
-<<<<<<< HEAD
     <main className={style.main}>
       <section className={style.contenidoInicial}>
         <div className={style.textoInicial}>
@@ -78,43 +77,6 @@ export default function Home() {
         </div>
       </section>
     </main>
-=======
-      <div className={style.header}>
-        <h1>Bienvenidos a Dinamango</h1>
-        <h3>La plataforma que te ayuda con lo que necesitas</h3>
-      </div>
-      <main className={style.container}>
-        <div className={style.card}>
-          <div className={`${style.text} ${style.left}`}>
-            <p>Emprende gratis</p>
-            <p>compartiendo tu proyecto</p>
-            <p>sin costo</p>
-          </div>
-          <div className={`${style.image} ${style.right}`}>
-            <Image
-              src="/gpt_logo.png"
-              alt="Logo de la aplicación"
-              width={450}
-              height={450}
-            />
-          </div>
-        </div>
-        <div className={style.card}>
-          <div className={`${style.image} ${style.left}`}>
-            <Image
-              src="/gpt_logo.png"
-              alt="Logo de la aplicación"
-              width={450}
-              height={450}
-            />
-          </div>
-          <div className={`${style.text} ${style.right}`}>
-            <p>Publica lo que vos quieras</p>
-            <p>en segundos</p>
-          </div>
-        </div>
-      </main>
->>>>>>> 2ef0f83c00854a1cad5e9881f0ef649c5fa7d615
     </>
   );
 }

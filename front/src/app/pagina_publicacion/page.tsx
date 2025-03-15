@@ -9,7 +9,7 @@ import api from "../../jsonPrueba/pruebaApi.json";
 interface Publicacion {
     id: number;
     titulo: string;
-    dinero: number;
+    dineroOfrecido: number;
     descripcion: string;
 }
 
@@ -21,7 +21,7 @@ function ContenidoPaginaPublicacion() {
 
     useEffect(() => {
         if (id) {
-            const pub = api.find((item) => item.id === Number(id));
+            let pub = api.find((item) => item.id === Number(id));
             setPublicacion(pub || null);
         }
     }, [id]);
@@ -39,7 +39,7 @@ function ContenidoPaginaPublicacion() {
                 width={200}
                 height={200}
             />
-            <p>Precio: ${publicacion.dinero}</p>
+            <p>Precio: ${publicacion.dineroOfrecido}</p>
             <p>{publicacion.descripcion}</p>
         </div>
     );

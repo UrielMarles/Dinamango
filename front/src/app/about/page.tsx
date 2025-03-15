@@ -20,7 +20,6 @@ export default function About() {
             <label>Conéctate con gente para hacer unas changas y ganar <span id="money">money</span> en el proceso</label>
           </div>
         </div>
-        <Image src="/gpt_logo.png" alt="Logo de la aplicación" width={450} height={450}/>
       </div>
     </main>
   );
