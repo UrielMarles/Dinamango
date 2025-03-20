@@ -4,7 +4,7 @@
 import { TextField, Button, Box, Typography, Link } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { FcGoogle } from "react-icons/fc";
-import { apiService } from "@/helper/apiService";
+import { apiHelper } from "@/helper/apiHelper";
 
 export default function RegistroForm() {
     const {
@@ -16,7 +16,7 @@ export default function RegistroForm() {
 
     const onSubmit = async (data: any) => {
         try {
-            await apiService.register(data);
+            await apiHelper.register(data);
 
             window.location.href = "./inicio_sesion";
 

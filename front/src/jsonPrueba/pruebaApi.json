@@ -11,262 +11,262 @@
     {
         "id": 2,
         "titulo": "Startup de Inteligencia Artificial",
-        "dineroOfrecido": 120000,
         "descripcion": "Desarrollo de una IA que automatiza tareas administrativas.",
         "ubicacion": "Desconocida",
         "horarioDeseado": "Flexible",
-        "fechaDeseada": "2025-12-31"
+        "fechaDeseada": "2025-12-31",
+        "dineroOfrecido": 120000
     },
     {
         "id": 3,
         "titulo": "Restaurante Submarino",
-        "dineroOfrecido": 300000,
         "descripcion": "Experiencia gastronómica única bajo el mar con vista a la vida marina.",
         "ubicacion": "Desconocida",
         "horarioDeseado": "Flexible",
-        "fechaDeseada": "2025-12-31"
+        "fechaDeseada": "2025-12-31",
+        "dineroOfrecido": 300000
     },
     {
         "id": 4,
         "titulo": "Colección de NFTs",
-        "dineroOfrecido": 50000,
         "descripcion": "Arte digital exclusivo basado en mitología griega.",
         "ubicacion": "Desconocida",
         "horarioDeseado": "Flexible",
-        "fechaDeseada": "2025-12-31"
+        "fechaDeseada": "2025-12-31",
+        "dineroOfrecido": 50000
     },
     {
         "id": 5,
         "titulo": "Caza de Tesoros en el Caribe",
-        "dineroOfrecido": 75000,
         "descripcion": "Expedición para encontrar barcos hundidos con riquezas ocultas.",
         "ubicacion": "Desconocida",
         "horarioDeseado": "Flexible",
-        "fechaDeseada": "2025-12-31"
+        "fechaDeseada": "2025-12-31",
+        "dineroOfrecido": 75000
     },
     {
         "id": 6,
         "titulo": "Resort en la Antártida",
-        "dineroOfrecido": 2500000,
         "descripcion": "Un lujoso hotel ecológico en el corazón del hielo.",
         "ubicacion": "Desconocida",
         "horarioDeseado": "Flexible",
-        "fechaDeseada": "2025-12-31"
+        "fechaDeseada": "2025-12-31",
+        "dineroOfrecido": 2500000
     },
     {
         "id": 7,
         "titulo": "Academia de Esports",
-        "dineroOfrecido": 100000,
         "descripcion": "Entrenamiento profesional para jugadores competitivos de videojuegos.",
         "ubicacion": "Desconocida",
         "horarioDeseado": "Flexible",
-        "fechaDeseada": "2025-12-31"
+        "fechaDeseada": "2025-12-31",
+        "dineroOfrecido": 100000
     },
     {
         "id": 8,
         "titulo": "Granja de Energía Solar",
-        "dineroOfrecido": 500000,
         "descripcion": "Proyecto sostenible para generar electricidad con paneles solares.",
         "ubicacion": "Desconocida",
         "horarioDeseado": "Flexible",
-        "fechaDeseada": "2025-12-31"
+        "fechaDeseada": "2025-12-31",
+        "dineroOfrecido": 500000
     },
     {
         "id": 9,
         "titulo": "Tienda de Ropa Inteligente",
-        "dineroOfrecido": 80000,
         "descripcion": "Ropa con sensores que monitorean la temperatura y la salud.",
         "ubicacion": "Desconocida",
         "horarioDeseado": "Flexible",
-        "fechaDeseada": "2025-12-31"
+        "fechaDeseada": "2025-12-31",
+        "dineroOfrecido": 80000
     },
     {
         "id": 10,
         "titulo": "Festival de Música Virtual",
-        "dineroOfrecido": 200000,
         "descripcion": "Conciertos en realidad aumentada con artistas internacionales.",
         "ubicacion": "Desconocida",
         "horarioDeseado": "Flexible",
-        "fechaDeseada": "2025-12-31"
+        "fechaDeseada": "2025-12-31",
+        "dineroOfrecido": 200000
     },
     {
         "id": 11,
         "titulo": "Cine al Aire Libre",
-        "dineroOfrecido": 50000,
         "descripcion": "Ciclo de proyecciones en parques y playas con pantalla gigante.",
         "ubicacion": "Desconocida",
         "horarioDeseado": "Flexible",
-        "fechaDeseada": "2025-12-31"
+        "fechaDeseada": "2025-12-31",
+        "dineroOfrecido": 50000
     },
     {
         "id": 12,
         "titulo": "Juego de Realidad Virtual",
-        "dineroOfrecido": 150000,
         "descripcion": "Videojuego inmersivo basado en mundos de ciencia ficción.",
         "ubicacion": "Desconocida",
         "horarioDeseado": "Flexible",
-        "fechaDeseada": "2025-12-31"
+        "fechaDeseada": "2025-12-31",
+        "dineroOfrecido": 150000
     },
     {
         "id": 13,
         "titulo": "Biblioteca Digital Global",
-        "dineroOfrecido": 90000,
         "descripcion": "Acceso ilimitado a libros y artículos de todo el mundo.",
         "ubicacion": "Desconocida",
         "horarioDeseado": "Flexible",
-        "fechaDeseada": "2025-12-31"
+        "fechaDeseada": "2025-12-31",
+        "dineroOfrecido": 90000
     },
     {
         "id": 14,
         "titulo": "Robot Asistente Doméstico",
-        "dineroOfrecido": 350000,
         "descripcion": "Un dispositivo que ayuda con tareas del hogar y asistencia personal.",
         "ubicacion": "Desconocida",
         "horarioDeseado": "Flexible",
-        "fechaDeseada": "2025-12-31"
+        "fechaDeseada": "2025-12-31",
+        "dineroOfrecido": 350000
     },
     {
         "id": 15,
         "titulo": "Turismo Espacial Económico",
-        "dineroOfrecido": 10000000,
         "descripcion": "Vuelos accesibles al espacio para turistas de todo el mundo.",
         "ubicacion": "Desconocida",
         "horarioDeseado": "Flexible",
-        "fechaDeseada": "2025-12-31"
+        "fechaDeseada": "2025-12-31",
+        "dineroOfrecido": 10000000
     },
     {
         "id": 16,
         "titulo": "Proyecto Solar",
-        "dineroOfrecido": 50000,
         "descripcion": "Instalación de paneles solares en una comunidad rural.",
         "ubicacion": "Desconocida",
         "horarioDeseado": "Flexible",
-        "fechaDeseada": "2025-12-31"
+        "fechaDeseada": "2025-12-31",
+        "dineroOfrecido": 50000
     },
     {
         "id": 17,
         "titulo": "Beca de Estudios",
-        "dineroOfrecido": 10000,
         "descripcion": "Financiamiento para estudiantes universitarios de bajos recursos.",
         "ubicacion": "Desconocida",
         "horarioDeseado": "Flexible",
-        "fechaDeseada": "2025-12-31"
+        "fechaDeseada": "2025-12-31",
+        "dineroOfrecido": 10000
     },
     {
         "id": 18,
         "titulo": "Programa de Reciclaje",
-        "dineroOfrecido": 20000,
         "descripcion": "Implementación de un sistema de reciclaje en una ciudad.",
         "ubicacion": "Desconocida",
         "horarioDeseado": "Flexible",
-        "fechaDeseada": "2025-12-31"
+        "fechaDeseada": "2025-12-31",
+        "dineroOfrecido": 20000
     },
     {
         "id": 19,
         "titulo": "Investigación Médica",
-        "dineroOfrecido": 150000,
         "descripcion": "Financiamiento para la investigación de nuevas terapias contra el cáncer.",
         "ubicacion": "Desconocida",
         "horarioDeseado": "Flexible",
-        "fechaDeseada": "2025-12-31"
+        "fechaDeseada": "2025-12-31",
+        "dineroOfrecido": 150000
     },
     {
         "id": 20,
         "titulo": "Parque Infantil",
-        "dineroOfrecido": 30000,
         "descripcion": "Construcción de un parque infantil en un barrio marginal.",
         "ubicacion": "Desconocida",
         "horarioDeseado": "Flexible",
-        "fechaDeseada": "2025-12-31"
+        "fechaDeseada": "2025-12-31",
+        "dineroOfrecido": 30000
     },
     {
         "id": 21,
         "titulo": "Capacitación Laboral",
-        "dineroOfrecido": 12000,
         "descripcion": "Cursos de formación para desempleados en nuevas tecnologías.",
         "ubicacion": "Desconocida",
         "horarioDeseado": "Flexible",
-        "fechaDeseada": "2025-12-31"
+        "fechaDeseada": "2025-12-31",
+        "dineroOfrecido": 12000
     },
     {
         "id": 22,
         "titulo": "Refugio Animal",
-        "dineroOfrecido": 25000,
         "descripcion": "Creación de un refugio para animales abandonados.",
         "ubicacion": "Desconocida",
         "horarioDeseado": "Flexible",
-        "fechaDeseada": "2025-12-31"
+        "fechaDeseada": "2025-12-31",
+        "dineroOfrecido": 25000
     },
     {
         "id": 23,
         "titulo": "Proyecto de Huertos Urbanos",
-        "dineroOfrecido": 18000,
         "descripcion": "Promoción de la agricultura urbana en zonas residenciales.",
         "ubicacion": "Desconocida",
         "horarioDeseado": "Flexible",
-        "fechaDeseada": "2025-12-31"
+        "fechaDeseada": "2025-12-31",
+        "dineroOfrecido": 18000
     },
     {
         "id": 24,
         "titulo": "Festival Cultural",
-        "dineroOfrecido": 40000,
         "descripcion": "Organización de un festival para promover la diversidad cultural.",
         "ubicacion": "Desconocida",
         "horarioDeseado": "Flexible",
-        "fechaDeseada": "2025-12-31"
+        "fechaDeseada": "2025-12-31",
+        "dineroOfrecido": 40000
     },
     {
         "id": 25,
         "titulo": "Programa de Alfabetización",
-        "dineroOfrecido": 15000,
         "descripcion": "Clases de alfabetización para adultos en comunidades rurales.",
         "ubicacion": "Desconocida",
         "horarioDeseado": "Flexible",
-        "fechaDeseada": "2025-12-31"
+        "fechaDeseada": "2025-12-31",
+        "dineroOfrecido": 15000
     },
     {
         "id": 26,
         "titulo": "Infraestructura Escolar",
-        "dineroOfrecido": 80000,
         "descripcion": "Mejora de instalaciones en escuelas públicas.",
         "ubicacion": "Desconocida",
         "horarioDeseado": "Flexible",
-        "fechaDeseada": "2025-12-31"
+        "fechaDeseada": "2025-12-31",
+        "dineroOfrecido": 80000
     },
     {
         "id": 27,
         "titulo": "Proyecto de Energía Eólica",
-        "dineroOfrecido": 200000,
         "descripcion": "Instalación de aerogeneradores en una zona costera.",
         "ubicacion": "Desconocida",
         "horarioDeseado": "Flexible",
-        "fechaDeseada": "2025-12-31"
+        "fechaDeseada": "2025-12-31",
+        "dineroOfrecido": 200000
     },
     {
         "id": 28,
         "titulo": "Biblioteca Comunitaria",
-        "dineroOfrecido": 22000,
         "descripcion": "Construcción de una biblioteca para el acceso público a libros.",
         "ubicacion": "Desconocida",
         "horarioDeseado": "Flexible",
-        "fechaDeseada": "2025-12-31"
+        "fechaDeseada": "2025-12-31",
+        "dineroOfrecido": 22000
     },
     {
         "id": 29,
         "titulo": "Programa de Salud Mental",
-        "dineroOfrecido": 35000,
         "descripcion": "Apoyo psicológico gratuito para personas en situación de vulnerabilidad.",
         "ubicacion": "Desconocida",
         "horarioDeseado": "Flexible",
-        "fechaDeseada": "2025-12-31"
+        "fechaDeseada": "2025-12-31",
+        "dineroOfrecido": 35000
     },
     {
         "id": 30,
         "titulo": "Proyecto de Conservación Ambiental",
-        "dineroOfrecido": 50000,
         "descripcion": "Protección y restauración de ecosistemas naturales.",
         "ubicacion": "Desconocida",
         "horarioDeseado": "Flexible",
-        "fechaDeseada": "2025-12-31"
+        "fechaDeseada": "2025-12-31",
+        "dineroOfrecido": 50000
     }
 ]

@@ -5,7 +5,7 @@ import { TextField, Button, Box, Typography, Link } from "@mui/material";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { FcGoogle } from "react-icons/fc";
-import { apiService } from "@/helper/apiService";
+import { apiHelper } from "@/helper/apiHelper";
 
 export default function LoginForm() {
     const [serverError, setServerError] = useState("");
@@ -19,27 +19,27 @@ export default function LoginForm() {
 
     const onSubmit = async (data: any) => {
         setServerError("");
-        
+
         try {
-            const responseData = await apiService.login(data);
+            const responseData = await apiHelper.login(data);
             const token = responseData.token;
-    
+
             if (token) {
                 sessionStorage.setItem("authToken", token);
 
                 window.location.href = "./";
             }
-    
+
         } catch (error: any) {
             console.error("Error al iniciar sesión:", error);
-    
+
             if (error.status === 401) {
                 setError("password", { type: "manual", message: "Email o contraseña incorrectos" });
             }
         }
     };
 
-    const handleGoogleSignIn = async () => {
+    const handleGoogleSignIn = async (data: any) => {
         console.log("Iniciar sesión con Google");
     };
 
@@ -114,11 +114,11 @@ export default function LoginForm() {
                         textTransform: "none",
                         borderColor: "#ccc",
                     }}
-                    >
+                >
                     <FcGoogle size={24} />
                     Continuar con Google
                 </Button>
-                
+
                 {/* Si no esta registrado */}
                 <Link href="../registro">Registrarse</Link>
             </Box>

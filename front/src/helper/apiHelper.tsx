@@ -3,22 +3,23 @@ const API = process.env.NEXT_PUBLIC_API;
 interface RequestOptions {
     method: string;
     body?: any;
-    header?: Record<string, string>;
+    headers?: Record<string, string>;
     includeToken?: boolean;
 }
 
-export const apiService = {
+export const apiHelper = {
     async request(endpoint: string, options: RequestOptions) {
         try {
             const headers: Record<string, string> = {
                 "Content-Type": "application/json",
-                ...(options.header || {}),
+                ...(options.headers || {}),
             };
 
             if (options.includeToken) {
                 const token = sessionStorage.getItem("authToken");
+
                 if (token) {
-                    headers.Authorization = `Bearer ${token}`;
+                    headers.Authorization = token;
                 }
             }
 
@@ -33,6 +34,8 @@ export const apiService = {
             if (!response.ok) {
                 throw { status: response.status, message: responseData.message || "Error desconocido" };
             }
+
+            console.log(responseData);
 
             return responseData
 
@@ -81,7 +84,7 @@ export const apiService = {
     },
 
     // Ofertas
-    mandarOferta(id:number, data: any) {
+    mandarOferta(id: number, data: any) {
         return this.request(`/ofertas/${id}`, { method: "POST", body: data, includeToken: true });
     },
 

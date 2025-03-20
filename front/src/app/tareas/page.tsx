@@ -3,7 +3,7 @@
 import { useState, useEffect, use } from "react";
 import Image from "next/image";
 import styles from "./tareas.module.css";
-import { apiService } from "@/helper/apiService";
+import { apiService } from "@/helper/apiHelper";
 
 interface Publicacion {
     titulo: string;
