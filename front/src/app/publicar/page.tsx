@@ -1,11 +1,35 @@
 /* eslint-disable */
 "use client";
 
-import { TextField, Button, Box, Typography, InputAdornment } from "@mui/material";
+import { TextField, Button, Box, Typography, InputAdornment, createTheme } from "@mui/material";
 import Image from "next/image";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { apiHelper } from "@/helper/apiHelper";
+
+const estiloTitulo = (color: string, fontSize: string, fontWeight: string, letterSpacing: string) => ({
+    color: color,
+    fontSize: fontSize,
+    fontWeight: fontWeight,
+    letterSpacing: letterSpacing,
+});
+
+const estiloLabel = (fontSize: string, letterSpacing: string) => ({
+    fontSize: fontSize,
+    letterSpacing: letterSpacing,
+});
+
+const estiloInput = (color: string, fontSize: string, fontWeight: string) => ({
+    "& input": {
+        color: color,
+        fontSize: fontSize,
+        fontWeight: fontWeight,
+        "&::placeholder": {
+            color: "black",
+            fontSize: "18px",
+        }
+    }
+});
 
 export default function TareasForm() {
     const sectionsFields = [
@@ -110,35 +134,47 @@ export default function TareasForm() {
     const sections = [
         // Título y Fecha
         <>
-            <Typography>Empecemos con lo básico.</Typography>
+            <Typography
+                style={estiloTitulo("#0acc0a", "30px", "900", "-2px")}
+            >
+                Empecemos con lo básico.</Typography>
             <br />
-            <Typography>En pocas palabras ¿Qué necesitas que se haga?</Typography>
+            <Typography
+                style={estiloLabel("20px", "-1px")}
+            >
+                En pocas palabras ¿Qué necesitas que se haga?
+            </Typography>
             <TextField
                 placeholder="Ejemplo: Pintar mi casa"
                 type="text"
                 fullWidth
                 {...register("titulo", { required: "El título es obligatorio" })}
                 error={!!errors.titulo}
+                sx={estiloInput("#757575", "18px", "500")}
             />
             {errors.titulo && <Typography color="error">El título es obligatorio</Typography>}
 
-            <Typography>¿Cuándo necesitas que se haga esto?</Typography>
+            <Typography
+                style={estiloLabel("20px", "-1px")}
+            >
+                ¿Cuándo necesitas que se haga esto?
+            </Typography>
             <Box display="flex" gap={2}>
                 <Button
-                    variant={fechaSeleccionada === "fecha" ? "contained" : "outlined"}
                     onClick={() => handleChangeFecha("fecha")}
+                    variant={fechaSeleccionada === "fecha" ? "contained" : "outlined"}
                 >
                     En la fecha
                 </Button>
                 <Button
-                    variant={fechaSeleccionada === "antes" ? "contained" : "outlined"}
                     onClick={() => handleChangeFecha("antes")}
+                    variant={fechaSeleccionada === "antes" ? "contained" : "outlined"}
                 >
                     Antes de la fecha
                 </Button>
                 <Button
-                    variant={fechaSeleccionada === "flexible" ? "contained" : "outlined"}
                     onClick={() => handleChangeFecha("flexible")}
+                    variant={fechaSeleccionada === "flexible" ? "contained" : "outlined"}
                 >
                     Soy flexible
                 </Button>
@@ -149,23 +185,27 @@ export default function TareasForm() {
 
             <br />
 
-            <Typography>¿En qué horario?</Typography>
+            <Typography
+                style={estiloLabel("20px", "-1px")}
+            >
+                ¿En qué horario?
+            </Typography>
             <Box display="flex" justifyContent={"center"} gap={2} marginTop={2}>
                 <Button
-                    variant={horaSeleccionada === "mañana" ? "contained" : "outlined"}
                     onClick={() => handleChangeHorario("mañana")}
+                    variant={horaSeleccionada === "mañana" ? "contained" : "outlined"}
                 >
                     Mañana
                 </Button>
                 <Button
-                    variant={horaSeleccionada === "tarde" ? "contained" : "outlined"}
                     onClick={() => handleChangeHorario("tarde")}
+                    variant={horaSeleccionada === "tarde" ? "contained" : "outlined"}
                 >
                     Tarde
                 </Button>
                 <Button
-                    variant={horaSeleccionada === "noche" ? "contained" : "outlined"}
                     onClick={() => handleChangeHorario("noche")}
+                    variant={horaSeleccionada === "noche" ? "contained" : "outlined"}
                 >
                     Noche
                 </Button>
@@ -176,26 +216,39 @@ export default function TareasForm() {
 
         // Ubicacion
         <>
-            <Typography>Dinos dónde</Typography>
+            <Typography
+                sx={{
+                    fontWeight: "900",
+                    fontSize: "30px",
+                    letterSpacing: "-2px",
+                    color: "#0acc0a",
+                }}
+            >
+                Dinos dónde
+            </Typography>
             <br />
-            <Typography>¿Dónde necesitas que se haga esto?</Typography>
+            <Typography
+                style={estiloLabel("20px", "-1px")}
+            >
+                ¿Dónde necesitas que se haga esto?
+            </Typography>
 
             <Box display="flex" gap={2}>
                 <Button
-                    variant={ubicacionTipo === "casa" ? "contained" : "outlined"}
                     onClick={() => {
                         setUbicacionTipo("casa");
                         setValue("ubicacionTipo", "casa", { shouldValidate: true });
                     }}
+                    variant={ubicacionTipo === "casa" ? "contained" : "outlined"}
                 >
                     En mi casa
                 </Button>
                 <Button
-                    variant={ubicacionTipo === "online" ? "contained" : "outlined"}
                     onClick={() => {
                         setUbicacionTipo("online");
                         setValue("ubicacionTipo", "online", { shouldValidate: true });
                     }}
+                    variant={ubicacionTipo === "online" ? "contained" : "outlined"}
                 >
                     En línea
                 </Button>
@@ -210,6 +263,7 @@ export default function TareasForm() {
                         fullWidth
                         {...register("ubicacion", { required: "La ubicación es obligatoria" })}
                         error={!!errors.ubicacion}
+                        sx={estiloInput("#757575", "18px", "500")}
                     />
                     {errors.ubicacion && <Typography color="error">La ubicación es obligatoria</Typography>}
                 </Box>
@@ -221,9 +275,17 @@ export default function TareasForm() {
 
         // Detalles
         <>
-            <Typography>Proporcionar más detalles</Typography>
+            <Typography
+                style={estiloTitulo("#0acc0a", "30px", "900", "-2px")}
+            >
+                Proporcionar más detalles
+            </Typography>
             <br />
-            <Typography>¿Cuáles son los detalles?</Typography>
+            <Typography
+                style={estiloLabel("20px", "-1px")}
+            >
+                ¿Cuáles son los detalles?
+            </Typography>
             <TextField
                 placeholder="Escribe un resumen de los detalles clave"
                 multiline
@@ -232,10 +294,34 @@ export default function TareasForm() {
                 fullWidth
                 {...register("descripcion", { required: "La descripción es obligatoria" })}
                 error={!!errors.descripcion}
+                sx={{
+                    "& .MuiInputBase-input": {
+                        color: "#757575",
+                        fontSize: "18px",
+                        fontWeight: 500,
+                        "&::placeholder": {
+                            color: "black",
+                            fontSize: "18px",
+                        },
+                    },
+                    "& .MuiInputBase-inputMultiline": {
+                        color: "#757575",
+                        fontSize: "18px",
+                        fontWeight: 500,
+                        "&::placeholder": {
+                            color: "black",
+                            fontSize: "18px",
+                        },
+                    }
+                }}
             />
             {errors.descripcion && <Typography color="error">Seleccione una descripcion</Typography>}
 
-            <Typography>Añadir imágenes <span>(opcional)</span></Typography>
+            <Typography
+                style={estiloLabel("20px", "-1px")}
+            >
+                Añadir imágenes <span style={{ fontSize: "12px" }}>(opcional)</span>
+            </Typography>
             <TextField
                 type="file"
                 {...register("imagenes")}
@@ -244,9 +330,17 @@ export default function TareasForm() {
 
         // Presupuesto
         <>
-            <Typography>Sugiere tu presupuesto</Typography>
+            <Typography
+                style={estiloTitulo("#0acc0a", "30px", "900", "-2px")}
+            >
+                Sugiere tu presupuesto
+            </Typography>
             <br />
-            <Typography>¿Cuál es tu presupuesto?</Typography>
+            <Typography
+                style={estiloLabel("20px", "-1px")}
+            >
+                ¿Cuál es tu presupuesto?
+            </Typography>
             <Typography>Siempre puedes negociar el precio final.</Typography>
             <TextField
                 fullWidth
@@ -292,7 +386,18 @@ export default function TareasForm() {
                         boxShadow: 2,
                     }}
                 >
-                    <Typography variant="h6" mb={2}>Publicar Tarea</Typography>
+                    <Typography
+                        variant="h5"
+                        mb={2}
+                        sx={{
+                            textAlign: "center",
+                            fontWeight: "bold",
+                        }}
+                    >
+                        <span style={{ borderBottom: "2px solid black" }}>
+                            Publicar Tarea
+                        </span>
+                    </Typography>
                     {["Título y Fecha", "Ubicación", "Detalles", "Presupuesto"].map((label, index) => (
                         <Typography
                             key={index}
@@ -301,6 +406,7 @@ export default function TareasForm() {
                                 textAlign: "left",
                                 padding: 0,
                                 textTransform: "none",
+                                fontSize: "18px",
                                 textDecoration: currentSection === index ? "underline" : "none",
                                 color: currentSection === index ? "#1976d2" : "inherit",
                                 fontWeight: currentSection === index ? "bold" : "normal",
@@ -362,4 +468,4 @@ export default function TareasForm() {
     );
 }
 
-console.log(sessionStorage.getItem("authToken"));
+// PANTALLA < 836px quitar el sidebar

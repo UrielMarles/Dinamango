@@ -25,6 +25,7 @@ export default function Home() {
           <Image className={style.img} src="/img/emprendedor.webp" alt="emprendedor" width={500} height={500} objectFit="cover" />
         </div>
       </section>
+      
       <section className={style.contenidoMitad}>
       <div>
           <Image className={style.img} src="/img/hombreFeliz.webp" alt="Logo de la aplicación" width={450} height={450} objectFit="cover" />
@@ -47,6 +48,7 @@ export default function Home() {
           <a href="./registro"><button>Publica tu Proyecto</button></a>
         </div>
       </section>
+
       <section className={style.contenidoFinal}>
         <div className={style.textoFinal}>
           <p>Se tu propio jefe</p>

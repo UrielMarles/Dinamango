@@ -3,7 +3,7 @@
 import { useState, useEffect, use } from "react";
 import Image from "next/image";
 import styles from "./tareas.module.css";
-import { apiService } from "@/helper/apiHelper";
+import { apiHelper } from "@/helper/apiHelper";
 
 interface Publicacion {
     titulo: string;
@@ -20,7 +20,7 @@ export default function Tareas() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const data: Publicacion[] = await apiService.getTareas();
+                const data: Publicacion[] = await apiHelper.getTareas();
                 setPublicaciones(data);
                 
             } catch (error) {
