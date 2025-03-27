@@ -1,7 +1,8 @@
 /* eslint-disable */
 "use client";
 
-import { TextField, Button, Box, Typography, Link } from "@mui/material";
+import { TextField, Button, Box, Typography, Link, InputAdornment, IconButton } from "@mui/material";
+import Image from "next/image";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { FcGoogle } from "react-icons/fc";
@@ -9,6 +10,7 @@ import { apiHelper } from "@/helper/apiHelper";
 
 export default function LoginForm() {
     const [serverError, setServerError] = useState("");
+    const [showPassword, setShowPassword] = useState(false);
 
     const {
         register,
@@ -22,13 +24,14 @@ export default function LoginForm() {
 
         try {
             const responseData = await apiHelper.login(data);
+
             const token = responseData.token;
 
             if (token) {
                 sessionStorage.setItem("authToken", token);
-
-                window.location.href = "./";
             }
+
+            window.location.href = "/";
 
         } catch (error: any) {
             console.error("Error al iniciar sesión:", error);
@@ -87,10 +90,24 @@ export default function LoginForm() {
                 {/* Campo de Contraseña */}
                 <TextField
                     label="Contraseña"
-                    type="password"
+                    type={showPassword ? "text" : "password"}
                     {...register("password", { required: "La contraseña es obligatoria" })}
                     error={!!errors.password}
                     fullWidth
+                    InputProps={{
+                        endAdornment: (
+                            <InputAdornment position="end">
+                                <IconButton onClick={() => setShowPassword(!showPassword)} edge="end">
+                                    <Image
+                                        src={showPassword ? "/icons/openEye.png" : "/icons/closeEye.png"}
+                                        alt={showPassword ? "Ojo abierto" : "Ojo cerrado"}
+                                        width={30}
+                                        height={30}
+                                    />
+                                </IconButton>
+                            </InputAdornment>
+                        )
+                    }}
                 />
                 {errors.password && (
                     <Typography variant="body2" color="error">

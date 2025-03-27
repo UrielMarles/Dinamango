@@ -1,12 +1,17 @@
 /* eslint-disable */
 "use client";
 
-import { TextField, Button, Box, Typography, Link } from "@mui/material";
+import { TextField, Button, Box, Typography, Link, InputAdornment, IconButton } from "@mui/material";
+import Image from "next/image";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { FcGoogle } from "react-icons/fc";
 import { apiHelper } from "@/helper/apiHelper";
 
 export default function RegistroForm() {
+    const [showPassword, setShowPassword] = useState(false);
+    const [showRepeatPassword, setshowRepeatPassword] = useState(false);
+
     const {
         register,
         handleSubmit,
@@ -101,10 +106,24 @@ export default function RegistroForm() {
                 {/* Campo de Contraseña */}
                 <TextField
                     label="Contraseña"
-                    type="password"
+                    type={showPassword ? "text" : "password"}
                     {...register("password", { required: "La contraseña es obligatoria" })}
                     error={!!errors.password}
                     fullWidth
+                    InputProps={{
+                        endAdornment: (
+                            <InputAdornment position="end">
+                                <IconButton onClick={() => setShowPassword(!showPassword)} edge="end">
+                                    <Image
+                                        src={showPassword ? "/icons/openEye.png" : "/icons/closeEye.png"}
+                                        alt={showPassword ? "Ojo abierto" : "Ojo cerrado"}
+                                        width={30}
+                                        height={30}
+                                    />
+                                </IconButton>
+                            </InputAdornment>
+                        )
+                    }}
                 />
                 {errors.password && (
                     <Typography variant="body2" color="error">
@@ -115,13 +134,27 @@ export default function RegistroForm() {
                 {/* Repetir Campo de Contraseña */}
                 <TextField
                     label="Repetir Contraseña"
-                    type="password"
-                    {...register("repeatPassword", { 
+                    type={showRepeatPassword ? "text" : "password"}
+                    {...register("repeatPassword", {
                         required: "Debes repetir la contraseña",
                         validate: value => value === watch("password") || "Las contraseñas no coinciden"
                     })}
                     error={!!errors.repeatPassword}
                     fullWidth
+                    InputProps={{
+                        endAdornment: (
+                            <InputAdornment position="end">
+                                <IconButton onClick={() => setshowRepeatPassword(!showRepeatPassword)} edge="end">
+                                    <Image
+                                        src={showRepeatPassword ? "/icons/openEye.png" : "/icons/closeEye.png"}
+                                        alt={showRepeatPassword ? "Ojo abierto" : "Ojo cerrado"}
+                                        width={30}
+                                        height={30}
+                                    />
+                                </IconButton>
+                            </InputAdornment>
+                        )
+                    }}
                 />
                 {errors.repeatPassword && (
                     <Typography variant="body2" color="error">

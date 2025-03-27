@@ -1,16 +1,20 @@
 // app/layout.tsx
+"use client";
+
 import '../styles/globals.css';
 import Navbar from '../components/navbar/navbar'; // Importa tu componente Navbar
 import Footer from '../components/footer/footer'; // Importa tu componente Footer
-import { ReactNode } from 'react';
-
-export const metadata = {
-  title: 'Dinamango',
-  description: 'Aplicación Next.js con barra de navegación adaptable',
-};
+import { ReactNode, useEffect, useState } from 'react';
 
 export default function RootLayout({ children }: { children: ReactNode }) {
-  const isLoggedIn = false;
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const token = sessionStorage.getItem('authToken');
+
+    setIsLoggedIn(!!token);
+  }, []);
+
   return (
     <html lang="en">
       <body>

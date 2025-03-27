@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, use } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import styles from "./tareas.module.css";
 import { apiHelper } from "@/helper/apiHelper";

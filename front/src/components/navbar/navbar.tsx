@@ -46,21 +46,21 @@ export default function Navbar({ isLoggedIn }: { isLoggedIn: boolean }) {
         <div className={styles.navbarLinks}>
           {(isLoggedIn
             ? [
-                { label: "Búsqueda", link: "/tareas" },
-                { label: "Contrata", link: "/contrata" },
-                { label: "Categorías", link: "/categorias" },
-                { label: "Soporte", link: "/soporte" },
-                { label: "Mensajes", link: "/mensajes" },
-                { label: "Perfil", link: "/perfil" },
-              ]
+              { label: "Búsqueda", link: "/tareas" },
+              { label: "Contrata", link: "/contrata" },
+              { label: "Categorías", link: "/categorias" },
+              { label: "Soporte", link: "/soporte" },
+              { label: "Mensajes", link: "/mensajes" },
+              { label: "Perfil", link: "/perfil" },
+            ]
             : [
-                { img: "/sin_fondo_blanco.png", label: "Inicio", link: "/" }, //
-                { label: "Publicar tarea", link: "/publicar" },
-                { label: "Ver tareas", link: "/tareas" }, //
-                { label: "Cómo Funciona", link: "/about" }, //
-                { label: "Registrarte", link: "/registro" }, //
-                { label: "Iniciar sesión", link: "/inicio_sesion" }, //
-              ]
+              { img: "/sin_fondo_blanco.png", label: "Inicio", link: "/" },
+              { label: "Publicar tarea", link: "/publicar" },
+              { label: "Ver tareas", link: "/tareas" },
+              { label: "Cómo Funciona", link: "/about" },
+              { label: "Registrarte", link: "/registro" },
+              { label: "Iniciar sesión", link: "/inicio_sesion" },
+            ]
           ).map((option, index) => (
             <Link key={index} href={option.link} className={styles.link}>
               {option.img ? (
@@ -69,7 +69,7 @@ export default function Navbar({ isLoggedIn }: { isLoggedIn: boolean }) {
                 option.label
               )}
             </Link>
-        ))}
+          ))}
         </div>
       )}
     </nav>

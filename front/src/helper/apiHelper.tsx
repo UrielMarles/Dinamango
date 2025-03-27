@@ -35,8 +35,6 @@ export const apiHelper = {
                 throw { status: response.status, message: responseData.message || "Error desconocido" };
             }
 
-            console.log(responseData);
-
             return responseData
 
         } catch (error) {
@@ -54,7 +52,7 @@ export const apiHelper = {
         return this.request("/user/login", { method: "POST", body: data });
     },
 
-    userValidate() {
+    userValidate(data: any) {
         return this.request("/user/validate", { method: "GET", includeToken: true });
     },
 
