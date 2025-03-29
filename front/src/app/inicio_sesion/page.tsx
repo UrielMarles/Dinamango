@@ -53,7 +53,7 @@ export default function LoginForm() {
                 justifyContent: "center",
                 alignItems: "center",
                 flex: 1,
-                minHeight: "80vh",
+                minHeight: "70vh",
             }}
         >
             <Box

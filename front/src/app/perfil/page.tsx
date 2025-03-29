@@ -67,6 +67,7 @@ export default function Perfil() {
                 <h3>Email: {profileData?.email}</h3>
                 <h3>Nombre: {profileData?.nombre}</h3>
                 <h3>Apellido: {profileData?.apellido}</h3>
+                {profileData?.role === "admin" ? <h3>Rol: Administrador</h3>: ""}
             </div>
 
             <div>

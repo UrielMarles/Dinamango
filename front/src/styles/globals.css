@@ -1,21 +1,20 @@
-body, h1, p, ul, li, a, button {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: Arial, sans-serif;
-  position: relative;
-}
-
-body, html {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
+:root {
+  --verde: #1ADB1A;
+  --color-fondo: #FFFFFF;
+  --color-secundario: #56A3A6;
+  --color-texto: #212121;
+  --color-contraste: #F694C1;
+  --color-oscuro: #153B50;
 }
 
 body {
-  background-color: #f0f0f0;
-  color: #333;
   margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-fondo);
 }
 
 .main-content {
@@ -23,8 +22,8 @@ body {
 }
 
 .btn-primary {
-  background-color: #0070f3;
-  color: white;
+  background-color: var(--color-oscuro);
+  color: var(--color-fondo);
   border: none;
   padding: 10px 15px;
   border-radius: 5px;
@@ -34,16 +33,5 @@ body {
 }
 
 .btn-primary:hover {
-  background-color: #005bb5;
-}
-
-#money {
-  color: #008000;
-  font-size: larger;
-}
-
-@media (max-width: 768px) {
-  #footer {
-    display: none;
-  }
-}
+  background-color: var(--color-secundario);
+} 

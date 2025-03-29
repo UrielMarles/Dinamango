@@ -20,8 +20,6 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       <body>
         <Navbar isLoggedIn={isLoggedIn} />
         <main className="main-content">{children}</main>
-        <br></br>
-        <br></br>
         <Footer />
       </body>
     </html>

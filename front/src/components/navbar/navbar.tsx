@@ -46,8 +46,9 @@ export default function Navbar({ isLoggedIn }: { isLoggedIn: boolean }) {
         <div className={styles.navbarLinks}>
           {(isLoggedIn
             ? [
+              { img: "/sin_fondo_blanco.png", label: "Inicio", link: "/" },
               { label: "Búsqueda", link: "/tareas" },
-              { label: "Contrata", link: "/contrata" },
+              { label: "Contrata", link: "/publicar" },
               { label: "Categorías", link: "/categorias" },
               { label: "Soporte", link: "/soporte" },
               { label: "Mensajes", link: "/mensajes" },

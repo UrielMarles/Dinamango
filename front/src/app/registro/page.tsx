@@ -41,7 +41,7 @@ export default function RegistroForm() {
                 justifyContent: "center",
                 alignItems: "center",
                 flex: 1,
-                minHeight: "80vh",
+                minHeight: "80vh"
             }}
         >
             <Box
