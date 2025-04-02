@@ -1,0 +1,101 @@
+.main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 30px;
+}
+
+.contenedorTitle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+}
+
+.title {
+    color: black;
+    font-family: 'Nehue Machina', sans-serif;
+    font-size: 115px;
+    width: 50%;
+    text-align: center;
+    margin-right: 80px;
+    margin-top: 10px;
+}
+
+.imgUno {
+    width: 100%;
+    height: 100%;
+    align-items: right;
+}
+
+.interes {
+    width: 50%;
+    position: relative;
+    font-size: 30px;
+    margin-top: -80px;
+}
+
+.interes button {
+    background-color: var(--verde);
+    color: black;
+    font-weight: bold;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 8px;
+}
+
+.interes button:hover,
+.btnPublicar:hover,
+.btnGanar:hover {
+    background-color: var(--color-secundario);
+    color: black;
+}
+
+.seccionDos {
+    display: flex;
+    flex-direction: row;
+}
+
+.oportunidad {
+    width: 100%;
+    font-size: 30px;
+    margin-top: -45px;
+}
+
+.btnPublicar,
+.btnGanar {
+    background-color: var(--verde);
+    color: black;
+    font-weight: bold;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 8px;
+    display: block;
+    margin: 0 auto;
+}
+
+.seccionTres {
+    display: flex;
+    flex-direction: row;
+}
+
+.propioJefe {
+    width: 100%;
+    font-size: 30px;
+}
+
+.imgTres {
+    width: 50%;
+    height: 50%;
+}
