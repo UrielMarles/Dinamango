@@ -7,15 +7,11 @@ import { useState, useEffect } from "react";
 import { apiHelper } from "@/helper/apiHelper";
 import { useSession, signOut } from "next-auth/react";
 
-const token = sessionStorage.getItem("authToken");
+// const token = sessionStorage.getItem("authToken");
 
 const getProfile = async () => {
     try {
-        if (!token) {
-            return null;
-        }
-
-        const datosPerfil = await apiHelper.userValidate(token);
+        const datosPerfil = await apiHelper.userValidate();
 
         if (!datosPerfil) {
             return null;

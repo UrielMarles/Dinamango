@@ -122,8 +122,41 @@ namespace MangoDB.Controllers
             return Ok(tareas);
         }
 
-    }
+        [HttpGet("user")]
+        public async Task<IActionResult> GetUserTareas([FromHeader(Name = "Authorization")] string token)
+        {
+            var user = await _userService.ValidateToken(token);
+            if (user == null)
+            {
+                return Unauthorized(new { message = "Token inválido" });
+            }
 
+            var tareas = await _context.Tareas
+                .Where(t => t.IdCreador == user.Id)
+                .Select(t => new
+                {
+                    t.Id,
+                    t.Titulo,
+                    t.Descripcion,
+                    t.Ubicacion,
+                    t.FechaPublicacion,
+                    t.HorarioDeseado,
+                    t.FechaDeseada,
+                    t.DineroOfrecido,
+                    t.Ofertas
+                })
+                .ToListAsync();
+
+            if (tareas == null || tareas.Count == 0)
+            {
+                return NotFound(new { message = "No se encontraron tareas para este usuario." });
+            }
+            else
+            {
+                return Ok(tareas);
+            }
+        }
+    }
 }
 
 

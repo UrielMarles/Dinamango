@@ -49,8 +49,8 @@ export default function Navbar({ isLoggedIn }: { isLoggedIn: boolean }) {
               { img: "/sin_fondo_blanco.png", label: "Inicio", link: "/" },
               { label: "Búsqueda", link: "/tareas" },
               { label: "Contrata", link: "/publicar" },
-              { label: "Categorías", link: "/categorias" },
               { label: "Soporte", link: "/soporte" },
+              { label: "Mis Tareas", link: "/mis_tareas" },
               { label: "Mensajes", link: "/mensajes" },
               { label: "Perfil", link: "/perfil" },
             ]

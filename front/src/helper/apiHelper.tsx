@@ -1,3 +1,5 @@
+import { get } from "http";
+
 const API = process.env.NEXT_PUBLIC_API;
 
 interface RequestOptions {
@@ -52,7 +54,7 @@ export const apiHelper = {
         return this.request("/user/login", { method: "POST", body: data });
     },
 
-    userValidate(data: any) {
+    userValidate() {
         return this.request("/user/validate", { method: "GET", includeToken: true });
     },
 
@@ -67,6 +69,10 @@ export const apiHelper = {
     // Tareas
     getTareas() {
         return this.request("/tareas", { method: "GET" });
+    },
+
+    getUserTareas() {
+        return this.request(`/tareas/user`, { method: "GET", includeToken: true });
     },
 
     addTareas(data: any) {
