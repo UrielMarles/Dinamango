@@ -47,15 +47,13 @@ export default function LoginForm() {
 
     const handleGoogleSignIn = async () => {
         try {
-            await signIn("google", { redirect: false });
+            await signIn("google", { callbackUrl: "/" });
 
             if (session?.user) {
                 const token = `${session.user.email}-${session.user.name}-${Date.now()}`;
 
                 sessionStorage.setItem("authToken", token);
             }
-
-            window.location.href = "/";
         } catch (error) {
             console.error("Error al iniciar sesión con Google:", error);
         }

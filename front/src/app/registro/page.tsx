@@ -34,19 +34,19 @@ export default function RegistroForm() {
     const { data: session } = useSession();
 
     const handleGoogleSignIn = async () => {
-        try {
-            await signIn("google", { redirect: false });
+        // try {
+        //     await signIn("google", { redirect: false });
 
-            if (session?.user) {
-                const token = `${session.user.email}-${session.user.name}-${Date.now()}`;
+        //     if (session?.user) {
+        //         const token = `${session.user.email}-${session.user.name}-${Date.now()}`;
 
-                sessionStorage.setItem("authToken", token);
-            }
+        //         sessionStorage.setItem("authToken", token);
+        //     }
 
-            window.location.href = "/";
-        } catch (error) {
-            console.error("Error al iniciar sesión con Google:", error);
-        }
+        //     window.location.href = "/";
+        // } catch (error) {
+        //     console.error("Error al iniciar sesión con Google:", error);
+        // }
     };
 
     return (
