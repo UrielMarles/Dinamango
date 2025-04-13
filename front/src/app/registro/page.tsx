@@ -7,6 +7,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { FcGoogle } from "react-icons/fc";
 import { apiHelper } from "@/helper/apiHelper";
+import { signIn, useSession } from "next-auth/react";
 
 export default function RegistroForm() {
     const [showPassword, setShowPassword] = useState(false);
@@ -30,8 +31,22 @@ export default function RegistroForm() {
         }
     };
 
+    const { data: session } = useSession();
+
     const handleGoogleSignIn = async () => {
-        console.log("Registrarse con Google");
+        try {
+            await signIn("google", { redirect: false });
+
+            if (session?.user) {
+                const token = `${session.user.email}-${session.user.name}-${Date.now()}`;
+
+                sessionStorage.setItem("authToken", token);
+            }
+
+            window.location.href = "/";
+        } catch (error) {
+            console.error("Error al iniciar sesión con Google:", error);
+        }
     };
 
     return (

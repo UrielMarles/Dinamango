@@ -211,7 +211,7 @@ export default function TareasForm() {
                 </Button>
             </Box>
             <input type="hidden" {...register("horarioDeseado", { required: "Seleccione un horario" })} />
-            {errors.fechaDeseada && <Typography color="error">Seleccione una fecha</Typography>}
+            {errors.fechaDeseada && <Typography color="error">Seleccione un horario</Typography>}
         </>,
 
         // Ubicacion

@@ -5,23 +5,33 @@ import { Button } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { useState, useEffect } from "react";
 import { apiHelper } from "@/helper/apiHelper";
+import { useSession, signOut } from "next-auth/react";
 
 const token = sessionStorage.getItem("authToken");
 
 const getProfile = async () => {
     try {
+        if (!token) {
+            return null;
+        }
+
         const datosPerfil = await apiHelper.userValidate(token);
 
-        return datosPerfil;
-
-    } catch (error: any) {
-        console.error("Error al obtener perfil:", error);
-
+        if (!datosPerfil) {
+            return null;
+        }
+        else {
+            return datosPerfil;
+        }
+    }
+    catch (err) {
         return null;
     }
 }
 
 export default function Perfil() {
+    const { data: session } = useSession();
+
     const {
         handleSubmit,
     } = useForm();
@@ -38,7 +48,12 @@ export default function Perfil() {
         const fetchProfile = async () => {
             const data = await getProfile();
 
-            setProfileData(data);
+            if (!data) {
+                return null;
+            }
+            else {
+                setProfileData(data);
+            }
         };
 
         fetchProfile();
@@ -46,9 +61,13 @@ export default function Perfil() {
 
     const onSubmit = (data: any) => {
         try {
+            sessionStorage.removeItem("authToken");
+
             apiHelper.logout(data);
 
-            sessionStorage.removeItem("authToken");
+            if (session?.user?.email) {
+                signOut( { callbackUrl: "./inicio_sesion" } );
+            }
 
             window.location.href = "./inicio_sesion";
 
@@ -64,10 +83,9 @@ export default function Perfil() {
             </div>
 
             <div>
-                <h3>Email: {profileData?.email}</h3>
-                <h3>Nombre: {profileData?.nombre}</h3>
-                <h3>Apellido: {profileData?.apellido}</h3>
-                {profileData?.role === "admin" ? <h3>Rol: Administrador</h3>: ""}
+                {profileData?.email ? <h3>Email: {profileData?.email}</h3> : <h3>Email: {session?.user?.email}</h3>}
+                {profileData?.nombre ? <h3>Nombre: {profileData?.nombre} {profileData?.apellido}</h3> : <h3>Nombre: {session?.user?.name}</h3>}
+                {profileData?.role === "admin" ? <h3>Rol: Administrador</h3> : ""}
             </div>
 
             <div>

@@ -6,6 +6,7 @@ import styles from "./tareas.module.css";
 import { apiHelper } from "@/helper/apiHelper";
 
 interface Publicacion {
+    id: string;
     titulo: string;
     descripcion: string;
     ubicacion: string;
@@ -22,30 +23,29 @@ export default function Tareas() {
             try {
                 const data: Publicacion[] = await apiHelper.getTareas();
                 setPublicaciones(data);
-                
+
             } catch (error) {
                 console.error("Error al obtener publicaciones:", error);
             }
         };
-    
+
         fetchData();
     }, []);
 
     return (
         <>
-        <h1>Ver Tareas</h1>
-        <main>
-            {publicaciones.map((publicacion, index) => (
-                <div key={index} className={styles.container}>
-                    <div className={styles.poster}>
-                        <Image
-                            src="/gpt_logo.png"
-                            alt="Logo de la aplicación"
-                            width={200}
-                            height={200}
-                        />
-                        <div className={styles.titulo}>
-                            <div>
+            <h1>Ver Tareas</h1>
+            <main>
+                {publicaciones.map((publicacion, index) => (
+                    <div key={index} className={styles.container}>
+                        <div className={styles.poster}>
+                            <Image
+                                src="/gpt_logo.png"
+                                alt="Logo de la aplicación"
+                                width={200}
+                                height={200}
+                            />
+                            <div className={styles.titulo}>
                                 <p>Titulo: {publicacion.titulo}</p>
                                 <p>Descripcion: {publicacion.descripcion}</p>
                                 <p>Ubicacion: {publicacion.ubicacion}</p>
@@ -53,11 +53,12 @@ export default function Tareas() {
                                 <p>Fecha Desesada: {publicacion.fechaDeseada}</p>
                                 <p>Dinero Ofrecido: {publicacion.dineroOfrecido}</p>
                             </div>
+
+                            <a href={`../detalles/${publicacion.id}`} className={styles.btn}>Postularme</a>
                         </div>
                     </div>
-                </div>
-            ))}
-        </main>
+                ))}
+            </main>
         </>
     );
 }

@@ -3,10 +3,11 @@
 
 import { TextField, Button, Box, Typography, Link, InputAdornment, IconButton } from "@mui/material";
 import Image from "next/image";
-import { useState } from "react";
+import { use, useState } from "react";
 import { useForm } from "react-hook-form";
 import { FcGoogle } from "react-icons/fc";
 import { apiHelper } from "@/helper/apiHelper";
+import { signIn, useSession } from "next-auth/react";
 
 export default function LoginForm() {
     const [serverError, setServerError] = useState("");
@@ -42,8 +43,22 @@ export default function LoginForm() {
         }
     };
 
-    const handleGoogleSignIn = async (data: any) => {
-        console.log("Iniciar sesión con Google");
+    const { data: session } = useSession();
+
+    const handleGoogleSignIn = async () => {
+        try {
+            await signIn("google", { redirect: false });
+
+            if (session?.user) {
+                const token = `${session.user.email}-${session.user.name}-${Date.now()}`;
+
+                sessionStorage.setItem("authToken", token);
+            }
+
+            window.location.href = "/";
+        } catch (error) {
+            console.error("Error al iniciar sesión con Google:", error);
+        }
     };
 
     return (
