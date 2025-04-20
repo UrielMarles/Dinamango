@@ -6,8 +6,6 @@ import Navbar from '../components/navbar/navbar'; // Importa tu componente Navba
 import Footer from '../components/footer/footer'; // Importa tu componente Footer
 import { ReactNode, useEffect, useState } from 'react';
 
-import { SessionProvider } from "next-auth/react";
-
 export default function RootLayout({ children }: { children: ReactNode }) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
@@ -20,10 +18,8 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
       <body>
-        <SessionProvider>
-          <Navbar isLoggedIn={isLoggedIn} />
-          <main className="main-content">{children}</main>
-        </SessionProvider>
+        <Navbar isLoggedIn={isLoggedIn} />
+        <main className="main-content">{children}</main>
         <Footer />
       </body>
     </html>

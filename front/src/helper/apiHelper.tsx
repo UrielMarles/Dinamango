@@ -1,5 +1,3 @@
-import { get } from "http";
-
 const API = process.env.NEXT_PUBLIC_API;
 
 interface RequestOptions {

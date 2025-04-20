@@ -7,7 +7,10 @@ import { use, useState } from "react";
 import { useForm } from "react-hook-form";
 import { FcGoogle } from "react-icons/fc";
 import { apiHelper } from "@/helper/apiHelper";
-import { signIn, useSession } from "next-auth/react";
+import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { auth } from "@/helper/firebaseConfig";
+
+const provider = new GoogleAuthProvider();
 
 export default function LoginForm() {
     const [serverError, setServerError] = useState("");
@@ -43,20 +46,27 @@ export default function LoginForm() {
         }
     };
 
-    const { data: session } = useSession();
-
     const handleGoogleSignIn = async () => {
-        try {
-            await signIn("google", { callbackUrl: "/" });
+        signInWithPopup(auth, provider)
+            .then((result) => {
+                const credential = GoogleAuthProvider.credentialFromResult(result);
 
-            if (session?.user) {
-                const token = `${session.user.email}-${session.user.name}-${Date.now()}`;
+                const token = credential?.accessToken;
 
-                sessionStorage.setItem("authToken", token);
-            }
-        } catch (error) {
-            console.error("Error al iniciar sesión con Google:", error);
-        }
+                //base de datos -> googleLogin(token)
+                sessionStorage.setItem("authToken", token || "");
+
+                // const user = result.user;
+
+                window.location.href = "/";
+            }).catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+
+                const email = error.customData.email;
+
+                const credential = GoogleAuthProvider.credentialFromError(error);
+            });
     };
 
     return (

@@ -5,20 +5,14 @@ import { Button } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { useState, useEffect } from "react";
 import { apiHelper } from "@/helper/apiHelper";
-import { useSession, signOut } from "next-auth/react";
-
-// const token = sessionStorage.getItem("authToken");
+import { signOut, onAuthStateChanged, User } from "firebase/auth";
+import { auth } from "@/helper/firebaseConfig";
 
 const getProfile = async () => {
     try {
         const datosPerfil = await apiHelper.userValidate();
 
-        if (!datosPerfil) {
-            return null;
-        }
-        else {
-            return datosPerfil;
-        }
+        return datosPerfil;
     }
     catch (err) {
         return null;
@@ -26,8 +20,6 @@ const getProfile = async () => {
 }
 
 export default function Perfil() {
-    const { data: session } = useSession();
-
     const {
         handleSubmit,
     } = useForm();
@@ -39,6 +31,16 @@ export default function Perfil() {
         email?: string;
         role?: string;
     } | null>(null);
+
+    const [user, setUser] = useState<User | null>(null);
+
+    useEffect(() => {
+        const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
+            setUser(firebaseUser);
+        });
+
+        return () => unsubscribe();
+    }, []);
 
     useEffect(() => {
         const fetchProfile = async () => {
@@ -55,15 +57,19 @@ export default function Perfil() {
         fetchProfile();
     }, []);
 
-    const onSubmit = (data: any) => {
+    const onSubmit = async (data: any) => {
         try {
             sessionStorage.removeItem("authToken");
 
-            apiHelper.logout(data);
+            if (user) {
+                await signOut(auth);
 
-            if (session?.user?.email) {
-                signOut( { callbackUrl: "./inicio_sesion" } );
+                window.location.href = "./inicio_sesion";
+
+                return;
             }
+
+            await apiHelper.logout(data);
 
             window.location.href = "./inicio_sesion";
 
@@ -79,8 +85,8 @@ export default function Perfil() {
             </div>
 
             <div>
-                {profileData?.email ? <h3>Email: {profileData?.email}</h3> : <h3>Email: {session?.user?.email}</h3>}
-                {profileData?.nombre ? <h3>Nombre: {profileData?.nombre} {profileData?.apellido}</h3> : <h3>Nombre: {session?.user?.name}</h3>}
+                {profileData?.email ? <h3>Email: {profileData?.email}</h3> : <h3>Email: {user?.email}</h3>}
+                {profileData?.nombre ? <h3>Nombre: {profileData?.nombre} {profileData?.apellido}</h3> : <h3>Nombre: {user?.displayName}</h3>}
                 {profileData?.role === "admin" ? <h3>Rol: Administrador</h3> : ""}
             </div>
 

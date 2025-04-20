@@ -7,7 +7,8 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { FcGoogle } from "react-icons/fc";
 import { apiHelper } from "@/helper/apiHelper";
-import { signIn, useSession } from "next-auth/react";
+import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { auth } from "@/helper/firebaseConfig";
 
 export default function RegistroForm() {
     const [showPassword, setShowPassword] = useState(false);
@@ -31,22 +32,23 @@ export default function RegistroForm() {
         }
     };
 
-    const { data: session } = useSession();
-
     const handleGoogleSignIn = async () => {
-        // try {
-        //     await signIn("google", { redirect: false });
+        const provider = new GoogleAuthProvider();
 
-        //     if (session?.user) {
-        //         const token = `${session.user.email}-${session.user.name}-${Date.now()}`;
+        signInWithPopup(auth, provider)
+            .then((result) => {
+                const credential = GoogleAuthProvider.credentialFromResult(result);
 
-        //         sessionStorage.setItem("authToken", token);
-        //     }
+                const token = credential?.accessToken;
 
-        //     window.location.href = "/";
-        // } catch (error) {
-        //     console.error("Error al iniciar sesión con Google:", error);
-        // }
+                //base de datos -> googleLogin(token)
+                sessionStorage.setItem("authToken", token || "");
+
+                window.location.href = "/";
+            })
+            .catch((error) => {
+                console.error("Error al iniciar sesión con Google:", error);
+            });
     };
 
     return (
