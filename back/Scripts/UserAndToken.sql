@@ -6,8 +6,10 @@
     Nombre NVARCHAR(255) NOT NULL,
     Apellido NVARCHAR(255) NOT NULL,
     ProfilePictureUrl NVARCHAR(500) NULL, -- URL de la imagen de perfil
+    isGoogleUser BIT NOT NULL DEFAULT 0,
+    googleUserId NVARCHAR(255) NULL,
     Role NVARCHAR(50) NOT NULL DEFAULT 'User',
-    CreatedAt DATETIME DEFAULT GETDATE(),
+    CreatedAt DATETIME NOT NULL DEFAULT GETUTCDATE(),
     UpdatedAt DATETIME NULL
 );
 
@@ -19,3 +21,11 @@ CREATE TABLE UserTokens (
     CreatedAt DATETIME DEFAULT GETDATE(),
     FOREIGN KEY (UserId) REFERENCES Users(Id) ON DELETE CASCADE
 );
+
+--DROP table Ofertas
+--drop table Tareas
+--drop table UserTokens
+--DROP TABLE Users
+
+select * from users
+select * from Tareas
