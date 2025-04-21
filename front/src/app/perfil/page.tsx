@@ -4,6 +4,7 @@
 import { Button } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { useState, useEffect } from "react";
+import style from "./perfil.module.css";
 import { apiHelper } from "@/helper/apiHelper";
 import { signOut, onAuthStateChanged, User } from "firebase/auth";
 import { auth } from "@/helper/firebaseConfig";
@@ -81,10 +82,11 @@ export default function Perfil() {
     return (
         <>
             <div>
-                <h1>Perfil</h1>
+                <h1>Mi perfil</h1>
             </div>
 
             <div>
+                {user?.photoURL ? <img src={user?.photoURL} alt="Imagen Usuario" className={style.imgPerfil} /> : ""}
                 {profileData?.email ? <h3>Email: {profileData?.email}</h3> : <h3>Email: {user?.email}</h3>}
                 {profileData?.nombre ? <h3>Nombre: {profileData?.nombre} {profileData?.apellido}</h3> : <h3>Nombre: {user?.displayName}</h3>}
                 {profileData?.role === "admin" ? <h3>Rol: Administrador</h3> : ""}

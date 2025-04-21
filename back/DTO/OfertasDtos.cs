@@ -10,6 +10,6 @@
         public Guid Id { get; set; }
         public string MensajeOferta { get; set; }
         public DateTime FechaCreacion { get; set; }
-        public UsuarioDTO Creador { get; set; }
+        public ResultGetUsuarioDTO Creador { get; set; }
     }
 }

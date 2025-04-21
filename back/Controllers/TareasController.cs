@@ -22,7 +22,7 @@ namespace MangoDB.Controllers
 
         // Crear una nueva tarea
         [HttpPost]
-        public async Task<IActionResult> CreateTarea([FromHeader(Name = "Authorization")] string token, [FromBody] TareaDTO request)
+        public async Task<IActionResult> CreateTarea([FromHeader(Name = "Authorization")] string token, [FromBody] ParamsCreateTareasDTO request)
         {
             var user = await _userService.ValidateToken(token);
             if (user == null)
@@ -49,7 +49,7 @@ namespace MangoDB.Controllers
 
         // Modificar una tarea existente
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateTarea(Guid id, [FromBody] TareaDTO request)
+        public async Task<IActionResult> UpdateTarea(Guid id, [FromBody] ParamsCreateTareasDTO request)
         {
             var tarea = await _context.Tareas.FindAsync(id);
             if (tarea == null)
@@ -80,7 +80,7 @@ namespace MangoDB.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetTareas([FromQuery] GetTareasDTO filters)
+        public async Task<IActionResult> GetTareas([FromQuery] ParamsGetTareasDTO filters)
         {
             var query = _context.Tareas
                 .Include(t => t.Creador)
@@ -143,7 +143,7 @@ namespace MangoDB.Controllers
                     t.HorarioDeseado,
                     t.FechaDeseada,
                     t.DineroOfrecido,
-                    t.Ofertas
+                    CantidadOfertas = t.Ofertas.Count
                 })
                 .ToListAsync();
 
@@ -155,6 +155,55 @@ namespace MangoDB.Controllers
             {
                 return Ok(tareas);
             }
+        }
+
+        [HttpGet("{idTarea}/ofertas")]
+        public async Task<IActionResult> ObtenerTareaConOfertas(Guid idTarea)
+        {
+            var tarea = await _context.Tareas
+                .Include(t => t.Creador)
+                .Include(t => t.Ofertas)
+                .ThenInclude(o => o.CreadorOferta)
+                .FirstOrDefaultAsync(t => t.Id == idTarea);
+
+            if (tarea == null)
+                return NotFound(new { message = "Tarea no encontrada" });
+
+            var resultado = new ResultTareaConOfertasDTO
+            {
+                Id = tarea.Id,
+                Titulo = tarea.Titulo,
+                Descripcion = tarea.Descripcion,
+                Ubicacion = tarea.Ubicacion,
+                HorarioDeseado = tarea.HorarioDeseado,
+                FechaDeseada = tarea.FechaDeseada,
+                DineroOfrecido = tarea.DineroOfrecido,
+                FechaPublicacion = tarea.FechaPublicacion,
+                Creador = new ResultGetUsuarioDTO
+                {
+                    Id = tarea.Creador.Id,
+                    Nombre = tarea.Creador.Nombre,
+                    Apellido = tarea.Creador.Apellido,
+                    Email = tarea.Creador.Email,
+                    ProfilePictureURL = tarea.Creador.ProfilePictureUrl ?? ""
+                },
+                Ofertas = tarea.Ofertas.Select(o => new OfertaDTO
+                {
+                    Id = o.Id,
+                    MensajeOferta = o.MensajeOferta,
+                    FechaCreacion = o.FechaCreacion,
+                    Creador = new ResultGetUsuarioDTO
+                    {
+                        Id = o.CreadorOferta.Id,
+                        Nombre = o.CreadorOferta.Nombre,
+                        Apellido = o.CreadorOferta.Apellido,
+                        Email = o.CreadorOferta.Email,
+                        ProfilePictureURL = o.CreadorOferta.ProfilePictureUrl ?? ""
+                    }
+                }).ToList()
+            };
+
+            return Ok(resultado);
         }
     }
 }

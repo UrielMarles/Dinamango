@@ -44,33 +44,4 @@ public class OfertaController : ControllerBase
 
         return Ok(new { message = "Oferta creada exitosamente", oferta.Id });
     }
-
-    // 📌 Obtener todas las ofertas de una tarea específica
-    [HttpGet("{idTarea}")]
-    public async Task<IActionResult> GetOfertasPorTarea(Guid idTarea)
-    {
-        var tarea = await _context.Tareas
-            .Include(t => t.Ofertas)
-            .ThenInclude(o => o.CreadorOferta) // Incluir el usuario que hizo la oferta
-            .FirstOrDefaultAsync(t => t.Id == idTarea);
-
-        if (tarea == null)
-            return NotFound(new { message = "Tarea no encontrada" });
-
-        var ofertas = tarea.Ofertas.Select(o => new OfertaDTO
-        {
-            Id = o.Id,
-            MensajeOferta = o.MensajeOferta,
-            FechaCreacion = o.FechaCreacion,
-            Creador = new UsuarioDTO
-            {
-                Id = o.CreadorOferta.Id,
-                Nombre = o.CreadorOferta.Nombre,
-                Apellido = o.CreadorOferta.Apellido,
-                Email = o.CreadorOferta.Email
-            }
-        }).ToList();
-
-        return Ok(ofertas);
-    }
 }

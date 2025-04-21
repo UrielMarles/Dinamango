@@ -80,7 +80,6 @@ export default function LoginForm() {
         }
     };
     
-
     return (
         <Box
             sx={{

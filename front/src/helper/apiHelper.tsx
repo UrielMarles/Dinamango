@@ -77,6 +77,10 @@ export const apiHelper = {
         return this.request(`/tareas/user`, { method: "GET", includeToken: true });
     },
 
+    ObtenerTareaConOfertas(idTarea: string) {
+        return this.request(`/tareas/${idTarea}/ofertas`, {method: "GET", includeToken: true});
+    },
+
     addTareas(data: any) {
         return this.request("/tareas", { method: "POST", body: data, includeToken: true });
     },
@@ -90,10 +94,16 @@ export const apiHelper = {
     },
 
     // Ofertas
-    mandarOferta(id: number, data: any) {
+    /**
+     * @param id id Publicidad
+     */
+    mandarOferta(id: string, data: any) {
         return this.request(`/ofertas/${id}`, { method: "POST", body: data, includeToken: true });
     },
 
+    /**
+     * @param id id Tarea
+     */
     getOfertas(id: number) {
         return this.request(`/ofertas/${id}`, { method: "GET" });
     }
