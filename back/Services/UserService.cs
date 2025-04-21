@@ -57,6 +57,62 @@ namespace MangoDB.Services
             return hashedInput == storedHash;
         }
 
+        //crea o logea el usuario de google
+        public async Task<string> GoogleLogin(string googleId, string nombre, string apellido, string email, string? profilePictureUrl)
+        {
+            User? existingUser = await _context.Users.FirstOrDefaultAsync(u => u.googleUserId == googleId);
+
+            if (existingUser != null)
+            {
+                // Ya existe, generar un nuevo token
+                string token = GenerateToken();
+
+                UserToken userToken = new UserToken
+                {
+                    UserId = existingUser.Id,
+                    Token = token
+                };
+
+                _context.UserTokens.Add(userToken);
+                await _context.SaveChangesAsync();
+
+                return token;
+            }
+
+            // No existe, crear nuevo usuario
+            User newUser = new User
+            {
+                Email = email,
+                Nombre = nombre,
+                Apellido = apellido,
+                ProfilePictureUrl = profilePictureUrl,
+                isGoogleUser = true,
+                googleUserId = googleId,
+                PasswordHash = string.Empty,
+                Salt = string.Empty,
+                Role = "User",
+                CreatedAt = DateTime.UtcNow,
+                UpdatedAt = DateTime.UtcNow
+            };
+
+            _context.Users.Add(newUser);
+            await _context.SaveChangesAsync();
+
+            string newToken = GenerateToken();
+
+            UserToken newUserToken = new UserToken
+            {
+                UserId = newUser.Id,
+                Token = newToken
+            };
+
+            _context.UserTokens.Add(newUserToken);
+            await _context.SaveChangesAsync();
+
+            return newToken;
+        }
+
+
         // Registrar un nuevo usuario con contraseña hasheada
         public async Task<User?> Register(string email, string password, string name, string lastName, string role = "User")
         {

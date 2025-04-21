@@ -52,6 +52,10 @@ export const apiHelper = {
         return this.request("/user/login", { method: "POST", body: data });
     },
 
+    googleLogin(data: any) {
+        return this.request("/user/login/google", { method: "POST", body: data });
+    },
+
     userValidate() {
         return this.request("/user/validate", { method: "GET", includeToken: true });
     },

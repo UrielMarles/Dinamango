@@ -23,6 +23,26 @@ namespace MangoDB.Controllers
             _userService = userService;
         }
 
+        // 📌 Registro o login de usuario en google
+        [HttpPost("login/google")]
+        public async Task<IActionResult> LoginGoogle([FromBody] GoogleLoginRequest request)
+        {
+            string token = await _userService.GoogleLogin(
+                request.UID,
+                request.Nombre,
+                request.Apellido,
+                request.Email,
+                request.ProfilePictureUrl
+            );
+
+            if (string.IsNullOrEmpty(token))
+                return Unauthorized(new { message = "No se pudo generar el token" });
+
+            return Ok(new { token });
+        }
+
+
+
         // 📌 Registro de usuario
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] RegisterRequest request)
@@ -95,13 +115,10 @@ namespace MangoDB.Controllers
             string fileName = $"{user.Id}{extension}";
             string filePath = Path.Combine(uploadsFolder, fileName);
 
-            // 📌 Guardar el archivo
             using (var stream = new FileStream(filePath, FileMode.Create))
             {
                 await file.CopyToAsync(stream);
             }
-
-            // 📌 Guardar la ruta relativa en la base de datos
             user.ProfilePictureUrl = filePath;
             await _context.SaveChangesAsync();
 

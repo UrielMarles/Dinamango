@@ -24,6 +24,10 @@ namespace MangoDB.Models
 
         public string? ProfilePictureUrl { get; set; } // URL de la imagen de perfil
 
+        public bool isGoogleUser {  get; set; }
+
+        public string? googleUserId { get; set; }
+
         [Required]
         public string Role { get; set; } = "User";
 
