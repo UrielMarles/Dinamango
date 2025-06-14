@@ -54,8 +54,6 @@ export default function MisTareas() {
                                 <p>Horario deseado: {tarea?.horarioDeseado}</p>
                                 <p>Dinero ofrecido: ${tarea?.dineroOfrecido}</p>
                                 <p>Ofertas: {tarea?.cantidadOfertas ?? "0"}</p>
-
-                                {/* <button onClick={mostrarOfertas()}>Ver ofertas</button> */}
                             </li>
                         ))}
                     </ul>
