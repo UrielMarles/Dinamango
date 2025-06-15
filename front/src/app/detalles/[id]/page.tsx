@@ -17,6 +17,7 @@ interface Publicacion {
         nombre: string;
         apellido: string;
         email: string;
+        isGoogleUser: boolean;
     };
     ofertas: any;
 }
@@ -32,6 +33,7 @@ export default function DetallePublicacion() {
         const tareaConOferta = async (id: string) => {
             try {
                 const data = await apiHelper.ObtenerTareaConOfertas(id);
+                console.log("DATA:", data);
 
                 if (data.id) {
                     setPublicacion(data);
@@ -69,7 +71,9 @@ export default function DetallePublicacion() {
                 <h1>{publicacion?.titulo}</h1>
                 <p>{publicacion?.descripcion}</p>
                 <p>
-                    Publicado por: <strong>{publicacion?.creador.nombre} {publicacion?.creador.apellido}</strong>
+                    Publicado por: {publicacion?.creador.isGoogleUser ? <strong>{publicacion?.creador.nombre}</strong> : <strong>{publicacion?.creador.nombre} {publicacion?.creador.apellido}</strong>}
+                    <br />
+                    OBLIGADO: {Boolean(publicacion?.creador?.isGoogleUser).toString()}
                 </p>
                 <p>Cantidad de Ofertas: {publicacion?.ofertas.length}</p>
             </div>

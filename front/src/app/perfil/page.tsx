@@ -6,8 +6,6 @@ import { useForm } from "react-hook-form";
 import { useState, useEffect } from "react";
 import style from "./perfil.module.css";
 import { apiHelper } from "@/helper/apiHelper";
-import { signOut, onAuthStateChanged, User } from "firebase/auth";
-import { auth } from "@/helper/firebaseConfig";
 
 const getProfile = async () => {
     try {
@@ -16,6 +14,17 @@ const getProfile = async () => {
         return datosPerfil;
     }
     catch (err) {
+        return null;
+    }
+}
+
+const getProfilePicture = async (userId: string) => {
+    try {
+        const img = await apiHelper.getProfilePicture(userId);
+
+        return img;
+    }
+    catch (error) {
         return null;
     }
 }
@@ -30,51 +39,42 @@ export default function Perfil() {
         nombre?: string;
         apellido?: string;
         email?: string;
+        profilePictureUrl?: string;
         role?: string;
+        isGoogleUser?: boolean;
     } | null>(null);
-
-    const [user, setUser] = useState<User | null>(null);
-
-    useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
-            setUser(firebaseUser);
-        });
-
-        return () => unsubscribe();
-    }, []);
 
     useEffect(() => {
         const fetchProfile = async () => {
             const data = await getProfile();
+            if (!data) return;
 
-            if (!data) {
-                return null;
+            let profilePictureUrl;
+            try {
+                const blob = await getProfilePicture(data.id);
+                profilePictureUrl = blob ? URL.createObjectURL(blob) : undefined;
+            } catch (e) {
+                profilePictureUrl = undefined;
             }
-            else {
-                setProfileData(data);
-            }
+
+            setProfileData({
+                ...data,
+                profilePictureUrl
+            });
         };
 
         fetchProfile();
     }, []);
 
-    const onSubmit = async (data: any) => {
+    const cerrarSesion = async () => {
         try {
+            await apiHelper.logout();
+
             sessionStorage.removeItem("authToken");
-
-            if (user) {
-                await signOut(auth);
-
-                window.location.href = "./inicio_sesion";
-
-                return;
-            }
-
-            await apiHelper.logout(data);
 
             window.location.href = "./inicio_sesion";
 
-        } catch (error: any) {
+        } catch (error) {
             console.error("Error al cerrar sesión:", error);
         }
     }
@@ -86,15 +86,31 @@ export default function Perfil() {
             </div>
 
             <div>
-                {user?.photoURL ? <img src={user?.photoURL} alt="Imagen Usuario" className={style.imgPerfil} /> : ""}
-                {profileData?.email ? <h3>Email: {profileData?.email}</h3> : <h3>Email: {user?.email}</h3>}
-                {profileData?.nombre ? <h3>Nombre: {profileData?.nombre} {profileData?.apellido}</h3> : <h3>Nombre: {user?.displayName}</h3>}
+                {profileData?.profilePictureUrl ? <img src={profileData?.profilePictureUrl} alt="Imagen Usuario" className={style.imgPerfil} /> : <img src="/icons/user.png" alt="Imagen Usuario" className={style.imgPerfil} />}
+                <h3>Email: {profileData?.email}</h3>
+                {profileData?.isGoogleUser ? <h3>Nombre: {profileData?.nombre}</h3> : <h3>Nombre: {profileData?.nombre} {profileData?.apellido}</h3>}
                 {profileData?.role === "admin" ? <h3>Rol: Administrador</h3> : ""}
             </div>
 
             <div>
                 <Button
-                    onClick={handleSubmit(onSubmit)}
+                    onClick={() => window.location.href = "../editar_perfil"}
+                    variant="contained"
+                    color="warning"
+                    sx={{
+                        width: "100px",
+                        height: "30px",
+                        display: "flex",
+                        justifyContent: "center",
+                    }}
+                >
+                    Editar
+                </Button>
+            </div>
+
+            <div>
+                <Button
+                    onClick={handleSubmit(cerrarSesion)}
                     variant="contained"
                     color="primary"
                     sx={{
@@ -102,6 +118,7 @@ export default function Perfil() {
                         height: "30px",
                         display: "flex",
                         justifyContent: "center",
+                        marginTop: "20px",
                     }}
                 >
                     Logout

@@ -25,6 +25,10 @@ export default function MisTareas() {
         const fetchData = async () => {
             try {
                 const tareas = await getTareas();
+
+                if (tareas.status !== 200) {
+                    return;
+                }
                 
                 setTareas(tareas);
             }

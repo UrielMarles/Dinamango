@@ -78,7 +78,7 @@ export default function TareasForm() {
             console.error("Hubo un error con agregar una tarea", error);
         }
 
-        // window.location.reload();
+        window.location.reload();
     };
 
     const handleNext = async () => {

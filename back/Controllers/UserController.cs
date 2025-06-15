@@ -41,8 +41,6 @@ namespace MangoDB.Controllers
             return Ok(new { token });
         }
 
-
-
         // 📌 Registro de usuario
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] RegisterRequest request)
@@ -74,7 +72,7 @@ namespace MangoDB.Controllers
             if (user == null)
                 return Unauthorized(new { message = "Token inválido" });
 
-            return Ok(new { user.Id, user.Email, user.Nombre, user.Apellido, user.Role });
+            return Ok(new { user.Id, user.Email, user.Nombre, user.Apellido, user.ProfilePictureUrl, user.Role, user.isGoogleUser });
         }
 
         // 📌 Cerrar sesión
@@ -91,6 +89,8 @@ namespace MangoDB.Controllers
         [HttpPost("profile-picture")]
         public async Task<IActionResult> UploadProfilePicture([FromHeader(Name = "Authorization")] string token, IFormFile file)
         {
+            var serverURL = $"{Request.Scheme}://{Request.Host}";
+            
             var user = await _userService.ValidateToken(token);
             if (user == null)
                 return Unauthorized(new { message = "Token inválido" });
@@ -105,7 +105,7 @@ namespace MangoDB.Controllers
                 return BadRequest(new { message = "Formato de imagen no permitido" });
 
             // 📌 Definir la carpeta donde se guardarán las imágenes (misma altura que la solución)
-            var solutionFolder = Directory.GetParent(AppContext.BaseDirectory)?.FullName;
+            var solutionFolder = Directory.GetParent(AppContext.BaseDirectory)?.Parent?.Parent?.Parent?.FullName;
             var uploadsFolder = Path.Combine(solutionFolder, "ProfilePictures");
 
             if (!Directory.Exists(uploadsFolder))
@@ -119,13 +119,53 @@ namespace MangoDB.Controllers
             {
                 await file.CopyToAsync(stream);
             }
-            user.ProfilePictureUrl = filePath;
+
+            user.ProfilePictureUrl = $"{serverURL}/getImages/profile/{fileName}";
             await _context.SaveChangesAsync();
 
             return Ok(new { message = "Foto de perfil actualizada", profilePictureUrl = user.ProfilePictureUrl });
         }
 
+        [HttpGet("getImages/profile/{id}")]
+        public async Task<IActionResult> getProfilePicture(Guid id, [FromHeader(Name = "Authorization")] string token)
+        {
+            var currentUser = await _userService.ValidateToken(token);
+            if (currentUser == null)
+                return Unauthorized(new { message = "Token inválido" });
+
+            var folder = Directory.GetParent(AppContext.BaseDirectory)?.Parent?.Parent?.Parent?.FullName;
+            var folderImages = Path.Combine(folder, "ProfilePictures");
+
+            if (!Directory.Exists(folderImages))
+                return NotFound("Directorio de imágenes no existe");
+
+            // Buscar archivo que empiece con el ID
+            var file = Directory.GetFiles(folderImages)
+                .FirstOrDefault(f => Path.GetFileNameWithoutExtension(f).Equals(id.ToString(), StringComparison.OrdinalIgnoreCase));
+
+            if (file == null)
+                return NotFound("Imagen no encontrada");
+
+            var mime = "image/jpeg"; // o usar lógica para detectar MIME
+            var archivo = System.IO.File.OpenRead(file);
+            return File(archivo, mime);
+        }
+
+        [HttpPut("update")]
+        public async Task<IActionResult> UpdateUser([FromHeader(Name = "Authorization")] string token, [FromBody] ResultGetUsuarioDTO userDto)
+        {
+            var user = await _userService.ValidateToken(token);
+            if (user == null)
+                return Unauthorized(new { message = "Token inválido" });
+
+            user.Nombre = string.IsNullOrEmpty(userDto.Nombre) ? user.Nombre : userDto.Nombre;
+            user.Apellido = string.IsNullOrEmpty(userDto.Apellido) ? user.Apellido : userDto.Apellido;
+            user.Email = string.IsNullOrEmpty(userDto.Email) ? user.Email : userDto.Email;
+
+            await _context.SaveChangesAsync();
+
+            return Ok(new { message = "Usuario actualizado", user = new { user.Nombre, user.Apellido, user.Email } });
+        }
+
     }
-
-
 }

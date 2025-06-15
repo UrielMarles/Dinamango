@@ -22,6 +22,11 @@ export default function Tareas() {
         const fetchData = async () => {
             try {
                 const data: Publicacion[] = await apiHelper.getTareas();
+
+                // if (data.length === 0) {
+                //     return;
+                // }
+
                 setPublicaciones(data);
 
             } catch (error) {

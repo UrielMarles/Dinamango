@@ -38,7 +38,8 @@ namespace MangoDB.Controllers
                 FechaPublicacion = DateTime.UtcNow,
                 HorarioDeseado = request.HorarioDeseado,
                 FechaDeseada = request.FechaDeseada,
-                DineroOfrecido = request.DineroOfrecido
+                DineroOfrecido = request.DineroOfrecido,
+                //isGoogleUser = user.isGoogleUser
             };
 
             _context.Tareas.Add(tarea);
@@ -113,7 +114,8 @@ namespace MangoDB.Controllers
                         t.Creador.Id,
                         t.Creador.Nombre,
                         t.Creador.Apellido,
-                        t.Creador.Email
+                        t.Creador.Email,
+                        t.Creador.isGoogleUser
                     },
                     CantidadOfertas = t.Ofertas.Count // 🔹 Se agrega el contador de ofertas
                 })

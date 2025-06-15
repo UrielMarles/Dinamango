@@ -3,15 +3,11 @@
 
 import { TextField, Button, Box, Typography, Link, InputAdornment, IconButton } from "@mui/material";
 import Image from "next/image";
-import { use, useEffect, useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { FcGoogle } from "react-icons/fc";
 import { apiHelper } from "@/helper/apiHelper";
-import { signInWithPopup, GoogleAuthProvider, User, onAuthStateChanged } from "firebase/auth";
-import { auth } from "@/helper/firebaseConfig";
-import { FirebaseError } from "firebase/app";
-
-const provider = new GoogleAuthProvider();
+import { inicioSesionGoogle } from "@/helper/googleHelper";
 
 export default function LoginForm() {
     const [serverError, setServerError] = useState("");
@@ -48,36 +44,7 @@ export default function LoginForm() {
     };
 
     const handleGoogleSignIn = async () => {
-        try {
-            console.log("entra a pedir");
-            const result = await signInWithPopup(auth, provider);
-            console.log("pidio bien");
-            const user = result.user;
-    
-            const data = {
-                UID: user?.uid,
-                Email: user?.email,
-                Nombre: user?.displayName,
-                Apellido: user?.displayName,
-                ProfilePictureUrl: user?.photoURL
-            };
-            console.log(data);
-            const responseData = await apiHelper.googleLogin(data);
-            console.log(responseData);
-    
-            sessionStorage.setItem("authToken", responseData.token || "");
-    
-            window.location.href = "/";
-        } catch (error) {
-            if (error instanceof FirebaseError) {
-                const errorCode = error.code;
-                const errorMessage = error.message;
-                const email = (error as any).customData?.email; 
-                const credential = GoogleAuthProvider.credentialFromError(error);
-            } else {
-                console.error("Error inesperado:", error);
-            }
-        }
+        inicioSesionGoogle();
     };
     
     return (
