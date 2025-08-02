@@ -5,6 +5,7 @@ import '../styles/globals.css';
 import Navbar from '../components/navbar/navbar'; // Importa tu componente Navbar
 import Footer from '../components/footer/footer'; // Importa tu componente Footer
 import { ReactNode, useEffect, useState } from 'react';
+import { Toaster } from 'react-hot-toast';
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -20,6 +21,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       <body>
         <Navbar isLoggedIn={isLoggedIn} />
         <main className="main-content">{children}</main>
+        <Toaster position='top-right'/>
         <Footer />
       </body>
     </html>

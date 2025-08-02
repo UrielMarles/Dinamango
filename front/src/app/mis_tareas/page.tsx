@@ -26,10 +26,6 @@ export default function MisTareas() {
             try {
                 const tareas = await getTareas();
 
-                if (tareas.status !== 200) {
-                    return;
-                }
-                
                 setTareas(tareas);
             }
             catch (error) {
@@ -51,20 +47,18 @@ export default function MisTareas() {
                     <ul>
                         {tareas.map((tarea) => (
                             <li key={tarea.id}>
-                                <h2>{tarea?.titulo}</h2>
-                                <p>{tarea?.descripcion}</p>
-                                <p>Ubicación: {tarea?.ubicacion}</p>
-                                <p>Fecha deseada: {tarea?.fechaDeseada}</p>
-                                <p>Horario deseado: {tarea?.horarioDeseado}</p>
-                                <p>Dinero ofrecido: ${tarea?.dineroOfrecido}</p>
-                                <p>Ofertas: {tarea?.cantidadOfertas ?? "0"}</p>
-
-                                {/* <button onClick={mostrarOfertas()}>Ver ofertas</button> */}
+                                <h2>{tarea.titulo}</h2>
+                                <p>{tarea.descripcion}</p>
+                                <p>Ubicación: {tarea.ubicacion}</p>
+                                <p>Fecha deseada: {tarea.fechaDeseada}</p>
+                                <p>Horario deseado: {tarea.horarioDeseado}</p>
+                                <p>Dinero ofrecido: ${tarea.dineroOfrecido}</p>
+                                <p>Ofertas: {tarea.cantidadOfertas ?? "0"}</p>
                             </li>
                         ))}
                     </ul>
                 )}
             </div>
         </>
-    ) 
+    )
 }

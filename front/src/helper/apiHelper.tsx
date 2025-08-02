@@ -104,7 +104,7 @@ export const apiHelper = {
     },
 
     getUserTareas() {
-        return this.request(`/tareas/user`, { method: "GET", includeToken: true });
+        return this.request(`/tareas/user`, { method: "GET", includeToken: true }); //
     },
 
     ObtenerTareaConOfertas(idTarea: string) {
