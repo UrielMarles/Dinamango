@@ -13,6 +13,15 @@ interface Publicacion {
     horarioDeseado: string;
     fechaDeseada: string;
     dineroOfrecido: number;
+    creador: {
+        id: string;
+        nombre: string;
+        apellido: string;
+        email: string;
+        isGoogleUser: boolean;
+        profilePictureUrl: string;
+    };
+    ofertas: any;
 }
 
 export default function Tareas() {
@@ -22,12 +31,9 @@ export default function Tareas() {
         const fetchData = async () => {
             try {
                 const data: Publicacion[] = await apiHelper.getTareas();
-
-                // if (data.length === 0) {
-                //     return;
-                // }
-
                 setPublicaciones(data);
+
+                console.log("DATA PUBLICACION", data);
 
             } catch (error) {
                 console.error("Error al obtener publicaciones:", error);
@@ -45,7 +51,7 @@ export default function Tareas() {
                     <div key={index} className={styles.container}>
                         <div className={styles.poster}>
                             <Image
-                                src="/gpt_logo.png"
+                                src={publicacion?.creador.profilePictureUrl}
                                 alt="Logo de la aplicación"
                                 width={200}
                                 height={200}

@@ -44,4 +44,34 @@ public class OfertaController : ControllerBase
 
         return Ok(new { message = "Oferta creada exitosamente", oferta.Id });
     }
+
+    [HttpGet("misOfertas")]
+    public async Task<IActionResult> GetMisOfertas([FromHeader(Name = "Authorization")] string token)
+    {
+        var user = await _userService.ValidateToken(token);
+        if (user == null)
+        {
+            return Unauthorized(new { message = "Token inválido" });
+        }
+
+        var misOfertas = await _context.Ofertas
+            .Include(o => o.Tarea)
+            .Where(o => o.IdCreadorOferta == user.Id)
+            .Select(o => new
+            {
+                o.Id,
+                o.MensajeOferta,
+                o.FechaCreacion,
+                Tarea = new
+                {
+                    o.Tarea.Id,
+                    o.Tarea.Titulo,
+                    o.Tarea.Descripcion,
+                    o.Tarea.FechaPublicacion,
+                    o.Tarea.DineroOfrecido
+                }
+            }).ToListAsync();
+
+        return Ok(misOfertas);
+    }
 }

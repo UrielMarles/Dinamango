@@ -1,0 +1,16 @@
+#container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+#tareas {
+    display: flex;
+    flex-direction: column;
+}
+
+#ofertas {
+    width: 550px;
+    display: flex;
+    flex-direction: column;
+}

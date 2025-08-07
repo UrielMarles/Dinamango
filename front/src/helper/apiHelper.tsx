@@ -136,6 +136,10 @@ export const apiHelper = {
      */
     getOfertas(id: number) {
         return this.request(`/ofertas/${id}`, { method: "GET" });
+    },
+
+    getMisOfertas() {
+        return this.request('/ofertas/misOfertas', { method: "GET", includeToken: true});
     }
 
 };

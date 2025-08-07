@@ -6,4 +6,3 @@ yarn.lock
 .next/
 dist/
 build/
-.env.local

@@ -1,7 +1,7 @@
 # Ruta al backend
-$backendPath = "D:\Escritorio\Proyectos\Dinamango\back"
+$backendPath = "E:\Dinamango\back"
 # Ruta al frontend
-$frontendPath = "D:\Escritorio\Proyectos\Dinamango\front"
+$frontendPath = "E:\Dinamango\front"
 
 # Comandos
 $backendCommand = "dotnet run"
