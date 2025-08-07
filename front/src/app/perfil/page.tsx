@@ -50,12 +50,11 @@ export default function Perfil() {
             if (!data) return;
 
             let profilePictureUrl;
-            
+
             if (data?.isGoogleUser) {
                 profilePictureUrl = data.profilePictureUrl;
             }
-            else
-            {
+            else {
                 try {
                     const blob = await getProfilePicture(data.id);
                     profilePictureUrl = blob ? URL.createObjectURL(blob) : undefined;
@@ -94,7 +93,7 @@ export default function Perfil() {
 
             <div>
                 {profileData?.profilePictureUrl ? <img src={profileData?.profilePictureUrl} alt="Imagen Usuario" className={style.imgPerfil} /> : <img src="/icons/user.png" alt="Imagen Usuario" className={style.imgPerfil} />}
-                
+
                 <h3>Email: {profileData?.email}</h3>
                 {profileData?.isGoogleUser ? <h3>Nombre: {profileData?.nombre}</h3> : <h3>Nombre: {profileData?.nombre} {profileData?.apellido}</h3>}
                 {profileData?.role === "admin" ? <h3>Rol: Administrador</h3> : ""}

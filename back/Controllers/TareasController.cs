@@ -115,7 +115,8 @@ namespace MangoDB.Controllers
                         t.Creador.Nombre,
                         t.Creador.Apellido,
                         t.Creador.Email,
-                        t.Creador.isGoogleUser
+                        t.Creador.isGoogleUser,
+                        t.Creador.ProfilePictureUrl
                     },
                     CantidadOfertas = t.Ofertas.Count // 🔹 Se agrega el contador de ofertas
                 })
