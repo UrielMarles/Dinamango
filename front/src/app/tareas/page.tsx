@@ -3,8 +3,6 @@
 import { useState, useEffect } from "react";
 import styles from "./tareas.module.css";
 import { apiHelper } from "@/helper/apiHelper";
-import { fetchInternalImage } from "next/dist/server/image-optimizer";
-import { profileEnd } from "console";
 
 interface Publicacion {
     id: string;
