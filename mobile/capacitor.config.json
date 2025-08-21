@@ -1,0 +1,9 @@
+{
+  "appId": "com.dinamango.app",
+  "appName": "Dinamango",
+  "webDir": "public",
+  "server": {
+    "url": "https://cool-jobs-taste.loca.lt/",
+    "cleartext": true
+  }
+}
