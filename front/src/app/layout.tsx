@@ -1,9 +1,8 @@
-// app/layout.tsx
 "use client";
 
 import '../styles/globals.css';
-import Navbar from '../components/navbar/navbar'; // Importa tu componente Navbar
-import Footer from '../components/footer/footer'; // Importa tu componente Footer
+import Navbar from '../components/navbar/navbar';
+import Footer from '../components/footer/footer';
 import { ReactNode, useEffect, useState } from 'react';
 import { Toaster } from 'react-hot-toast';
 
