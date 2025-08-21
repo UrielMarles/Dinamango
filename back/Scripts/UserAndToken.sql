@@ -21,11 +21,3 @@ CREATE TABLE UserTokens (
     CreatedAt DATETIME DEFAULT GETDATE(),
     FOREIGN KEY (UserId) REFERENCES Users(Id) ON DELETE CASCADE
 );
-
---DROP table Ofertas
---drop table Tareas
---drop table UserTokens
---DROP TABLE Users
-
-select * from users
-select * from Tareas

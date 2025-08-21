@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Image from "next/image";
 import styles from "./tareas.module.css";
 import { apiHelper } from "@/helper/apiHelper";
 
@@ -13,6 +12,19 @@ interface Publicacion {
     horarioDeseado: string;
     fechaDeseada: string;
     dineroOfrecido: number;
+    creador: {
+        id: string;
+        nombre: string;
+        apellido: string;
+        email: string;
+        isGoogleUser: boolean;
+        profilePictureUrl: string;
+    };
+    ofertas: any;
+}
+
+function getImage(id: string) {
+    return apiHelper.getProfilePicture(id);
 }
 
 export default function Tareas() {
@@ -21,10 +33,36 @@ export default function Tareas() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const data: Publicacion[] = await apiHelper.getTareas();
-                setPublicaciones(data);
+            const data = await apiHelper.getTareas();
 
-            } catch (error) {
+            if (!data) return;
+
+            const publicacionesActualizadas = await Promise.all(
+                data.map(async (pub: Publicacion) => {
+                    let profilePictureUrl = pub.creador.profilePictureUrl;
+
+                    if (!pub.creador.isGoogleUser) {
+                        try {
+                            const blob = await getImage(pub.creador.id);
+                            profilePictureUrl = blob ? URL.createObjectURL(blob) : " ";
+                        } catch (e) {
+                            profilePictureUrl = " ";
+                        }
+                    }
+
+                    return {
+                        ...pub,
+                        creador: {
+                            ...pub.creador,
+                            profilePictureUrl,
+                        },
+                    };
+                })
+            );
+
+            setPublicaciones(publicacionesActualizadas);
+            }
+            catch (error) {
                 console.error("Error al obtener publicaciones:", error);
             }
         };
@@ -39,12 +77,7 @@ export default function Tareas() {
                 {publicaciones.map((publicacion, index) => (
                     <div key={index} className={styles.container}>
                         <div className={styles.poster}>
-                            <Image
-                                src="/gpt_logo.png"
-                                alt="Logo de la aplicación"
-                                width={200}
-                                height={200}
-                            />
+                            <img id={styles.logoCreador} src={publicacion.creador.profilePictureUrl} alt="Logo del Creador" />
                             <div className={styles.titulo}>
                                 <p>Titulo: {publicacion.titulo}</p>
                                 <p>Descripcion: {publicacion.descripcion}</p>

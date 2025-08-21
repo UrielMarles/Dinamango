@@ -1,11 +1,12 @@
 /* eslint-disable */
 "use client";
 
-import { TextField, Button, Box, Typography, InputAdornment, createTheme } from "@mui/material";
+import { TextField, Button, Box, Typography, InputAdornment } from "@mui/material";
 import Image from "next/image";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { apiHelper } from "@/helper/apiHelper";
+import toast from "react-hot-toast";
 
 const estiloTitulo = (color: string, fontSize: string, fontWeight: string, letterSpacing: string) => ({
     color: color,
@@ -44,7 +45,8 @@ export default function TareasForm() {
         handleSubmit,
         formState: { errors },
         setValue,
-        trigger
+        trigger,
+        reset
     } = useForm();
 
     const [fechaSeleccionada, setValueFecha] = useState("");
@@ -74,11 +76,19 @@ export default function TareasForm() {
         try {
             await apiHelper.addTareas(cleanData);
 
-        } catch (error) {
-            console.error("Hubo un error con agregar una tarea", error);
-        }
+            toast.success("Tarea creada con éxito");
 
-        // window.location.reload();
+            reset();
+            setCurrentSection(0);
+            setUbicacionTipo(null);
+            setValueFecha("");
+            setValueHora("");
+        }
+        catch (error) {
+            console.error("Hubo un error con agregar una tarea", error);
+
+            toast.error("Hubo un problema para publicar la tarea");
+        }
     };
 
     const handleNext = async () => {

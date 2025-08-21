@@ -7,8 +7,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { FcGoogle } from "react-icons/fc";
 import { apiHelper } from "@/helper/apiHelper";
-import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
-import { auth } from "@/helper/firebaseConfig";
+import { inicioSesionGoogle } from "@/helper/googleHelper";
 
 export default function RegistroForm() {
     const [showPassword, setShowPassword] = useState(false);
@@ -33,22 +32,7 @@ export default function RegistroForm() {
     };
 
     const handleGoogleSignIn = async () => {
-        // const provider = new GoogleAuthProvider();
-
-        // signInWithPopup(auth, provider)
-        //     .then((result) => {
-        //         const credential = GoogleAuthProvider.credentialFromResult(result);
-
-        //         const token = credential?.accessToken;
-
-        //         //base de datos -> googleLogin(token)
-        //         sessionStorage.setItem("authToken", token || "");
-
-        //         window.location.href = "/";
-        //     })
-        //     .catch((error) => {
-        //         console.error("Error al iniciar sesión con Google:", error);
-        //     });
+        inicioSesionGoogle();
     };
 
     return (

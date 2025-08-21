@@ -1,0 +1,122 @@
+[
+    {
+        "titulo": "Viaje a Marte",
+        "descripcion": "Una misión espacial de lujo para turistas aventureros.",
+        "ubicacion": "Centro Espacial Kennedy, EE.UU.",
+        "horarioDeseado": "08:00 - 18:00",
+        "fechaDeseada": "2026-07-20",
+        "dineroOfrecido": 5000000
+    },
+    {
+        "titulo": "Startup de Inteligencia Artificial",
+        "descripcion": "Desarrollo de una IA que automatiza tareas administrativas.",
+        "ubicacion": "Silicon Valley, EE.UU.",
+        "horarioDeseado": "09:00 - 17:00",
+        "fechaDeseada": "2025-03-15",
+        "dineroOfrecido": 120000
+    },
+    {
+        "titulo": "Restaurante Submarino",
+        "descripcion": "Experiencia gastronómica única bajo el mar con vista a la vida marina.",
+        "ubicacion": "Maldivas, Océano Índico",
+        "horarioDeseado": "19:00 - 23:00",
+        "fechaDeseada": "2025-06-10",
+        "dineroOfrecido": 300000
+    },
+    {
+        "titulo": "Colección de NFTs",
+        "descripcion": "Arte digital exclusivo basado en mitología griega.",
+        "ubicacion": "Plataforma OpenSea, Blockchain",
+        "horarioDeseado": "24/7",
+        "fechaDeseada": "2025-01-01",
+        "dineroOfrecido": 50000
+    },
+    {
+        "titulo": "Caza de Tesoros en el Caribe",
+        "descripcion": "Expedición para encontrar barcos hundidos con riquezas ocultas.",
+        "ubicacion": "Mar Caribe, cerca de las Bahamas",
+        "horarioDeseado": "06:00 - 18:00",
+        "fechaDeseada": "2025-08-12",
+        "dineroOfrecido": 75000
+    },
+    {
+        "titulo": "Resort en la Antártida",
+        "descripcion": "Un lujoso hotel ecológico en el corazón del hielo.",
+        "ubicacion": "Polo Sur, Antártida",
+        "horarioDeseado": "Todo el día",
+        "fechaDeseada": "2026-12-01",
+        "dineroOfrecido": 2500000
+    },
+    {
+        "titulo": "Academia de Esports",
+        "descripcion": "Entrenamiento profesional para jugadores competitivos de videojuegos.",
+        "ubicacion": "Seúl, Corea del Sur",
+        "horarioDeseado": "10:00 - 20:00",
+        "fechaDeseada": "2025-04-05",
+        "dineroOfrecido": 100000
+    },
+    {
+        "titulo": "Granja de Energía Solar",
+        "descripcion": "Proyecto sostenible para generar electricidad con paneles solares.",
+        "ubicacion": "Desierto de Atacama, Chile",
+        "horarioDeseado": "07:00 - 16:00",
+        "fechaDeseada": "2025-09-30",
+        "dineroOfrecido": 500000
+    },
+    {
+        "titulo": "Tienda de Ropa Inteligente",
+        "descripcion": "Ropa con sensores que monitorean la temperatura y la salud.",
+        "ubicacion": "Tokio, Japón",
+        "horarioDeseado": "10:00 - 22:00",
+        "fechaDeseada": "2025-07-07",
+        "dineroOfrecido": 80000
+    },
+    {
+        "titulo": "Festival de Música Virtual",
+        "descripcion": "Conciertos en realidad aumentada con artistas internacionales.",
+        "ubicacion": "Metaverso",
+        "horarioDeseado": "20:00 - 03:00",
+        "fechaDeseada": "2025-11-15",
+        "dineroOfrecido": 200000
+    },
+    {
+        "titulo": "Cine al Aire Libre",
+        "descripcion": "Ciclo de proyecciones en parques y playas con pantalla gigante.",
+        "ubicacion": "Parque Central, Nueva York",
+        "horarioDeseado": "18:00 - 23:00",
+        "fechaDeseada": "2025-06-21",
+        "dineroOfrecido": 50000
+    },
+    {
+        "titulo": "Juego de Realidad Virtual",
+        "descripcion": "Videojuego inmersivo basado en mundos de ciencia ficción.",
+        "ubicacion": "Steam VR, Global",
+        "horarioDeseado": "24/7",
+        "fechaDeseada": "2026-02-14",
+        "dineroOfrecido": 150000
+    },
+    {
+        "titulo": "Biblioteca Digital Global",
+        "descripcion": "Acceso ilimitado a libros y artículos de todo el mundo.",
+        "ubicacion": "Web, Acceso Global",
+        "horarioDeseado": "24/7",
+        "fechaDeseada": "2025-05-01",
+        "dineroOfrecido": 90000
+    },
+    {
+        "titulo": "Robot Asistente Doméstico",
+        "descripcion": "Un dispositivo que ayuda con tareas del hogar y asistencia personal.",
+        "ubicacion": "Fábrica en Shenzhen, China",
+        "horarioDeseado": "08:00 - 18:00",
+        "fechaDeseada": "2025-10-10",
+        "dineroOfrecido": 350000
+    },
+    {
+        "titulo": "Turismo Espacial Económico",
+        "descripcion": "Vuelos accesibles al espacio para turistas de todo el mundo.",
+        "ubicacion": "Estación Espacial Internacional",
+        "horarioDeseado": "10:00 - 22:00",
+        "fechaDeseada": "2027-01-01",
+        "dineroOfrecido": 10000000
+    }
+]

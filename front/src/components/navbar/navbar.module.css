@@ -1,11 +1,9 @@
-/* Barra de navegación general */
 .navbar {
   display: flex;
   justify-content: center;
   align-items: center;
-  /* background-color: #00A800; Verde clarito */
   background-color: #0acc0a;
-  color: #fff; /* Texto blanco para contraste */
+  color: #fff;
   padding: 0;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
   position: sticky;
@@ -13,7 +11,6 @@
   z-index: 1000;
 }
 
-/* Estilo para opciones en navegador */
 .navbarLinks {
   display: flex;
   gap: 15px;
@@ -27,14 +24,14 @@
   padding: 10px 15px;
   border-radius: 5px;
   display: flex;
-  align-items: center; /* Alinea el texto dentro del enlace */
+  align-items: center;
   justify-content: center;
   height: 50px;
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .link:hover {
-  background-color: #008F00; /* Hover para navegador */
+  background-color: #008F00;
 }
 
 /* Modo móvil */
@@ -45,47 +42,45 @@
 
 .mobileTabs {
   display: flex;
-  justify-content: space-between; /* Distribuir uniformemente */
+  flex-direction: row;
+  justify-content: space-around;
   align-items: center;
-  width: 100%;
   padding: 10px 0;
-  background-color: #00A800; /* Verde clarito */
-  box-sizing: border-box; /* Asegurar que el padding no afecte el ancho */
+  background-color: #0acc0a;
+  box-sizing: border-box;
 }
 
-.mobileTab {
+.mobileTabs a {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center; /* Centrar ícono y texto */
-  flex: 1; /* Igual ancho para todos los contenedores */
   text-align: center;
-  color: #fff;
-  font-size: 0.9rem;
-  text-decoration: none; /* Sin subrayado */
+  font-size: 1rem;
+  color: black;
+  text-decoration: none;
   transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .mobileTab:hover {
-  background-color: #008F00; /* Hover para móvil */
-  transform: scale(1.05); /* Pequeño zoom */
+  background-color: #008F00;
+  transform: scale(1.05);
 }
 
 .mobileTab img {
   width: 40px;
   height: 40px;
-  background-color: #fff; /* Fondo blanco para los íconos */
+  background-color: #fff;
   border-radius: 50%;
   padding: 5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .mobileTab img:hover {
-  background-color: #008F00; /* Cambiar color del fondo en hover */
+  background-color: #008F00;
 }
 
 .mobileTab span {
-  margin-top: 5px; /* Separación entre ícono y texto */
-  font-size: 0.8rem; /* Tamaño del texto */
-  text-decoration: none; /* Sin subrayado */
+  margin-top: 5px;
+  font-size: 0.8rem;
+  text-decoration: none;
 }

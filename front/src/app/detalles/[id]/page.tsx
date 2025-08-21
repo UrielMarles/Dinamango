@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { apiHelper } from "@/helper/apiHelper";
+import toast from "react-hot-toast";
 
 interface Publicacion {
     id: string;
@@ -18,7 +19,7 @@ interface Publicacion {
         apellido: string;
         email: string;
     };
-    ofertas: any;
+    ofertas: string[];
 }
 
 export default function DetallePublicacion() {
@@ -28,23 +29,23 @@ export default function DetallePublicacion() {
     const [publicacion, setPublicacion] = useState<Publicacion | null>(null);
     const [mensajeOferta, setMensajeOferta] = useState<string>("");
 
-    useEffect(() => {
-        const tareaConOferta = async (id: string) => {
-            try {
-                const data = await apiHelper.ObtenerTareaConOfertas(id);
+    const tareaConOferta = async (id: string) => {
+        try {
+            const data = await apiHelper.ObtenerTareaConOfertas(id);
 
-                if (data.id) {
-                    setPublicacion(data);
-                }
-                else {
-                    console.warn("No se encontró la tarea con ID:", id);
-                }
+            if (data.id) {
+                setPublicacion(data);
             }
-            catch (err) {
-                console.error("Error en la obtencion del id: ", err);
+            else {
+                console.warn("No se encontró la tarea con ID:", id);
             }
         }
+        catch (err) {
+            console.error("Error en la obtencion del id: ", err);
+        }
+    }
 
+    useEffect(() => {
         tareaConOferta(id)
     }, [id]);
 
@@ -56,10 +57,17 @@ export default function DetallePublicacion() {
 
             const responseData = await apiHelper.mandarOferta(idTarea, mensaje)
 
+            toast.success("Postulación enviada con éxito.");
+            setMensajeOferta("");
+
+            await tareaConOferta(idTarea);
+
             return responseData;
         }
         catch (err) {
             console.error("Error al obtener las ofertas: ", err);
+
+            toast.error("Hubo un problema con la postulación.");
         }
     }
 
@@ -69,9 +77,9 @@ export default function DetallePublicacion() {
                 <h1>{publicacion?.titulo}</h1>
                 <p>{publicacion?.descripcion}</p>
                 <p>
-                    Publicado por: <strong>{publicacion?.creador.nombre} {publicacion?.creador.apellido}</strong>
+                    Publicado por: {<strong>{publicacion?.creador.nombre} {publicacion?.creador.apellido}</strong>}
                 </p>
-                <p>Cantidad de Ofertas: {publicacion?.ofertas.length}</p>
+                <p>Cantidad de Ofertas: <span>{publicacion?.ofertas.length}</span></p>
             </div>
 
             <div>
