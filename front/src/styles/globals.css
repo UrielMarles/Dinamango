@@ -5,5 +5,33 @@
   --color-texto: #212121;
   --color-contraste: #F694C1;
   --color-oscuro: #153B50;
-  --default-font: Arial, sans-serif;
 }
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-fondo);
+}
+
+.main-content {
+  padding: 20px;
+}
+
+.btn-primary {
+  background-color: var(--color-oscuro);
+  color: var(--color-fondo);
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  margin-top: 20px;
+}
+
+.btn-primary:hover {
+  background-color: var(--color-secundario);
+} 

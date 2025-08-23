@@ -18,19 +18,18 @@ public class OfertaController : ControllerBase
         _userService = userService;
     }
 
-    // 📌 Crear una nueva oferta para una tarea
     [HttpPost("{idTarea}")]
     public async Task<IActionResult> CrearOferta(Guid idTarea, [FromHeader(Name = "Authorization")] string token, [FromBody] CreateOfertaDTO request)
     {
-        var user = await _userService.ValidateToken(token);
+        User? user = await _userService.ValidateToken(token);
         if (user == null)
             return Unauthorized(new { message = "Token inválido" });
 
-        var tarea = await _context.Tareas.FindAsync(idTarea);
+        Tarea? tarea = await _context.Tareas.FindAsync(idTarea);
         if (tarea == null)
             return NotFound(new { message = "Tarea no encontrada" });
 
-        var oferta = new Oferta
+        Oferta oferta = new Oferta
         {
             Id = Guid.NewGuid(),
             IdTarea = idTarea,

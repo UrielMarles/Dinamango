@@ -25,11 +25,8 @@
         public string FechaDeseada { get; set; }
         public decimal DineroOfrecido { get; set; }
         public DateTime FechaPublicacion { get; set; }
-
         public ResultGetUsuarioDTO Creador { get; set; }
-
         public List<OfertaDTO> Ofertas { get; set; }
     }
-
-
 }
+

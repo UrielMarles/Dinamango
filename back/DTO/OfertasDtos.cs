@@ -4,7 +4,6 @@
     {
         public string MensajeOferta { get; set; }
     }
-
     public class OfertaDTO
     {
         public Guid Id { get; set; }

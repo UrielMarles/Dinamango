@@ -1,0 +1,1 @@
+type OpcionesBusqueda = 'recientes' | 'antiguos' | 'precio_alto' | 'precio_bajo' | 'mas_ofertas';

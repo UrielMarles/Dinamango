@@ -85,7 +85,7 @@ namespace MangoDB.Controllers
         {
             var query = _context.Tareas
                 .Include(t => t.Creador)
-                .Include(t => t.Ofertas) // 🔹 Incluir la relación con Ofertas
+                .Include(t => t.Ofertas)
                 .AsQueryable();
 
             if (filters.MinDinero.HasValue)
