@@ -1,481 +1,900 @@
-/* eslint-disable */
 "use client";
 
-import { TextField, Button, Box, Typography, InputAdornment } from "@mui/material";
+import { 
+    TextField, 
+    Button, 
+    Box, 
+    Typography, 
+    InputAdornment,
+    Card,
+    CardContent,
+    Stepper,
+    Step,
+    StepLabel,
+    StepButton,
+    Container,
+    IconButton,
+    Chip,
+    Stack,
+    Paper,
+    Avatar,
+    Badge
+} from "@mui/material";
+import {
+    Title as TitleIcon,
+    LocationOn as LocationIcon,
+    Description as DescriptionIcon,
+    AttachMoney as MoneyIcon,
+    Schedule as ScheduleIcon,
+    DateRange as DateIcon,
+    Home as HomeIcon,
+    Public as OnlineIcon,
+    CloudUpload as UploadIcon,
+    Delete as DeleteIcon,
+    CheckCircle as CheckIcon,
+    Edit as EditIcon
+} from "@mui/icons-material";
+import { LocalizationProvider, DatePicker, TimePicker } from '@mui/x-date-pickers';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { es } from 'date-fns/locale';
 import Image from "next/image";
 import { useForm } from "react-hook-form";
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { apiHelper } from "@/helper/apiHelper";
 import toast from "react-hot-toast";
+import { motion, AnimatePresence } from 'framer-motion';
+import estilos from "./publicar.module.css"
 
-const estiloTitulo = (color: string, fontSize: string, fontWeight: string, letterSpacing: string) => ({
-    color: color,
-    fontSize: fontSize,
-    fontWeight: fontWeight,
-    letterSpacing: letterSpacing,
-});
+const MotionBox = motion(Box);
+const MotionCard = motion(Card);
+const MotionPaper = motion(Paper);
 
-const estiloLabel = (fontSize: string, letterSpacing: string) => ({
-    fontSize: fontSize,
-    letterSpacing: letterSpacing,
-});
-
-const estiloInput = (color: string, fontSize: string, fontWeight: string) => ({
-    "& input": {
-        color: color,
-        fontSize: fontSize,
-        fontWeight: fontWeight,
-        "&::placeholder": {
-            color: "black",
-            fontSize: "18px",
-        }
-    }
-});
+interface ImageFile {
+    file: File;
+    preview: string;
+    id: string;
+}
 
 export default function TareasForm() {
-    const sectionsFields = [
-        { titulo: true, fechaDeseada: true, horarioDeseado: true },
-        { ubicacionTipo: true, ubicacion: true },
-        { descripcion: true },
-        { dineroOfrecido: true }
-    ];
-
     const {
         register,
         handleSubmit,
         formState: { errors },
         setValue,
         trigger,
-        reset
+        reset,
+        watch
     } = useForm();
 
-    const [fechaSeleccionada, setValueFecha] = useState("");
-    const [horaSeleccionada, setValueHora] = useState("");
+    // Estados
     const [currentSection, setCurrentSection] = useState(0);
-    const [ubicacionTipo, setUbicacionTipo] = useState<null | string>(null);
+    const [completedSections, setCompletedSections] = useState<boolean[]>([false, false, false, false]);
+    const [fechaSeleccionada, setFechaSeleccionada] = useState<string>("");
+    const [horaSeleccionada, setHoraSeleccionada] = useState<string>("");
+    const [ubicacionTipo, setUbicacionTipo] = useState<string | null>(null);
+    const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+    const [selectedTime, setSelectedTime] = useState<Date | null>(null);
+    const [images, setImages] = useState<ImageFile[]>([]);
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
-    const handleChangeFecha = (newValue: string) => {
-        setValueFecha(newValue);
-        setValue("fechaDeseada", newValue, { shouldValidate: true });
+    const steps = [
+        { label: 'Título y Fecha', icon: <TitleIcon />, color: '#1ADB1A' },
+        { label: 'Ubicación', icon: <LocationIcon />, color: '#1ADB1A' },
+        { label: 'Detalles', icon: <DescriptionIcon />, color: '#1ADB1A' },
+        { label: 'Presupuesto', icon: <MoneyIcon />, color: '#1ADB1A' }
+    ];
+
+    const watchedValues = watch();
+
+    // Manejar cambio de fecha
+    const handleChangeFecha = (tipo: string) => {
+        setFechaSeleccionada(tipo);
+        setValue("fechaDeseada", tipo, { shouldValidate: true });
         trigger("fechaDeseada");
     };
 
-    const handleChangeHorario = (newValue: string) => {
-        setValueHora(newValue);
-        setValue("horarioDeseado", newValue, { shouldValidate: true });
+    // Manejar cambio de horario
+    const handleChangeHorario = (tipo: string) => {
+        setHoraSeleccionada(tipo);
+        setValue("horarioDeseado", tipo, { shouldValidate: true });
         trigger("horarioDeseado");
-    }
+    };
 
+    // Manejar carga de imágenes
+    const handleImageUpload = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
+        const files = Array.from(event.target.files || []);
+        
+        files.forEach(file => {
+            if (file.type.startsWith('image/')) {
+                const reader = new FileReader();
+                reader.onload = () => {
+                    const newImage: ImageFile = {
+                        file,
+                        preview: reader.result as string,
+                        id: Math.random().toString(36).substr(2, 9)
+                    };
+                    setImages(prev => [...prev, newImage]);
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+        
+        // Reset input
+        event.target.value = '';
+    }, []);
+
+    // Eliminar imagen
+    const removeImage = (id: string) => {
+        setImages(prev => prev.filter(img => img.id !== id));
+    };
+
+    // Validar sección actual
+    const validateCurrentSection = async (): Promise<boolean> => {
+        const sectionFields = getSectionFields(currentSection);
+        
+        // Validaciones especiales
+        if (currentSection === 0) {
+            if (!fechaSeleccionada) {
+                setValue("fechaDeseada", "");
+                trigger("fechaDeseada");
+                return false;
+            }
+            if (!horaSeleccionada) {
+                setValue("horarioDeseado", "");
+                trigger("horarioDeseado");
+                return false;
+            }
+        }
+        
+        if (currentSection === 1) {
+            if (!ubicacionTipo) {
+                setValue("ubicacionTipo", "");
+                trigger("ubicacionTipo");
+                return false;
+            }
+            setValue("ubicacionTipo", ubicacionTipo);
+        }
+
+        return await trigger(sectionFields);
+    };
+
+    // Obtener campos de cada sección
+    const getSectionFields = (sectionIndex: number): string[] => {
+        const sectionFieldsMap = [
+            ['titulo', 'fechaDeseada', 'horarioDeseado'],
+            ['ubicacionTipo', ...(ubicacionTipo === 'casa' ? ['ubicacion'] : [])],
+            ['descripcion'],
+            ['dineroOfrecido']
+        ];
+        return sectionFieldsMap[sectionIndex] || [];
+    };
+
+    // Navegar a la siguiente sección
+    const handleNext = async () => {
+        const isValid = await validateCurrentSection();
+        if (isValid) {
+            const newCompleted = [...completedSections];
+            newCompleted[currentSection] = true;
+            setCompletedSections(newCompleted);
+            setCurrentSection(prev => prev + 1);
+        }
+    };
+
+    // Navegar a la sección anterior
+    const handleBack = () => {
+        setCurrentSection(prev => prev - 1);
+    };
+
+    // Navegar a una sección específica
+    const handleStepClick = async (stepIndex: number) => {
+        if (stepIndex < currentSection) {
+            // Permitir ir hacia atrás
+            setCurrentSection(stepIndex);
+        } else if (stepIndex === currentSection + 1) {
+            // Permitir avanzar una sección
+            await handleNext();
+        }
+    };
+
+    // Submit del formulario
     const onSubmit = async (data: any) => {
+        setIsSubmitting(true);
         const { ubicacionTipo, ...cleanData } = data;
 
         if (ubicacionTipo === "online") {
             cleanData.ubicacion = "online";
         }
 
+        // Agregar imágenes si las hay
+        if (images.length > 0) {
+            cleanData.imagenes = images.map(img => img.file);
+        }
+
         try {
             await apiHelper.addTareas(cleanData);
+            toast.success("¡Tarea creada con éxito!", {
+                duration: 4000,
+                icon: '🎉'
+            });
 
-            toast.success("Tarea creada con éxito");
-
+            // Reset form
             reset();
             setCurrentSection(0);
+            setCompletedSections([false, false, false, false]);
             setUbicacionTipo(null);
-            setValueFecha("");
-            setValueHora("");
-        }
-        catch (error) {
-            console.error("Hubo un error con agregar una tarea", error);
-
-            toast.error("Hubo un problema para publicar la tarea");
-        }
-    };
-
-    const handleNext = async () => {
-        const sectionFields = Object.keys(sectionsFields[currentSection]);
-
-        if (currentSection === 0 && !fechaSeleccionada) {
-            setValue("fechaDeseada", "");
-            trigger("fechaDeseada");
-
-            return;
-        }
-
-        if (currentSection === 0 && !horaSeleccionada) {
-            setValue("horarioDeseado", "");
-            trigger("horarioDeseado");
-
-            return;
-        }
-
-        if (currentSection === 1) {
-            setValue("ubicacionTipo", ubicacionTipo);
-        }
-
-        const valid = await trigger(sectionFields);
-
-        if (valid) {
-            setCurrentSection(currentSection + 1);
+            setFechaSeleccionada("");
+            setHoraSeleccionada("");
+            setSelectedDate(null);
+            setSelectedTime(null);
+            setImages([]);
+        } catch (error) {
+            console.error("Error al agregar tarea:", error);
+            toast.error("Hubo un problema al publicar la tarea");
+        } finally {
+            setIsSubmitting(false);
         }
     };
 
-    const handleBack = () => {
-        setCurrentSection(currentSection - 1);
-    };
-
-    const handleSectionClick = async (index: number) => {
-        if (currentSection === 0 && index > 0) return;
-        if (currentSection === 1 && index > 1) return;
-        if (currentSection === 2 && index > 2) return;
-        if (currentSection === 3 && index > 3) return;
-
-        if (index < currentSection) {
-            setCurrentSection(index);
-            return;
-        }
-
-        const sectionFields = Object.keys(sectionsFields[currentSection]);
-        const valid = await trigger(sectionFields);
-        if (valid) {
-            setCurrentSection(index);
+    // Animaciones
+    const containerVariants = {
+        hidden: { opacity: 0, y: 20 },
+        visible: { 
+            opacity: 1, 
+            y: 0,
+            transition: { duration: 0.5, staggerChildren: 0.1 }
         }
     };
 
-    const sections = [
-        // Título y Fecha
-        <>
-            <Typography
-                style={estiloTitulo("#0acc0a", "30px", "900", "-2px")}
-            >
-                Empecemos con lo básico.</Typography>
-            <br />
-            <Typography
-                style={estiloLabel("20px", "-1px")}
-            >
-                En pocas palabras ¿Qué necesitas que se haga?
-            </Typography>
-            <TextField
-                placeholder="Ejemplo: Pintar mi casa"
-                type="text"
-                fullWidth
-                {...register("titulo", { required: "El título es obligatorio" })}
-                error={!!errors.titulo}
-                sx={estiloInput("#757575", "18px", "500")}
-            />
-            {errors.titulo && <Typography color="error">El título es obligatorio</Typography>}
+    const sectionVariants = {
+        hidden: { opacity: 0, x: 20 },
+        visible: { opacity: 1, x: 0 },
+        exit: { opacity: 0, x: -20 }
+    };
 
-            <Typography
-                style={estiloLabel("20px", "-1px")}
-            >
-                ¿Cuándo necesitas que se haga esto?
-            </Typography>
-            <Box display="flex" gap={2}>
-                <Button
-                    onClick={() => handleChangeFecha("fecha")}
-                    variant={fechaSeleccionada === "fecha" ? "contained" : "outlined"}
-                >
-                    En la fecha
-                </Button>
-                <Button
-                    onClick={() => handleChangeFecha("antes")}
-                    variant={fechaSeleccionada === "antes" ? "contained" : "outlined"}
-                >
-                    Antes de la fecha
-                </Button>
-                <Button
-                    onClick={() => handleChangeFecha("flexible")}
-                    variant={fechaSeleccionada === "flexible" ? "contained" : "outlined"}
-                >
-                    Soy flexible
-                </Button>
-
-            </Box>
-            <input type="hidden" {...register("fechaDeseada", { required: "Seleccione una fecha" })} />
-            {errors.fechaDeseada && <Typography color="error">Seleccione una fecha</Typography>}
-
-            <br />
-
-            <Typography
-                style={estiloLabel("20px", "-1px")}
-            >
-                ¿En qué horario?
-            </Typography>
-            <Box display="flex" justifyContent={"center"} gap={2} marginTop={2}>
-                <Button
-                    onClick={() => handleChangeHorario("mañana")}
-                    variant={horaSeleccionada === "mañana" ? "contained" : "outlined"}
-                >
-                    Mañana
-                </Button>
-                <Button
-                    onClick={() => handleChangeHorario("tarde")}
-                    variant={horaSeleccionada === "tarde" ? "contained" : "outlined"}
-                >
-                    Tarde
-                </Button>
-                <Button
-                    onClick={() => handleChangeHorario("noche")}
-                    variant={horaSeleccionada === "noche" ? "contained" : "outlined"}
-                >
-                    Noche
-                </Button>
-            </Box>
-            <input type="hidden" {...register("horarioDeseado", { required: "Seleccione un horario" })} />
-            {errors.fechaDeseada && <Typography color="error">Seleccione un horario</Typography>}
-        </>,
-
-        // Ubicacion
-        <>
-            <Typography
-                sx={{
-                    fontWeight: "900",
-                    fontSize: "30px",
-                    letterSpacing: "-2px",
-                    color: "#0acc0a",
-                }}
-            >
-                Dinos dónde
-            </Typography>
-            <br />
-            <Typography
-                style={estiloLabel("20px", "-1px")}
-            >
-                ¿Dónde necesitas que se haga esto?
-            </Typography>
-
-            <Box display="flex" gap={2}>
-                <Button
-                    onClick={() => {
-                        setUbicacionTipo("casa");
-                        setValue("ubicacionTipo", "casa", { shouldValidate: true });
-                    }}
-                    variant={ubicacionTipo === "casa" ? "contained" : "outlined"}
-                >
-                    En mi casa
-                </Button>
-                <Button
-                    onClick={() => {
-                        setUbicacionTipo("online");
-                        setValue("ubicacionTipo", "online", { shouldValidate: true });
-                    }}
-                    variant={ubicacionTipo === "online" ? "contained" : "outlined"}
-                >
-                    En línea
-                </Button>
-            </Box>
-            <input type="hidden" {...register("ubicacionTipo", { required: "Debe seleccionar una ubicación" })} />
-            {errors.ubicacionTipo && <Typography color="error">Seleccione una ubicacion</Typography>}
-
-            {ubicacionTipo === "casa" && (
-                <Box mt={2}>
-                    <TextField
-                        placeholder="Ingrese su ubicación"
-                        fullWidth
-                        {...register("ubicacion", { required: "La ubicación es obligatoria" })}
-                        error={!!errors.ubicacion}
-                        sx={estiloInput("#757575", "18px", "500")}
-                    />
-                    {errors.ubicacion && <Typography color="error">La ubicación es obligatoria</Typography>}
-                </Box>
-            )}
-            {ubicacionTipo === "online" && errors.ubicacion && (
-                <Typography color="error">Debe seleccionar una opción</Typography>
-            )}
-        </>,
-
-        // Detalles
-        <>
-            <Typography
-                style={estiloTitulo("#0acc0a", "30px", "900", "-2px")}
-            >
-                Proporcionar más detalles
-            </Typography>
-            <br />
-            <Typography
-                style={estiloLabel("20px", "-1px")}
-            >
-                ¿Cuáles son los detalles?
-            </Typography>
-            <TextField
-                placeholder="Escribe un resumen de los detalles clave"
-                multiline
-                minRows={4}
-                maxRows={6}
-                fullWidth
-                {...register("descripcion", { required: "La descripción es obligatoria" })}
-                error={!!errors.descripcion}
-                sx={{
-                    "& .MuiInputBase-input": {
-                        color: "#757575",
-                        fontSize: "18px",
-                        fontWeight: 500,
-                        "&::placeholder": {
-                            color: "black",
-                            fontSize: "18px",
-                        },
-                    },
-                    "& .MuiInputBase-inputMultiline": {
-                        color: "#757575",
-                        fontSize: "18px",
-                        fontWeight: 500,
-                        "&::placeholder": {
-                            color: "black",
-                            fontSize: "18px",
-                        },
-                    }
-                }}
-            />
-            {errors.descripcion && <Typography color="error">Seleccione una descripcion</Typography>}
-
-            <Typography
-                style={estiloLabel("20px", "-1px")}
-            >
-                Añadir imágenes <span style={{ fontSize: "12px" }}>(opcional)</span>
-            </Typography>
-            <TextField
-                type="file"
-                {...register("imagenes")}
-            />
-        </>,
-
-        // Presupuesto
-        <>
-            <Typography
-                style={estiloTitulo("#0acc0a", "30px", "900", "-2px")}
-            >
-                Sugiere tu presupuesto
-            </Typography>
-            <br />
-            <Typography
-                style={estiloLabel("20px", "-1px")}
-            >
-                ¿Cuál es tu presupuesto?
-            </Typography>
-            <Typography>Siempre puedes negociar el precio final.</Typography>
-            <TextField
-                fullWidth
-                placeholder="Introducir presupuesto"
-                type="number"
-                {...register("dineroOfrecido", { required: "Su presupuesto es obligatorio" })}
-                error={!!errors.dineroOfrecido}
-                InputProps={{
-                    startAdornment: (
-                        <InputAdornment position="start">
-                            <Image
-                                src="/icons/dolar.png"
-                                alt="Moneda"
-                                width={25}
-                                height={25}
-                            />
-                        </InputAdornment>
-                    ),
-                }}
-            />
-            {errors.dineroOfrecido && <Typography color="error">Su presupuesto es obligatorio</Typography>}
-        </>
-    ];
+    const stepVariants = {
+        inactive: { scale: 0.9, opacity: 0.6 },
+        active: { scale: 1, opacity: 1 },
+        completed: { scale: 1, opacity: 1 }
+    };
 
     return (
-        <>
-            <Box
-                sx={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "stretch",
-                    flex: 1,
-                    gap: 2,
-                }}
-            >
-                {/* Sidebar de Secciones */}
-                <Box
-                    sx={{
-                        width: "200px",
-                        bgcolor: "white",
-                        p: 2,
-                        borderRadius: 2,
-                        boxShadow: 2,
-                    }}
+        <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={es}>
+            <Container maxWidth="lg" className={estilos.container}>
+                <motion.div
+                    initial="hidden"
+                    animate="visible"
+                    variants={containerVariants}
                 >
-                    <Typography
-                        variant="h5"
-                        mb={2}
-                        sx={{
-                            textAlign: "center",
-                            fontWeight: "bold",
-                        }}
-                    >
-                        <span style={{ borderBottom: "2px solid black" }}>
-                            Publicar Tarea
-                        </span>
-                    </Typography>
-                    {["Título y Fecha", "Ubicación", "Detalles", "Presupuesto"].map((label, index) => (
-                        <Typography
-                            key={index}
-                            sx={{
-                                justifyContent: "flex-start",
-                                textAlign: "left",
-                                padding: 0,
-                                textTransform: "none",
-                                fontSize: "18px",
-                                textDecoration: currentSection === index ? "underline" : "none",
-                                color: currentSection === index ? "#1976d2" : "inherit",
-                                fontWeight: currentSection === index ? "bold" : "normal",
-                                transition: "all 0.3s",
-                                background: "none",
-                                boxShadow: "none",
-                                cursor: "pointer"
-                            }}
-                            onClick={() => handleSectionClick(index)}
-                        >
-                            {label}
-                        </Typography>
-                    ))}
-                </Box>
-
-                {/* Formulario */}
-                <Box
-                    component="form"
-                    onSubmit={handleSubmit(onSubmit)}
-                    sx={{
-                        display: "flex",
-                        justifyContent: "center",
-                        flexDirection: "column",
-                        gap: 2,
-                        width: "500px",
-                        padding: 3,
-                        boxShadow: 3,
-                        borderRadius: 2,
-                        backgroundColor: "white",
-                    }}
-                >
-                    {/* Secciones */}
-                    {sections.map((section, index) => (
-                        <Box
-                            key={index}
-                            sx={{
-                                display: currentSection === index ? "block" : "none",
-                            }}
-                        >
-                            {section}
+                    {/* Header */}
+                    <MotionPaper className={estilos.header} elevation={2}>
+                        <Avatar className={estilos.headerIcon}>
+                            <EditIcon />
+                        </Avatar>
+                        <Box>
+                            <Typography variant="h4" className={estilos.headerTitle}>
+                                Crear Nueva Tarea
+                            </Typography>
+                            <Typography variant="subtitle1" className={estilos.headerSubtitle}>
+                                Completa la información paso a paso
+                            </Typography>
                         </Box>
-                    ))}
+                    </MotionPaper>
 
-                    {/* Navegación entre secciones */}
-                    <Box sx={{ display: "flex", justifyContent: "space-between", mt: 2 }}>
-                        {currentSection > 0 && (
-                            <Button onClick={handleBack} variant="contained" color="primary">Atrás</Button>
-                        )}
-                        {currentSection < sections.length - 1 && (
-                            <Button onClick={handleNext} variant="contained" color="primary">Siguiente</Button>
-                        )}
-                        {currentSection === sections.length - 1 && (
-                            <Button type="submit" variant="contained" color="primary">Enviar</Button>
-                        )}
+                    <Box className={estilos.mainContent}>
+                        {/* Stepper lateral */}
+                        <MotionBox className={estilos.sidebar}>
+                            <Paper className={estilos.sidebarPaper} elevation={3}>
+                                <Typography variant="h6" className={estilos.sidebarTitle}>
+                                    Progreso
+                                </Typography>
+                                
+                                <Stepper 
+                                    activeStep={currentSection} 
+                                    orientation="vertical"
+                                    className={estilos.stepper}
+                                >
+                                    {steps.map((step, index) => (
+                                        <Step 
+                                            key={step.label}
+                                            completed={completedSections[index]}
+                                            className={estilos.step}
+                                        >
+                                            <StepButton
+                                                onClick={() => handleStepClick(index)}
+                                                className={estilos.stepButton}
+                                                disabled={index > currentSection + 1}
+                                            >
+                                                <StepLabel 
+                                                    icon={
+                                                        <motion.div
+                                                            variants={stepVariants}
+                                                            animate={
+                                                                completedSections[index] 
+                                                                    ? "completed" 
+                                                                    : index === currentSection 
+                                                                        ? "active" 
+                                                                        : "inactive"
+                                                            }
+                                                        >
+                                                            <Avatar 
+                                                                className={`${estilos.stepIcon} ${
+                                                                    completedSections[index] 
+                                                                        ? estilos.completed
+                                                                        : index === currentSection 
+                                                                            ? estilos.active
+                                                                            : estilos.inactive
+                                                                }`}
+                                                            >
+                                                                {completedSections[index] ? <CheckIcon /> : step.icon}
+                                                            </Avatar>
+                                                        </motion.div>
+                                                    }
+                                                    className={estilos.stepLabel}
+                                                >
+                                                    <Typography 
+                                                        variant="body1" 
+                                                        className={`${estilos.stepText} ${
+                                                            index === currentSection ? estilos.activeText : ''
+                                                        }`}
+                                                    >
+                                                        {step.label}
+                                                    </Typography>
+                                                </StepLabel>
+                                            </StepButton>
+                                        </Step>
+                                    ))}
+                                </Stepper>
+
+                                {/* Progress indicator */}
+                                <Box className={estilos.progressContainer}>
+                                    <Typography variant="body2" className={estilos.progressText}>
+                                        {completedSections.filter(Boolean).length} de {steps.length} completado
+                                    </Typography>
+                                    <Box className={estilos.progressBar}>
+                                        <Box 
+                                            className={estilos.progressFill}
+                                            style={{ 
+                                                width: `${(completedSections.filter(Boolean).length / steps.length) * 100}%` 
+                                            }}
+                                        />
+                                    </Box>
+                                </Box>
+                            </Paper>
+                        </MotionBox>
+
+                        {/* Formulario principal */}
+                        <MotionBox className={estilos.formContainer}>
+                            <MotionCard 
+                                className={estilos.formCard}
+                                elevation={4}
+                            >
+                                <CardContent 
+                                    className={estilos.cardContent}
+                                    component="form"
+                                    onSubmit={handleSubmit(onSubmit)}
+                                >
+                                    <AnimatePresence mode="wait">
+                                        {/* Sección 1: Título y Fecha */}
+                                        {currentSection === 0 && (
+                                            <motion.div
+                                                key="section-0"
+                                                variants={sectionVariants}
+                                                initial="hidden"
+                                                animate="visible"
+                                                exit="exit"
+                                                className={estilos.section}
+                                            >
+                                                <Box className={estilos.sectionHeader}>
+                                                    <TitleIcon className={estilos.sectionIcon} />
+                                                    <Typography variant="h5" className={estilos.sectionTitle}>
+                                                        Empecemos con lo básico
+                                                    </Typography>
+                                                </Box>
+
+                                                <Stack spacing={4}>
+                                                    <Box>
+                                                        <Typography variant="h6" className={estilos.fieldLabel}>
+                                                            ¿Qué necesitas que se haga?
+                                                        </Typography>
+                                                        <TextField
+                                                            fullWidth
+                                                            placeholder="Ejemplo: Pintar mi casa, Diseñar un logo..."
+                                                            {...register("titulo", { 
+                                                                required: "El título es obligatorio",
+                                                                minLength: {
+                                                                    value: 10,
+                                                                    message: "El título debe tener al menos 10 caracteres"
+                                                                }
+                                                            })}
+                                                            error={!!errors.titulo}
+                                                            helperText={errors.titulo?.message?.toString()}
+                                                            className={estilos.textField}
+                                                            slotProps={{
+                                                                input: {
+                                                                    startAdornment: (
+                                                                        <InputAdornment position="start">
+                                                                            <EditIcon className={estilos.inputIcon} />
+                                                                        </InputAdornment>
+                                                                    )
+                                                                }
+                                                            }}
+                                                        />
+                                                    </Box>
+
+                                                    <Box>
+                                                        <Typography variant="h6" className={estilos.fieldLabel}>
+                                                            ¿Cuándo necesitas que se haga?
+                                                        </Typography>
+                                                        <Stack direction="row" spacing={2} flexWrap="wrap">
+                                                            {[
+                                                                { value: "fecha", label: "En la fecha", icon: <DateIcon /> },
+                                                                { value: "antes", label: "Antes de la fecha", icon: <ScheduleIcon /> },
+                                                                { value: "flexible", label: "Soy flexible", icon: <CheckIcon /> }
+                                                            ].map((option) => (
+                                                                <Chip
+                                                                    key={option.value}
+                                                                    icon={option.icon}
+                                                                    label={option.label}
+                                                                    onClick={() => handleChangeFecha(option.value)}
+                                                                    color={fechaSeleccionada === option.value ? "primary" : "default"}
+                                                                    variant={fechaSeleccionada === option.value ? "filled" : "outlined"}
+                                                                    className={`${estilos.chip} ${
+                                                                        fechaSeleccionada === option.value ? estilos.chipSelected : ''
+                                                                    }`}
+                                                                />
+                                                            ))}
+                                                        </Stack>
+                                                        <input type="hidden" {...register("fechaDeseada", { required: "Seleccione cuándo" })} />
+                                                        {errors.fechaDeseada && (
+                                                            <Typography color="error" variant="caption" className={estilos.errorText}>
+                                                                {errors.fechaDeseada.message?.toString()}
+                                                            </Typography>
+                                                        )}
+                                                    </Box>
+
+                                                    <Box>
+                                                        <Typography variant="h6" className={estilos.fieldLabel}>
+                                                            ¿En qué horario?
+                                                        </Typography>
+                                                        <Stack direction="row" spacing={2} justifyContent="center">
+                                                            {[
+                                                                { value: "mañana", label: "Mañana (6-12h)", color: "#FFD700" },
+                                                                { value: "tarde", label: "Tarde (12-18h)", color: "#FF8C00" },
+                                                                { value: "noche", label: "Noche (18-24h)", color: "#4169E1" }
+                                                            ].map((option) => (
+                                                                <Button
+                                                                    key={option.value}
+                                                                    variant={horaSeleccionada === option.value ? "contained" : "outlined"}
+                                                                    onClick={() => handleChangeHorario(option.value)}
+                                                                    className={estilos.timeButton}
+                                                                    startIcon={<ScheduleIcon />}
+                                                                    style={{
+                                                                        backgroundColor: horaSeleccionada === option.value ? option.color : 'transparent',
+                                                                        borderColor: option.color,
+                                                                        color: horaSeleccionada === option.value ? 'white' : option.color
+                                                                    }}
+                                                                >
+                                                                    {option.label}
+                                                                </Button>
+                                                            ))}
+                                                        </Stack>
+                                                        <input type="hidden" {...register("horarioDeseado", { required: "Seleccione un horario" })} />
+                                                        {errors.horarioDeseado && (
+                                                            <Typography color="error" variant="caption" className={estilos.errorText}>
+                                                                {errors.horarioDeseado.message?.toString()}
+                                                            </Typography>
+                                                        )}
+                                                    </Box>
+
+                                                    {/* Selectores de fecha y hora más específicos */}
+                                                    {fechaSeleccionada === "fecha" && (
+                                                        <motion.div
+                                                            initial={{ opacity: 0, height: 0 }}
+                                                            animate={{ opacity: 1, height: 'auto' }}
+                                                            transition={{ duration: 0.3 }}
+                                                        >
+                                                            <Stack direction="row" spacing={2}>
+                                                                <DatePicker
+                                                                    label="Fecha específica"
+                                                                    value={selectedDate}
+                                                                    onChange={setSelectedDate}
+                                                                    minDate={new Date()}
+                                                                    className={estilos.datePicker}
+                                                                />
+                                                                <TimePicker
+                                                                    label="Hora específica"
+                                                                    value={selectedTime}
+                                                                    onChange={setSelectedTime}
+                                                                    className={estilos.timePicker}
+                                                                />
+                                                            </Stack>
+                                                        </motion.div>
+                                                    )}
+                                                </Stack>
+                                            </motion.div>
+                                        )}
+
+                                        {/* Sección 2: Ubicación */}
+                                        {currentSection === 1 && (
+                                            <motion.div
+                                                key="section-1"
+                                                variants={sectionVariants}
+                                                initial="hidden"
+                                                animate="visible"
+                                                exit="exit"
+                                                className={estilos.section}
+                                            >
+                                                <Box className={estilos.sectionHeader}>
+                                                    <LocationIcon className={estilos.sectionIcon} />
+                                                    <Typography variant="h5" className={estilos.sectionTitle}>
+                                                        ¿Dónde se realizará?
+                                                    </Typography>
+                                                </Box>
+
+                                                <Stack spacing={4}>
+                                                    <Box>
+                                                        <Typography variant="h6" className={estilos.fieldLabel}>
+                                                            Tipo de ubicación
+                                                        </Typography>
+                                                        <Stack direction="row" spacing={3} justifyContent="center">
+                                                            {[
+                                                                { value: "casa", label: "En mi casa", icon: <HomeIcon />, color: "#1ADB1A" },
+                                                                { value: "online", label: "En línea", icon: <OnlineIcon />, color: "#2196F3" }
+                                                            ].map((option) => (
+                                                                <Paper
+                                                                    key={option.value}
+                                                                    className={`${estilos.locationCard} ${
+                                                                        ubicacionTipo === option.value ? estilos.locationCardSelected : ''
+                                                                    }`}
+                                                                    onClick={() => {
+                                                                        setUbicacionTipo(option.value);
+                                                                        setValue("ubicacionTipo", option.value, { shouldValidate: true });
+                                                                    }}
+                                                                    style={{
+                                                                        borderColor: ubicacionTipo === option.value ? option.color : '#e0e0e0',
+                                                                        backgroundColor: ubicacionTipo === option.value ? `${option.color}10` : 'white'
+                                                                    }}
+                                                                >
+                                                                    <Avatar 
+                                                                        className={estilos.locationIcon}
+                                                                        style={{ backgroundColor: option.color }}
+                                                                    >
+                                                                        {option.icon}
+                                                                    </Avatar>
+                                                                    <Typography variant="h6" className={estilos.locationLabel}>
+                                                                        {option.label}
+                                                                    </Typography>
+                                                                </Paper>
+                                                            ))}
+                                                        </Stack>
+                                                        <input type="hidden" {...register("ubicacionTipo", { required: "Seleccione una ubicación" })} />
+                                                        {errors.ubicacionTipo && (
+                                                            <Typography color="error" variant="caption" className={estilos.errorText}>
+                                                                {errors.ubicacionTipo.message?.toString()}
+                                                            </Typography>
+                                                        )}
+                                                    </Box>
+
+                                                    {ubicacionTipo === "casa" && (
+                                                        <motion.div
+                                                            initial={{ opacity: 0, y: 20 }}
+                                                            animate={{ opacity: 1, y: 0 }}
+                                                            transition={{ duration: 0.3 }}
+                                                        >
+                                                            <TextField
+                                                                fullWidth
+                                                                placeholder="Ingrese su dirección completa"
+                                                                {...register("ubicacion", { required: "La ubicación es obligatoria" })}
+                                                                error={!!errors.ubicacion}
+                                                                helperText={errors.ubicacion?.message?.toString()}
+                                                                className={estilos.textField}
+                                                                slotProps={{
+                                                                    input: {
+                                                                        startAdornment: (
+                                                                            <InputAdornment position="start">
+                                                                                <LocationIcon className={estilos.inputIcon} />
+                                                                            </InputAdornment>
+                                                                        )
+                                                                    }
+                                                                }}
+                                                            />
+                                                        </motion.div>
+                                                    )}
+                                                </Stack>
+                                            </motion.div>
+                                        )}
+
+                                        {/* Sección 3: Detalles */}
+                                        {currentSection === 2 && (
+                                            <motion.div
+                                                key="section-2"
+                                                variants={sectionVariants}
+                                                initial="hidden"
+                                                animate="visible"
+                                                exit="exit"
+                                                className={estilos.section}
+                                            >
+                                                <Box className={estilos.sectionHeader}>
+                                                    <DescriptionIcon className={estilos.sectionIcon} />
+                                                    <Typography variant="h5" className={estilos.sectionTitle}>
+                                                        Proporciona más detalles
+                                                    </Typography>
+                                                </Box>
+
+                                                <Stack spacing={4}>
+                                                    <Box>
+                                                        <Typography variant="h6" className={estilos.fieldLabel}>
+                                                            Descripción detallada
+                                                        </Typography>
+                                                        <TextField
+                                                            fullWidth
+                                                            multiline
+                                                            minRows={4}
+                                                            maxRows={8}
+                                                            placeholder="Describe con detalle qué necesitas, materiales, requisitos específicos, experiencia necesaria, etc."
+                                                            {...register("descripcion", { 
+                                                                required: "La descripción es obligatoria",
+                                                                minLength: {
+                                                                    value: 50,
+                                                                    message: "La descripción debe tener al menos 50 caracteres"
+                                                                }
+                                                            })}
+                                                            error={!!errors.descripcion}
+                                                            helperText={errors.descripcion?.message?.toString() || `${watchedValues.descripcion?.length || 0}/500 caracteres`}
+                                                            className={estilos.textArea}
+                                                            slotProps={{
+                                                                input: {
+                                                                    startAdornment: (
+                                                                        <InputAdornment position="start" style={{ alignSelf: 'flex-start', marginTop: '8px' }}>
+                                                                            <DescriptionIcon className={estilos.inputIcon} />
+                                                                        </InputAdornment>
+                                                                    )
+                                                                }
+                                                            }}
+                                                        />
+                                                    </Box>
+
+                                                    <Box>
+                                                        <Typography variant="h6" className={estilos.fieldLabel}>
+                                                            Imágenes de referencia
+                                                            <Chip label="Opcional" size="small" className={estilos.optionalChip} />
+                                                        </Typography>
+                                                        
+                                                        <Paper className={estilos.uploadArea}>
+                                                            <input
+                                                                type="file"
+                                                                accept="image/*"
+                                                                multiple
+                                                                onChange={handleImageUpload}
+                                                                style={{ display: 'none' }}
+                                                                id="image-upload"
+                                                            />
+                                                            <label htmlFor="image-upload" className={estilos.uploadLabel}>
+                                                                <Box className={estilos.uploadContent}>
+                                                                    <UploadIcon className={estilos.uploadIcon} />
+                                                                    <Typography variant="h6" className={estilos.uploadText}>
+                                                                        Arrastra imágenes aquí o haz clic para seleccionar
+                                                                    </Typography>
+                                                                    <Typography variant="body2" color="text.secondary">
+                                                                        Formatos: JPG, PNG, GIF (máx. 5MB cada una)
+                                                                    </Typography>
+                                                                </Box>
+                                                            </label>
+                                                        </Paper>
+
+                                                        {images.length > 0 && (
+                                                            <Box className={estilos.imagePreviewContainer}>
+                                                                <Typography variant="subtitle1" className={estilos.previewTitle}>
+                                                                    Imágenes seleccionadas ({images.length})
+                                                                </Typography>
+                                                                <Box className={estilos.imageGrid}>
+                                                                    {images.map((image) => (
+                                                                        <motion.div
+                                                                            key={image.id}
+                                                                            initial={{ opacity: 0, scale: 0.8 }}
+                                                                            animate={{ opacity: 1, scale: 1 }}
+                                                                            className={estilos.imagePreview}
+                                                                        >
+                                                                            <img 
+                                                                                src={image.preview} 
+                                                                                alt="Preview" 
+                                                                                className={estilos.previewImage}
+                                                                            />
+                                                                            <IconButton
+                                                                                className={estilos.removeImageButton}
+                                                                                onClick={() => removeImage(image.id)}
+                                                                                size="small"
+                                                                            >
+                                                                                <DeleteIcon />
+                                                                            </IconButton>
+                                                                            <Typography variant="caption" className={estilos.imageFilename}>
+                                                                                {image.file.name}
+                                                                            </Typography>
+                                                                        </motion.div>
+                                                                    ))}
+                                                                </Box>
+                                                            </Box>
+                                                        )}
+                                                    </Box>
+                                                </Stack>
+                                            </motion.div>
+                                        )}
+
+                                        {/* Sección 4: Presupuesto */}
+                                        {currentSection === 3 && (
+                                            <motion.div
+                                                key="section-3"
+                                                variants={sectionVariants}
+                                                initial="hidden"
+                                                animate="visible"
+                                                exit="exit"
+                                                className={estilos.section}
+                                            >
+                                                <Box className={estilos.sectionHeader}>
+                                                    <MoneyIcon className={estilos.sectionIcon} />
+                                                    <Typography variant="h5" className={estilos.sectionTitle}>
+                                                        Sugiere tu presupuesto
+                                                    </Typography>
+                                                </Box>
+
+                                                <Stack spacing={4}>
+                                                    <Box>
+                                                        <Typography variant="h6" className={estilos.fieldLabel}>
+                                                            ¿Cuál es tu presupuesto?
+                                                        </Typography>
+                                                        <Typography variant="body1" color="text.secondary" className={estilos.budgetSubtext}>
+                                                            Siempre puedes negociar el precio final con el profesional
+                                                        </Typography>
+                                                        
+                                                        <TextField
+                                                            fullWidth
+                                                            type="number"
+                                                            placeholder="0"
+                                                            {...register("dineroOfrecido", { 
+                                                                required: "El presupuesto es obligatorio",
+                                                                min: {
+                                                                    value: 100,
+                                                                    message: "El presupuesto mínimo es $100"
+                                                                },
+                                                                max: {
+                                                                    value: 1000000,
+                                                                    message: "El presupuesto máximo es $1,000,000"
+                                                                }
+                                                            })}
+                                                            error={!!errors.dineroOfrecido}
+                                                            helperText={errors.dineroOfrecido?.message?.toString()}
+                                                            className={estilos.budgetField}
+                                                            slotProps={{
+                                                                input: {
+                                                                    startAdornment: (
+                                                                        <InputAdornment position="start">
+                                                                            <Box className={estilos.currencyIcon}>
+                                                                                <MoneyIcon />
+                                                                                <Typography variant="h6">$</Typography>
+                                                                            </Box>
+                                                                        </InputAdornment>
+                                                                    ),
+                                                                    endAdornment: (
+                                                                        <InputAdornment position="end">
+                                                                            <Typography variant="body2" color="text.secondary">
+                                                                                ARS
+                                                                            </Typography>
+                                                                        </InputAdornment>
+                                                                    )
+                                                                }
+                                                            }}
+                                                        />
+
+                                                        {/* Rangos de presupuesto sugeridos */}
+                                                        <Box className={estilos.budgetSuggestions}>
+                                                            <Typography variant="subtitle2" className={estilos.suggestionsTitle}>
+                                                                Rangos sugeridos:
+                                                            </Typography>
+                                                            <Stack direction="row" spacing={1} flexWrap="wrap">
+                                                                {[
+                                                                    { range: "500-2000", label: "Básico" },
+                                                                    { range: "2000-5000", label: "Intermedio" },
+                                                                    { range: "5000-10000", label: "Avanzado" },
+                                                                    { range: "10000+", label: "Premium" }
+                                                                ].map((suggestion) => (
+                                                                    <Chip
+                                                                        key={suggestion.range}
+                                                                        label={`${suggestion.range} - ${suggestion.label}`}
+                                                                        variant="outlined"
+                                                                        className={estilos.budgetChip}
+                                                                        onClick={() => {
+                                                                            const minValue = suggestion.range.split('-')[0].replace('+', '');
+                                                                            setValue("dineroOfrecido", parseInt(minValue));
+                                                                        }}
+                                                                    />
+                                                                ))}
+                                                            </Stack>
+                                                        </Box>
+                                                    </Box>
+
+                                                    {/* Resumen final */}
+                                                    <Paper className={estilos.summaryCard}>
+                                                        <Typography variant="h6" className={estilos.summaryTitle}>
+                                                            📋 Resumen de tu tarea
+                                                        </Typography>
+                                                        <Stack spacing={2}>
+                                                            <Box>
+                                                                <Typography variant="subtitle2" color="primary">Título:</Typography>
+                                                                <Typography variant="body1">{watchedValues.titulo || "Sin especificar"}</Typography>
+                                                            </Box>
+                                                            <Box>
+                                                                <Typography variant="subtitle2" color="primary">Ubicación:</Typography>
+                                                                <Typography variant="body1">
+                                                                    {ubicacionTipo === "online" ? "En línea" : watchedValues.ubicacion || "Sin especificar"}
+                                                                </Typography>
+                                                            </Box>
+                                                            <Box>
+                                                                <Typography variant="subtitle2" color="primary">Cuándo:</Typography>
+                                                                <Typography variant="body1">
+                                                                    {fechaSeleccionada ? `${fechaSeleccionada} - ${horaSeleccionada}` : "Sin especificar"}
+                                                                </Typography>
+                                                            </Box>
+                                                            <Box>
+                                                                <Typography variant="subtitle2" color="primary">Presupuesto:</Typography>
+                                                                <Typography variant="h6" className={estilos.summaryBudget}>
+                                                                    ${watchedValues.dineroOfrecido ? parseInt(watchedValues.dineroOfrecido).toLocaleString() : "0"}
+                                                                </Typography>
+                                                            </Box>
+                                                            {images.length > 0 && (
+                                                                <Box>
+                                                                    <Typography variant="subtitle2" color="primary">Imágenes:</Typography>
+                                                                    <Typography variant="body1">{images.length} imagen{images.length > 1 ? 'es' : ''}</Typography>
+                                                                </Box>
+                                                            )}
+                                                        </Stack>
+                                                    </Paper>
+                                                </Stack>
+                                            </motion.div>
+                                        )}
+                                    </AnimatePresence>
+
+                                    {/* Navegación */}
+                                    <Box className={estilos.navigation}>
+                                        <Box className={estilos.navigationButtons}>
+                                            {currentSection > 0 && (
+                                                <Button
+                                                    onClick={handleBack}
+                                                    variant="outlined"
+                                                    size="large"
+                                                    className={estilos.backButton}
+                                                >
+                                                    Atrás
+                                                </Button>
+                                            )}
+                                            
+                                            {currentSection < steps.length - 1 ? (
+                                                <Button
+                                                    onClick={handleNext}
+                                                    variant="contained"
+                                                    size="large"
+                                                    className={estilos.nextButton}
+                                                >
+                                                    Siguiente
+                                                </Button>
+                                            ) : (
+                                                <Button
+                                                    type="submit"
+                                                    variant="contained"
+                                                    size="large"
+                                                    disabled={isSubmitting}
+                                                    className={`${estilos.submitButton} ${isSubmitting ? estilos.submitting : ''}`}
+                                                >
+                                                    {isSubmitting ? "Publicando..." : "🚀 Publicar Tarea"}
+                                                </Button>
+                                            )}
+                                        </Box>
+                                    </Box>
+                                </CardContent>
+                            </MotionCard>
+                        </MotionBox>
                     </Box>
-                </Box>
-            </Box>
-        </>
+                </motion.div>
+            </Container>
+        </LocalizationProvider>
     );
 }
-
-// PANTALLA < 836px quitar el sidebar

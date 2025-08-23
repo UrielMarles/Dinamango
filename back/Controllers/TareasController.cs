@@ -20,15 +20,17 @@ namespace MangoDB.Controllers
             _userService = authService;
         }
 
-        // Crear una nueva tarea
         [HttpPost]
         public async Task<IActionResult> CreateTarea([FromHeader(Name = "Authorization")] string token, [FromBody] ParamsCreateTareasDTO request)
         {
-            var user = await _userService.ValidateToken(token);
+            User? user = await _userService.ValidateToken(token);
             if (user == null)
+            {
                 return Unauthorized(new { message = "Token inválido" });
+            }
 
-            var tarea = new Tarea
+
+            Tarea tarea = new Tarea
             {
                 Id = Guid.NewGuid(),
                 Titulo = request.Titulo,
@@ -48,11 +50,10 @@ namespace MangoDB.Controllers
             return Ok(new { message = "Tarea creada exitosamente", tarea.Id });
         }
 
-        // Modificar una tarea existente
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateTarea(Guid id, [FromBody] ParamsCreateTareasDTO request)
         {
-            var tarea = await _context.Tareas.FindAsync(id);
+            Tarea? tarea = await _context.Tareas.FindAsync(id);
             if (tarea == null)
                 return NotFound(new { message = "Tarea no encontrada" });
 
@@ -67,7 +68,6 @@ namespace MangoDB.Controllers
             return Ok(new { message = "Tarea actualizada exitosamente" });
         }
 
-        // Eliminar una tarea
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteTarea(Guid id)
         {
