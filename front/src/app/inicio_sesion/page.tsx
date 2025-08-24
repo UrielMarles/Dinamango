@@ -25,18 +25,13 @@ export default function LoginForm() {
 
         try {
             const responseData = await apiHelper.login(data);
-
             const token = responseData.token;
-
             if (token) {
                 sessionStorage.setItem("authToken", token);
             }
-
             window.location.href = "/";
-
         } catch (error: any) {
             console.error("Error al iniciar sesión:", error);
-
             if (error.status === 401) {
                 setError("password", { type: "manual", message: "Email o contraseña incorrectos" });
             }
@@ -73,8 +68,6 @@ export default function LoginForm() {
                 }}
             >
                 <Typography variant="h5" textAlign="center">Iniciar Sesión</Typography>
-
-                {/* Campo de Email */}
                 <TextField
                     label="Email"
                     type="email"
@@ -87,8 +80,6 @@ export default function LoginForm() {
                         {String(errors.email.message)}
                     </Typography>
                 )}
-
-                {/* Campo de Contraseña */}
                 <TextField
                     label="Contraseña"
                     type={showPassword ? "text" : "password"}
@@ -115,11 +106,7 @@ export default function LoginForm() {
                         {String(errors.password.message)}
                     </Typography>
                 )}
-
-                {/* Botón de Enviar */}
                 <Button type="submit" variant="contained" color="primary" fullWidth>Iniciar Sesión</Button>
-
-                {/* Botón de Iniciar Sesión Google */}
                 <Button
                     variant="outlined"
                     fullWidth
@@ -136,8 +123,6 @@ export default function LoginForm() {
                     <FcGoogle size={24} />
                     Continuar con Google
                 </Button>
-
-                {/* Si no esta registrado */}
                 <Link href="../registro">Registrarse</Link>
             </Box>
         </Box>

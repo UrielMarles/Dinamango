@@ -1,5 +1,6 @@
 ﻿using MangoDB.Context;
 using MangoDB.DTO;
+using MangoDB.Models;
 using MangoDB.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -23,7 +24,6 @@ namespace MangoDB.Controllers
             _userService = userService;
         }
 
-        // 📌 Registro o login de usuario en google
         [HttpPost("login/google")]
         public async Task<IActionResult> LoginGoogle([FromBody] GoogleLoginRequest request)
         {
@@ -41,7 +41,6 @@ namespace MangoDB.Controllers
             return Ok(new { token });
         }
 
-        // 📌 Registro de usuario
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] RegisterRequest request)
         {
@@ -53,7 +52,6 @@ namespace MangoDB.Controllers
             return Ok(new { message = "Usuario registrado con éxito", user.Id, user.Email, user.Nombre, user.Apellido });
         }
 
-        // 📌 Iniciar sesión
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginRequest request)
         {
@@ -64,7 +62,6 @@ namespace MangoDB.Controllers
             return Ok(new { token });
         }
 
-        // 📌 Validar usuario por token
         [HttpGet("validate")]
         public async Task<IActionResult> Validate([FromHeader(Name = "Authorization")] string token)
         {
@@ -75,7 +72,6 @@ namespace MangoDB.Controllers
             return Ok(new { user.Id, user.Email, user.Nombre, user.Apellido, user.ProfilePictureUrl, user.Role, user.isGoogleUser });
         }
 
-        // 📌 Cerrar sesión
         [HttpPost("logout")]
         public async Task<IActionResult> Logout([FromHeader(Name = "Authorization")] string token)
         {
@@ -89,29 +85,28 @@ namespace MangoDB.Controllers
         [HttpPost("profile-picture")]
         public async Task<IActionResult> UploadProfilePicture([FromHeader(Name = "Authorization")] string token, IFormFile file)
         {
-            var serverURL = $"{Request.Scheme}://{Request.Host}";
-            
-            var user = await _userService.ValidateToken(token);
+            string? serverURL = $"{Request.Scheme}://{Request.Host}";
+
+            User? user = await _userService.ValidateToken(token);
             if (user == null)
                 return Unauthorized(new { message = "Token inválido" });
 
             if (file == null || file.Length == 0)
                 return BadRequest(new { message = "Archivo inválido" });
 
-            // 📌 Validar tipo de archivo (solo imágenes permitidas)
+
             var allowedExtensions = new[] { ".jpg", ".jpeg", ".png", ".gif" };
             var extension = Path.GetExtension(file.FileName).ToLower();
             if (!allowedExtensions.Contains(extension))
                 return BadRequest(new { message = "Formato de imagen no permitido" });
 
-            // 📌 Definir la carpeta donde se guardarán las imágenes (misma altura que la solución)
+
             var solutionFolder = Directory.GetParent(AppContext.BaseDirectory)?.Parent?.Parent?.Parent?.FullName;
             var uploadsFolder = Path.Combine(solutionFolder, "ProfilePictures");
 
             if (!Directory.Exists(uploadsFolder))
                 Directory.CreateDirectory(uploadsFolder);
 
-            // 📌 Generar el nombre del archivo
             string fileName = $"{user.Id}{extension}";
             string filePath = Path.Combine(uploadsFolder, fileName);
 
@@ -129,25 +124,24 @@ namespace MangoDB.Controllers
         [HttpGet("getImages/profile/{id}")]
         public async Task<IActionResult> getProfilePicture(Guid id, [FromHeader(Name = "Authorization")] string token)
         {
-            var currentUser = await _userService.ValidateToken(token);
+            User? currentUser = await _userService.ValidateToken(token);
             if (currentUser == null)
                 return Unauthorized(new { message = "Token inválido" });
 
-            var folder = Directory.GetParent(AppContext.BaseDirectory)?.Parent?.Parent?.Parent?.FullName;
-            var folderImages = Path.Combine(folder, "ProfilePictures");
+            string? folder = Directory.GetParent(AppContext.BaseDirectory)?.Parent?.Parent?.Parent?.FullName;
+            string folderImages = Path.Combine(folder, "ProfilePictures");
 
             if (!Directory.Exists(folderImages))
                 return NotFound("Directorio de imágenes no existe");
 
-            // Buscar archivo que empiece con el ID
-            var file = Directory.GetFiles(folderImages)
-                .FirstOrDefault(f => Path.GetFileNameWithoutExtension(f).Equals(id.ToString(), StringComparison.OrdinalIgnoreCase));
+            string? file = Directory.GetFiles(folderImages)
+                .FirstOrDefault(f => Path.GetFileNameWithoutExtension(f).Equals(currentUser.Id.ToString(), StringComparison.OrdinalIgnoreCase));
 
             if (file == null)
                 return NotFound("Imagen no encontrada");
 
-            var mime = "image/jpeg"; // o usar lógica para detectar MIME
-            var archivo = System.IO.File.OpenRead(file);
+            string? mime = "image/jpeg"; // o usar lógica para detectar MIME
+            FileStream archivo = System.IO.File.OpenRead(file);
             return File(archivo, mime);
         }
 

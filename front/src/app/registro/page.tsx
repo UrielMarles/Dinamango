@@ -1,4 +1,3 @@
-/* eslint-disable */
 "use client";
 
 import { TextField, Button, Box, Typography, Link, InputAdornment, IconButton } from "@mui/material";
@@ -62,7 +61,6 @@ export default function RegistroForm() {
             >
                 <Typography variant="h5" textAlign="center">Registro</Typography>
 
-                {/* Campo de Nombre */}
                 <TextField
                     label="Nombre"
                     type="text"
@@ -75,8 +73,6 @@ export default function RegistroForm() {
                         {String(errors.nombre.message)}
                     </Typography>
                 )}
-
-                {/* Campo de Apellido */}
                 <TextField
                     label="Apellido"
                     type="text"
@@ -89,8 +85,6 @@ export default function RegistroForm() {
                         {String(errors.apellido.message)}
                     </Typography>
                 )}
-
-                {/* Campo de Email */}
                 <TextField
                     label="Email"
                     type="email"
@@ -104,7 +98,6 @@ export default function RegistroForm() {
                     </Typography>
                 )}
 
-                {/* Campo de Contraseña */}
                 <TextField
                     label="Contraseña"
                     type={showPassword ? "text" : "password"}
@@ -131,8 +124,7 @@ export default function RegistroForm() {
                         {String(errors.password.message)}
                     </Typography>
                 )}
-
-                {/* Repetir Campo de Contraseña */}
+                
                 <TextField
                     label="Repetir Contraseña"
                     type={showRepeatPassword ? "text" : "password"}

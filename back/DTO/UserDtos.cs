@@ -32,5 +32,4 @@
         public string Email { get; set; }
         public string ProfilePictureURL { get; set; }
     }
-
 }

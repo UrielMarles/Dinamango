@@ -1,0 +1,689 @@
+/* Container principal */
+.container {
+    padding: 32px 16px !important;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #f8fffe 0%, #f0fdf4 100%);
+}
+
+/* Header */
+.header {
+    padding: 24px 32px !important;
+    margin-bottom: 32px !important;
+    background: linear-gradient(135deg, #1ADB1A 0%, #16c216 100%) !important;
+    color: white !important;
+    border-radius: 20px !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 20px !important;
+    box-shadow: 0 8px 32px rgba(26, 219, 26, 0.3) !important;
+}
+
+.headerIcon {
+    background-color: rgba(255, 255, 255, 0.2) !important;
+    width: 64px !important;
+    height: 64px !important;
+}
+
+.headerTitle {
+    font-weight: 700 !important;
+    color: white !important;
+    margin-bottom: 4px !important;
+}
+
+.headerSubtitle {
+    opacity: 0.9;
+    color: white !important;
+}
+
+/* Layout principal */
+.mainContent {
+    display: flex;
+    gap: 32px;
+    align-items: flex-start;
+}
+
+/* Sidebar */
+.sidebar {
+    flex: 0 0 320px;
+    position: sticky;
+    top: 32px;
+}
+
+.sidebarPaper {
+    padding: 24px !important;
+    border-radius: 16px !important;
+    background: white !important;
+    border-left: 4px solid #1ADB1A !important;
+}
+
+.sidebarTitle {
+    font-weight: 600 !important;
+    color: #1ADB1A !important;
+    margin-bottom: 24px !important;
+    text-align: center;
+}
+
+/* Stepper */
+.stepper {
+    margin-bottom: 24px !important;
+}
+
+.step {
+    padding: 0 !important;
+}
+
+.stepButton {
+    width: 100% !important;
+    justify-content: flex-start !important;
+    padding: 12px 0 !important;
+    text-align: left !important;
+}
+
+.stepButton:disabled {
+    opacity: 0.5;
+}
+
+.stepIcon {
+    width: 40px !important;
+    height: 40px !important;
+    margin-right: 16px !important;
+    transition: all 0.3s ease !important;
+}
+
+.stepIcon.inactive {
+    background-color: #f5f5f5 !important;
+    color: #999 !important;
+}
+
+.stepIcon.active {
+    background-color: #1ADB1A !important;
+    color: white !important;
+    box-shadow: 0 4px 12px rgba(26, 219, 26, 0.3) !important;
+}
+
+.stepIcon.completed {
+    background-color: #4CAF50 !important;
+    color: white !important;
+}
+
+.stepLabel {
+    flex: 1;
+}
+
+.stepText {
+    font-weight: 500 !important;
+    transition: all 0.3s ease !important;
+}
+
+.activeText {
+    color: #1ADB1A !important;
+    font-weight: 600 !important;
+}
+
+/* Progress indicator */
+.progressContainer {
+    margin-top: 16px;
+}
+
+.progressText {
+    color: #666 !important;
+    margin-bottom: 8px !important;
+    text-align: center;
+}
+
+.progressBar {
+    width: 100%;
+    height: 8px;
+    background-color: #f0f0f0;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.progressFill {
+    height: 100%;
+    background: linear-gradient(90deg, #1ADB1A 0%, #16c216 100%);
+    transition: width 0.3s ease;
+    border-radius: 4px;
+}
+
+/* Form container */
+.formContainer {
+    flex: 1;
+    max-width: 800px;
+}
+
+.formCard {
+    border-radius: 20px !important;
+    box-shadow: 0 12px 48px rgba(0, 0, 0, 0.1) !important;
+    border: 1px solid rgba(26, 219, 26, 0.1) !important;
+}
+
+.cardContent {
+    padding: 40px !important;
+}
+
+/* Sections */
+.section {
+    min-height: 500px;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+.sectionHeader {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 8px;
+}
+
+.sectionIcon {
+    color: #1ADB1A !important;
+    font-size: 36px !important;
+}
+
+.sectionTitle {
+    color: #1ADB1A !important;
+    font-weight: 700 !important;
+    margin: 0 !important;
+}
+
+.fieldLabel {
+    color: #333 !important;
+    font-weight: 600 !important;
+    margin-bottom: 12px !important;
+}
+
+/* Form fields */
+.textField,
+.textArea {
+    margin-bottom: 8px !important;
+}
+
+.textField .MuiOutlinedInput-root,
+.textArea .MuiOutlinedInput-root {
+    border-radius: 12px !important;
+    font-size: 1rem !important;
+    transition: all 0.3s ease !important;
+}
+
+.textField .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline,
+.textArea .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline {
+    border-color: #1ADB1A !important;
+}
+
+.textField .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline,
+.textArea .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+    border-color: #1ADB1A !important;
+    border-width: 2px !important;
+}
+
+.inputIcon {
+    color: #1ADB1A !important;
+}
+
+.errorText {
+    margin-top: 4px !important;
+    display: block !important;
+}
+
+/* Chips */
+.chip {
+    margin: 4px !important;
+    font-weight: 500 !important;
+    transition: all 0.3s ease !important;
+}
+
+.chipSelected {
+    background-color: #1ADB1A !important;
+    color: white !important;
+}
+
+.chip:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.optionalChip {
+    margin-left: 8px !important;
+    background-color: #f0f0f0 !important;
+    color: #666 !important;
+}
+
+/* Time buttons */
+.timeButton {
+    padding: 12px 24px !important;
+    border-radius: 25px !important;
+    font-weight: 600 !important;
+    text-transform: none !important;
+    transition: all 0.3s ease !important;
+    min-width: 140px !important;
+}
+
+.timeButton:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+/* Date and time pickers */
+.datePicker,
+.timePicker {
+    flex: 1;
+}
+
+.datePicker .MuiOutlinedInput-root,
+.timePicker .MuiOutlinedInput-root {
+    border-radius: 12px !important;
+}
+
+/* Location cards */
+.locationCard {
+    padding: 24px !important;
+    border-radius: 16px !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+    text-align: center !important;
+    min-width: 160px !important;
+    border: 2px solid #e0e0e0 !important;
+}
+
+.locationCard:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.locationCardSelected {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(26, 219, 26, 0.2);
+}
+
+.locationIcon {
+    margin-bottom: 12px !important;
+    width: 56px !important;
+    height: 56px !important;
+}
+
+.locationLabel {
+    font-weight: 600 !important;
+    color: #333 !important;
+}
+
+/* Upload area */
+.uploadArea {
+    border: 2px dashed #1ADB1A !important;
+    border-radius: 16px !important;
+    padding: 32px !important;
+    text-align: center !important;
+    transition: all 0.3s ease !important;
+    background-color: rgba(26, 219, 26, 0.02) !important;
+}
+
+.uploadArea:hover {
+    border-color: #16c216 !important;
+    background-color: rgba(26, 219, 26, 0.05) !important;
+}
+
+.uploadLabel {
+    cursor: pointer;
+    display: block;
+    width: 100%;
+}
+
+.uploadContent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+}
+
+.uploadIcon {
+    font-size: 48px !important;
+    color: #1ADB1A !important;
+}
+
+.uploadText {
+    color: #1ADB1A !important;
+    font-weight: 600 !important;
+}
+
+/* Image preview */
+.imagePreviewContainer {
+    margin-top: 16px;
+}
+
+.previewTitle {
+    font-weight: 600 !important;
+    margin-bottom: 12px !important;
+    color: #333 !important;
+}
+
+.imageGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 16px;
+}
+
+.imagePreview {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    background: white;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.imagePreview:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.previewImage {
+    width: 100%;
+    height: 120px;
+    object-fit: cover;
+}
+
+.removeImageButton {
+    position: absolute !important;
+    top: 4px !important;
+    right: 4px !important;
+    background-color: rgba(244, 67, 54, 0.9) !important;
+    color: white !important;
+    width: 28px !important;
+    height: 28px !important;
+}
+
+.removeImageButton:hover {
+    background-color: #f44336 !important;
+}
+
+.imageFilename {
+    padding: 4px 8px;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    font-size: 0.7rem;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+/* Budget field */
+.budgetField .MuiOutlinedInput-root {
+    border-radius: 16px !important;
+    font-size: 1.5rem !important;
+    font-weight: 600 !important;
+}
+
+.currencyIcon {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    color: #1ADB1A !important;
+    font-weight: 600 !important;
+}
+
+.budgetSubtext {
+    margin-bottom: 16px !important;
+    font-style: italic;
+}
+
+.budgetSuggestions {
+    margin-top: 16px;
+}
+
+.suggestionsTitle {
+    margin-bottom: 8px !important;
+    font-weight: 600 !important;
+    color: #666 !important;
+}
+
+.budgetChip {
+    margin: 4px !important;
+    border-color: #1ADB1A !important;
+    color: #1ADB1A !important;
+    transition: all 0.3s ease !important;
+}
+
+.budgetChip:hover {
+    background-color: #1ADB1A !important;
+    color: white !important;
+    transform: translateY(-2px);
+}
+
+/* Summary card */
+.summaryCard {
+    padding: 24px !important;
+    border-radius: 16px !important;
+    background: linear-gradient(135deg, #f8fffe 0%, #f0fdf4 100%) !important;
+    border: 2px solid rgba(26, 219, 26, 0.2) !important;
+}
+
+.summaryTitle {
+    color: #1ADB1A !important;
+    font-weight: 700 !important;
+    margin-bottom: 16px !important;
+    text-align: center;
+}
+
+.summaryBudget {
+    color: #1ADB1A !important;
+    font-weight: 700 !important;
+}
+
+/* Navigation */
+.navigation {
+    margin-top: 32px;
+    padding-top: 24px;
+    border-top: 1px solid #e0e0e0;
+}
+
+.navigationButtons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.backButton {
+    padding: 12px 32px !important;
+    border-radius: 25px !important;
+    font-weight: 600 !important;
+    text-transform: none !important;
+    border-color: #1ADB1A !important;
+    color: #1ADB1A !important;
+}
+
+.backButton:hover {
+    background-color: rgba(26, 219, 26, 0.1) !important;
+}
+
+.nextButton,
+.submitButton {
+    padding: 12px 32px !important;
+    border-radius: 25px !important;
+    font-weight: 600 !important;
+    text-transform: none !important;
+    background: linear-gradient(135deg, #1ADB1A 0%, #16c216 100%) !important;
+    box-shadow: 0 4px 16px rgba(26, 219, 26, 0.3) !important;
+    transition: all 0.3s ease !important;
+}
+
+.nextButton:hover,
+.submitButton:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(26, 219, 26, 0.4) !important;
+}
+
+.submitting {
+    opacity: 0.7;
+    transform: none !important;
+}
+
+/* Responsive design */
+@media (max-width: 1024px) {
+    .mainContent {
+        flex-direction: column;
+        gap: 24px;
+    }
+    
+    .sidebar {
+        flex: none;
+        position: relative;
+        top: auto;
+    }
+    
+    .sidebarPaper {
+        padding: 16px !important;
+    }
+    
+    .stepper {
+        flex-direction: row;
+        overflow-x: auto;
+    }
+    
+    .stepText {
+        font-size: 0.875rem !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 16px 8px !important;
+    }
+    
+    .header {
+        padding: 16px 20px !important;
+        flex-direction: column;
+        text-align: center;
+        gap: 12px !important;
+    }
+    
+    .headerIcon {
+        width: 48px !important;
+        height: 48px !important;
+    }
+    
+    .headerTitle {
+        font-size: 1.75rem !important;
+    }
+    
+    .cardContent {
+        padding: 24px !important;
+    }
+    
+    .section {
+        min-height: auto;
+        gap: 24px;
+    }
+    
+    .sectionIcon {
+        font-size: 28px !important;
+    }
+    
+    .sectionTitle {
+        font-size: 1.5rem !important;
+    }
+    
+    .locationCard {
+        min-width: 120px !important;
+        padding: 16px !important;
+    }
+    
+    .uploadArea {
+        padding: 24px 16px !important;
+    }
+    
+    .uploadIcon {
+        font-size: 36px !important;
+    }
+    
+    .uploadText {
+        font-size: 1rem !important;
+    }
+    
+    .imageGrid {
+        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+        gap: 12px;
+    }
+    
+    .previewImage {
+        height: 100px;
+    }
+    
+    .navigationButtons {
+        flex-direction: column-reverse;
+        gap: 12px;
+        width: 100%;
+    }
+    
+    .backButton,
+    .nextButton,
+    .submitButton {
+        width: 100% !important;
+        justify-content: center !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .sectionHeader {
+        flex-direction: column;
+        text-align: center;
+        gap: 8px;
+    }
+    
+    .timeButton {
+        min-width: 100px !important;
+        font-size: 0.875rem !important;
+    }
+    
+    .budgetField .MuiOutlinedInput-root {
+        font-size: 1.25rem !important;
+    }
+    
+    .summaryCard {
+        padding: 16px !important;
+    }
+}
+
+/* Animaciones personalizadas */
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+}
+
+.stepIcon.active {
+    animation: pulse 2s infinite;
+}
+
+/* Estados de loading */
+.submitting {
+    position: relative;
+}
+
+.submitting::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    margin: auto;
+    border: 2px solid transparent;
+    border-top-color: #ffffff;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}

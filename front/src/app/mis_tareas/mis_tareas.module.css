@@ -1,16 +1,176 @@
-#container {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
+
+.container {
+    padding: 32px 0 !important;
 }
 
-#tareas {
+.loadingContainer {
     display: flex;
-    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 400px;
 }
 
-#ofertas {
-    width: 550px;
+.headerSection {
+    margin-bottom: 24px !important;
+}
+
+.headerPaper {
+    padding: 24px !important;
+    background: linear-gradient(135deg, #1ADB1A 0%, #0f9b0f 100%) !important;
+    color: white !important;
+    border-radius: 16px !important;
+}
+
+.headerAvatar {
+    background-color: rgba(255,255,255,0.2) !important;
+    width: 56px !important;
+    height: 56px !important;
+}
+
+.headerTitle {
+    font-weight: bold !important;
+    color: white !important;
+}
+
+.headerSubtitle {
+    opacity: 0.9;
+    color: white !important;
+}
+
+.tabsSection {
+    margin-bottom: 24px !important;
+}
+
+.tabsPaper {
+    border-radius: 12px !important;
+    overflow: hidden !important;
+}
+
+.tabs {
+    background-color: white !important;
+}
+
+.tab {
+    font-weight: 500 !important;
+    text-transform: none !important;
+    color: #666 !important;
+    transition: all 0.3s ease !important;
+}
+
+.tab:hover {
+    background-color: rgba(26, 219, 26, 0.05) !important;
+}
+
+.tab.Mui-selected {
+    color: #1ADB1A !important;
+    font-weight: 600 !important;
+}
+
+.tabBadge .MuiBadge-badge {
+    background-color: #1ADB1A !important;
+    color: white !important;
+    font-size: 0.75rem !important;
+}
+
+/* Filter Section */
+.filterSection {
+    margin-bottom: 24px !important;
+}
+
+.filterPaper {
+    padding: 16px 24px !important;
+    border-radius: 12px !important;
+    background-color: #f8fffe !important;
+    border: 1px solid rgba(26, 219, 26, 0.2) !important;
+}
+
+.filterIcon {
+    color: #1ADB1A !important;
+}
+
+.filterControl {
+    min-width: 200px !important;
+}
+
+.filterSelect .MuiOutlinedInput-root {
+    border-radius: 8px !important;
+}
+
+.filterSelect .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline {
+    border-color: #1ADB1A !important;
+}
+
+.filterSelect .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+    border-color: #1ADB1A !important;
+}
+
+.filterSelect .MuiInputLabel-root.Mui-focused {
+    color: #1ADB1A !important;
+}
+
+.contentSection {
+    min-height: 400px;
+}
+
+.tareasContainer,
+.ofertasContainer {
+    width: 100%;
+}
+
+.emptyCard {
+    text-align: center !important;
+    padding: 48px 24px !important;
+    border-radius: 12px !important;
+    border: 2px dashed #e0e0e0 !important;
+    background-color: #fafafa !important;
+}
+
+.emptyContent {
     display: flex;
     flex-direction: column;
+    align-items: center;
+    gap: 16px;
+}
+
+.emptyIcon {
+    font-size: 64px !important;
+    color: #bbb !important;
+    margin-bottom: 16px;
+}
+
+.emptyTitle {
+    color: #666 !important;
+    font-weight: 500 !important;
+}
+
+.emptySubtitle {
+    color: #999 !important;
+    margin-top: 8px !important;
+}
+
+.ofertaCard {
+    border-radius: 12px !important;
+    overflow: hidden !important;
+    position: relative !important;
+    transition: all 0.3s ease !important;
+    border: 1px solid #e0e0e0 !important;
+}
+
+.ofertaCard:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0px 4px 20px rgba(26, 219, 26, 0.1) !important;
+}
+
+.ofertaCardBorder {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #1ADB1A 0%, #16c216 100%);
+}
+
+.ofertaCardContent {
+    padding: 24px !important;
+    padding-top: 28px !important;
 }

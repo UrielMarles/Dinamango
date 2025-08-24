@@ -1,36 +1,362 @@
+
 .container {
-    display: grid;
-    margin-left: 100px;
+    padding: 32px 0 !important;
+    max-width: 1200px !important;
 }
 
-.poster {
-    width: 80%;
+.loadingContainer {
     display: flex;
+    justify-content: center;
     align-items: center;
-    gap: 10px;
-
-    border: 1px solid black;
+    min-height: 400px;
+    flex-direction: column;
+    gap: 16px;
 }
 
-.btn {
-    background-color: #4CAF50;
-    border: none;
-    border-radius: 12px;
-    color: white;
-    padding: 15px 25px;
-    font-weight: bold;
-    text-align: center;
-    font-size: 16px;
-    margin: 4px 2px 0 auto;
-    cursor: pointer;
-    margin-top: auto;
-    text-decoration: none;
-    display: inline-block;
+.headerSection {
+    margin-bottom: 32px !important;
 }
 
-#logoCreador {
-    width: 200px;
-    height: 200px;
-    border-radius: 50%;
-    object-fit: cover;
+.headerPaper {
+    padding: 32px !important;
+    background: linear-gradient(135deg, #1ADB1A 0%, #0f9b0f 100%) !important;
+    color: white !important;
+    border-radius: 20px !important;
+    box-shadow: 0 8px 32px rgba(26, 219, 26, 0.3) !important;
+}
+
+.headerAvatar {
+    background-color: rgba(255,255,255,0.2) !important;
+    width: 64px !important;
+    height: 64px !important;
+}
+
+.headerTitle {
+    font-weight: bold !important;
+    color: white !important;
+    font-size: 2.5rem !important;
+}
+
+.headerSubtitle {
+    opacity: 0.9;
+    color: white !important;
+    font-size: 1.1rem !important;
+    margin-top: 4px !important;
+}
+
+/* Filters Section */
+.filtersSection {
+    margin-bottom: 32px !important;
+}
+
+.filtersPaper {
+    padding: 24px !important;
+    border-radius: 16px !important;
+    background-color: #fafffe !important;
+    border: 1px solid rgba(26, 219, 26, 0.1) !important;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04) !important;
+}
+
+/* Search Field */
+.searchField {
+    background-color: white !important;
+    border-radius: 12px !important;
+}
+
+.searchField .MuiOutlinedInput-root {
+    border-radius: 12px !important;
+    font-size: 1rem !important;
+}
+
+.searchField .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline {
+    border-color: #1ADB1A !important;
+}
+
+.searchField .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+    border-color: #1ADB1A !important;
+    border-width: 2px !important;
+}
+
+.searchIcon {
+    color: #1ADB1A !important;
+    font-size: 24px !important;
+}
+
+/* Filter Controls */
+.filterControl {
+    min-width: 180px !important;
+    background-color: white !important;
+    border-radius: 8px !important;
+}
+
+.filterControl .MuiOutlinedInput-root {
+    border-radius: 8px !important;
+}
+
+.filterControl .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline {
+    border-color: #1ADB1A !important;
+}
+
+.filterControl .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+    border-color: #1ADB1A !important;
+}
+
+.filterControl .MuiInputLabel-root.Mui-focused {
+    color: #1ADB1A !important;
+}
+
+/* Filter Actions */
+.filterActions {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.activeFiltersChip {
+    background-color: #1ADB1A !important;
+    color: white !important;
+    font-weight: 500 !important;
+}
+
+.activeFiltersChip .MuiChip-icon {
+    color: white !important;
+}
+
+.activeFiltersChip .MuiChip-deleteIcon {
+    color: rgba(255, 255, 255, 0.8) !important;
+}
+
+.activeFiltersChip .MuiChip-deleteIcon:hover {
+    color: white !important;
+}
+
+/* Content Section */
+.contentSection {
+    margin-bottom: 32px !important;
+}
+
+/* Empty State */
+.emptyState {
+    text-align: center !important;
+    padding: 64px 32px !important;
+    border-radius: 16px !important;
+    border: 2px dashed #e0e0e0 !important;
+    background-color: #fafafa !important;
+}
+
+.emptyIcon {
+    font-size: 80px !important;
+    color: #ccc !important;
+    margin-bottom: 24px !important;
+}
+
+.emptyTitle {
+    color: #666 !important;
+    font-weight: 600 !important;
+    margin-bottom: 8px !important;
+}
+
+.emptySubtitle {
+    color: #999 !important;
+    font-size: 1rem !important;
+}
+
+/* Pagination Section */
+.paginationSection {
+    margin-top: 32px !important;
+}
+
+.paginationPaper {
+    padding: 20px 32px !important;
+    border-radius: 16px !important;
+    background-color: white !important;
+    border: 1px solid rgba(26, 219, 26, 0.1) !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04) !important;
+}
+
+.pagination .MuiPaginationItem-root {
+    color: #666 !important;
+    border: 1px solid transparent !important;
+    transition: all 0.2s ease !important;
+}
+
+.pagination .MuiPaginationItem-root:hover {
+    background-color: rgba(26, 219, 26, 0.1) !important;
+    border-color: #1ADB1A !important;
+}
+
+.pagination .MuiPaginationItem-root.Mui-selected {
+    background-color: #1ADB1A !important;
+    color: white !important;
+    border-color: #1ADB1A !important;
+    font-weight: 600 !important;
+}
+
+.pagination .MuiPaginationItem-root.Mui-selected:hover {
+    background-color: #16c216 !important;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        padding: 16px 0 !important;
+    }
+    
+    .headerPaper {
+        padding: 20px !important;
+        border-radius: 16px !important;
+    }
+    
+    .headerTitle {
+        font-size: 2rem !important;
+    }
+    
+    .headerSubtitle {
+        font-size: 1rem !important;
+    }
+    
+    .headerAvatar {
+        width: 48px !important;
+        height: 48px !important;
+    }
+    
+    .filtersPaper {
+        padding: 16px !important;
+        border-radius: 12px !important;
+    }
+    
+    .filterControl {
+        min-width: 140px !important;
+    }
+    
+    .filterActions {
+        width: 100%;
+        justify-content: flex-start;
+        margin-top: 8px;
+    }
+    
+    .emptyState {
+        padding: 40px 20px !important;
+        border-radius: 12px !important;
+    }
+    
+    .emptyIcon {
+        font-size: 64px !important;
+    }
+    
+    .emptyTitle {
+        font-size: 1.25rem !important;
+    }
+    
+    .paginationPaper {
+        padding: 16px 20px !important;
+        border-radius: 12px !important;
+    }
+    
+    .pagination {
+        transform: scale(0.9);
+    }
+}
+
+@media (max-width: 480px) {
+    .headerPaper {
+        padding: 16px !important;
+    }
+    
+    .headerTitle {
+        font-size: 1.75rem !important;
+    }
+    
+    .headerSubtitle {
+        font-size: 0.9rem !important;
+    }
+    
+    .filtersPaper {
+        padding: 12px !important;
+    }
+    
+    .filterControl {
+        width: 100% !important;
+        min-width: unset !important;
+    }
+    
+    .searchField .MuiOutlinedInput-input {
+        font-size: 0.9rem !important;
+    }
+    
+    .emptyState {
+        padding: 32px 16px !important;
+    }
+    
+    .emptyIcon {
+        font-size: 48px !important;
+    }
+    
+    .emptyTitle {
+        font-size: 1.1rem !important;
+    }
+    
+    .emptySubtitle {
+        font-size: 0.9rem !important;
+    }
+    
+    .paginationPaper {
+        padding: 12px 16px !important;
+    }
+    
+    .pagination {
+        transform: scale(0.8);
+    }
+}
+
+/* Custom scrollbar para mejor UX */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(26, 219, 26, 0.3);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(26, 219, 26, 0.5);
+}
+
+/* Animaciones adicionales */
+.filtersPaper {
+    transition: all 0.3s ease !important;
+}
+
+.filtersPaper:hover {
+    box-shadow: 0 4px 20px rgba(26, 219, 26, 0.1) !important;
+}
+
+.searchField {
+    transition: all 0.3s ease !important;
+}
+
+.searchField:hover {
+    transform: translateY(-1px);
+}
+
+.loadingContainer {
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
