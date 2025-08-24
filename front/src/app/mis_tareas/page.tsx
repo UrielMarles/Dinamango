@@ -80,6 +80,8 @@ export default function MisTareas() {
                                     <p>Horario deseado: {tarea.horarioDeseado}</p>
                                     <p>Dinero ofrecido: ${tarea.dineroOfrecido}</p>
                                     <p>Ofertas: {tarea.cantidadOfertas ?? "0"}</p>
+
+                                    <button><a href={`../detalles/${tarea.id}`}>Ver la Tarea</a></button>
                                 </li>
                             ))}
                         </ul>
