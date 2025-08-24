@@ -89,7 +89,7 @@ export const apiHelper = {
             if (!res.ok) {
                 throw new Error("No se pudo obtener la imagen de perfil");
             }
-            
+
             return res.blob();
         });
     },
@@ -139,7 +139,19 @@ export const apiHelper = {
     },
 
     getMisOfertas() {
-        return this.request('/ofertas/misOfertas', { method: "GET", includeToken: true});
+        return this.request('/ofertas/misOfertas', { method: "GET", includeToken: true });
+    },
+
+    GetPostulacionesEnMisTareas() {
+        return this.request('/ofertas/postulaciones', { method: "GET", includeToken: true });
+    },
+
+    aceptarOferta(idOferta: string) {
+        return this.request(`/ofertas/${idOferta}/aceptar`, { method: "POST", includeToken: true })
+    },
+
+    rechazarOferta(idOferta: string) {
+        return this.request(`/ofertas/${idOferta}/rechazar`, { method: "POST", includeToken: true })
     }
 
 };

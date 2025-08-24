@@ -11,5 +11,6 @@
         public string MensajeOferta { get; set; }
         public DateTime FechaCreacion { get; set; }
         public ResultGetUsuarioDTO Creador { get; set; }
+        //public string Status { get; set; }
     }
 }

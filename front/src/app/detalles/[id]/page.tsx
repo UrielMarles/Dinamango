@@ -18,15 +18,49 @@ interface Publicacion {
         nombre: string;
         apellido: string;
         email: string;
+        isGoogleUser: boolean;
     };
     ofertas: string[];
+}
+
+interface Ofertas {
+    id: string;
+    mensajeOferta: string;
+    fechaCreacion: string;
+    postulante: string;
+    tarea: {
+        id: string;
+        titulo: string;
+        descripcion: string;
+        fechaPublicacion: string;
+        dineroOfrecido: number;
+    };
+}
+
+async function dataUser() {
+    try {
+        const data = await apiHelper.userValidate();
+
+        if (data.id) {
+            return data.id;
+        }
+        else {
+            return null
+        }
+    }
+    catch (error) {
+        console.error("Error en los datos del usuario", error);
+    }
 }
 
 export default function DetallePublicacion() {
     const params = useParams();
     const id = params.id as string;
 
+    const [userId, setUserId] = useState<string | null>(null);
+
     const [publicacion, setPublicacion] = useState<Publicacion | null>(null);
+    const [ofertas, setOfertas] = useState<Ofertas[]>([]);
     const [mensajeOferta, setMensajeOferta] = useState<string>("");
 
     const tareaConOferta = async (id: string) => {
@@ -46,7 +80,23 @@ export default function DetallePublicacion() {
     }
 
     useEffect(() => {
-        tareaConOferta(id)
+        tareaConOferta(id);
+
+        async function fetchUserId() {
+            const userId = await dataUser();
+
+            setUserId(userId);
+        }
+        fetchUserId();
+
+        async function fetchOfertas() {
+            const postulaciones = await apiHelper.GetPostulacionesEnMisTareas();
+            const filtradas = postulaciones.filter((p: Ofertas) => p.tarea?.id === id);
+
+            setOfertas(filtradas);
+        }
+        fetchOfertas();
+
     }, [id]);
 
     const onSubmit = async () => {
@@ -77,7 +127,7 @@ export default function DetallePublicacion() {
                 <h1>{publicacion?.titulo}</h1>
                 <p>{publicacion?.descripcion}</p>
                 <p>
-                    Publicado por: {<strong>{publicacion?.creador.nombre} {publicacion?.creador.apellido}</strong>}
+                    Publicado por: <strong>{publicacion?.creador.isGoogleUser ? publicacion?.creador.nombre : `${publicacion?.creador.nombre} ${publicacion?.creador.apellido}`}</strong>
                 </p>
                 <p>Cantidad de Ofertas: <span>{publicacion?.ofertas.length}</span></p>
             </div>
@@ -90,6 +140,22 @@ export default function DetallePublicacion() {
                     onChange={(e) => setMensajeOferta(e.target.value)}
                 />
                 <button onClick={onSubmit}>Ofertar</button>
+            </div>
+
+            <div>
+                {publicacion?.creador.id === userId ? (
+                    <div>
+                        {ofertas.map((oferta) => (
+                            <div key={oferta.id}>
+                                <h2>Postulante: {oferta.postulante ?? "??"}</h2>
+                                <p>Mensaje: {oferta.mensajeOferta}</p>
+                                <button>Rechazar</button>
+                                {/* Agregar logica para aceptar o rechazar*/}
+                                <button>Aceptar</button>
+                            </div>
+                        ))}
+                    </div>
+                ) : null}
             </div>
         </>
     );
