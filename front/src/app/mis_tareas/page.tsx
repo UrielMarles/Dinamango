@@ -2,24 +2,7 @@
 
 import { apiHelper } from "@/helper/apiHelper";
 import { useEffect, useState } from "react";
-import {
-    Box,
-    Card,
-    CardContent,
-    Typography,
-    Chip,
-    Avatar,
-    Container,
-    Paper,
-    Stack,
-    Tabs,
-    Tab,
-    FormControl,
-    InputLabel,
-    Select,
-    MenuItem,
-    Badge
-} from '@mui/material';
+import { Box, Card, CardContent, Typography, Chip, Avatar, Container, Paper, Stack, Tabs, Tab, FormControl, InputLabel, Select, MenuItem, Badge } from '@mui/material';
 import {
     Task as TaskIcon,
     Assignment as AssignmentIcon,
@@ -30,7 +13,6 @@ import {
 import { motion } from 'framer-motion';
 import TareaCard from "../../components/tarea-card/tarea-card.component"
 import estilos from "./mis_tareas.module.css";
-
 
 type FilterType = 'todas' | 'activas' | 'terminadas' | 'buscando_ofertas' | 'en_progreso';
 type TabType = 'tareas' | 'ofertas';
@@ -62,7 +44,7 @@ export default function MisTareas() {
                 ]);
                 setTareas(tareasData);
                 setOfertas(ofertasData);
-                
+
                 if (tareasData.length === 0 && ofertasData.length > 0) {
                     setActiveTab('ofertas');
                 } else {
@@ -109,18 +91,17 @@ export default function MisTareas() {
     };
 
     const handleViewTarea = (id: string) => {
-        console.log('Ver tarea:', id);
-        // Implementar lógica para ver tarea
+        window.location.href = `/detalles/${id}`;
     };
 
     const handleEditTarea = (id: string) => {
         console.log('Editar tarea:', id);
-        // Implementar lógica para editar tarea
+
     };
 
     const handleDeleteTarea = (id: string) => {
         console.log('Eliminar tarea:', id);
-        // Implementar lógica para eliminar tarea
+
     };
 
     if (loading) {
@@ -245,15 +226,11 @@ export default function MisTareas() {
                                     <CardContent className={estilos.emptyContent}>
                                         <TaskIcon className={estilos.emptyIcon} />
                                         <Typography variant="h6" className={estilos.emptyTitle}>
-                                            {filter === 'todas' 
-                                                ? 'No tienes tareas publicadas'
-                                                : `No tienes tareas ${filter === 'activas' ? 'activas' : filter.replace('_', ' ')}`
+                                            {filter === 'todas' ? 'No tienes tareas publicadas' : `No tienes tareas ${filter === 'activas' ? 'activas' : filter.replace('_', ' ')}`
                                             }
                                         </Typography>
                                         <Typography variant="body2" className={estilos.emptySubtitle}>
-                                            {filter === 'todas' 
-                                                ? '¡Crea tu primera tarea para comenzar!'
-                                                : 'Prueba cambiando el filtro para ver otras tareas'
+                                            {filter === 'todas' ? '¡Crea tu primera tarea para comenzar!' : 'Prueba cambiando el filtro para ver otras tareas'
                                             }
                                         </Typography>
                                     </CardContent>
@@ -302,7 +279,7 @@ export default function MisTareas() {
                                             className={estilos.ofertaCard}
                                         >
                                             <Box className={estilos.ofertaCardBorder} />
-                                            
+
                                             <CardContent className={estilos.ofertaCardContent}>
                                                 <Stack direction="row" alignItems="flex-start" spacing={2} className={estilos.ofertaHeader}>
                                                     <Avatar className={estilos.ofertaAvatar}>
@@ -312,8 +289,8 @@ export default function MisTareas() {
                                                         <Typography variant="h6" className={estilos.ofertaTitle}>
                                                             Tu Oferta
                                                         </Typography>
-                                                        <Typography 
-                                                            variant="body2" 
+                                                        <Typography
+                                                            variant="body2"
                                                             className={estilos.ofertaMensaje}
                                                         >
                                                             "{oferta.mensajeOferta}"

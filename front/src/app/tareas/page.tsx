@@ -1,23 +1,7 @@
 "use client";
 
 import { useState, useEffect, useMemo } from "react";
-import {
-    Container,
-    Box,
-    Typography,
-    TextField,
-    InputAdornment,
-    Paper,
-    Stack,
-    Pagination,
-    FormControl,
-    InputLabel,
-    Select,
-    MenuItem,
-    Chip,
-    Avatar,
-    Grid
-} from '@mui/material';
+import { Container, Box, Typography, TextField, InputAdornment, Paper, Stack, Pagination, FormControl, InputLabel, Select, MenuItem, Chip, Avatar } from '@mui/material';
 import {
     Search as SearchIcon,
     FilterList as FilterIcon,
@@ -32,12 +16,18 @@ import { apiHelper } from "@/helper/apiHelper";
 import estilos from "./tareas.module.css";
 import { Publicacion } from "@/types/Dto/Publicacion";
 
-
 const ITEMS_PER_PAGE = 10;
 
-function getImage(id: string) {
-    return apiHelper.getProfilePicture(id);
-}
+const getImage = async (userId: string) => {
+    try {
+        const img = await apiHelper.getProfilePicture(userId);
+
+        return img;
+    }
+    catch (error) {
+        return null;
+    }
+};
 
 const MotionBox = motion(Box);
 
@@ -55,20 +45,23 @@ export default function Tareas() {
             setLoading(true);
             try {
                 const data = await apiHelper.getTareas();
-                
                 if (!data) return;
 
                 const publicacionesActualizadas = await Promise.all(
                     data.map(async (pub: Publicacion) => {
-                        let profilePictureUrl = pub.creador.profilePictureUrl;
+                        let profilePictureUrl;
 
                         if (!pub.creador.isGoogleUser) {
                             try {
-                                const blob = await getImage(pub.creador.id);
-                                profilePictureUrl = blob ? URL.createObjectURL(blob) : "";
-                            } catch (e) {
-                                profilePictureUrl = "";
+                                const urlImage = await getImage(pub.creador.id);
+                                profilePictureUrl = urlImage ? URL.createObjectURL(urlImage) : undefined; // BUG segun la cuenta muestra una imagen u otra
+
+                            } catch (error) {
+                                console.error("Error al obtener la imagen de perfil:", error);
                             }
+                        }
+                        else {
+                            profilePictureUrl = pub.creador.profilePictureUrl;
                         }
 
                         return {
@@ -82,9 +75,11 @@ export default function Tareas() {
                 );
 
                 setPublicaciones(publicacionesActualizadas);
-            } catch (error) {
+            }
+            catch (error) {
                 console.error("Error al obtener publicaciones:", error);
-            } finally {
+            }
+            finally {
                 setLoading(false);
             }
         };
@@ -95,18 +90,18 @@ export default function Tareas() {
     // Filtrado y ordenamiento de tareas
     const filteredAndSortedTareas = useMemo(() => {
         let filtered = publicaciones.filter(pub => {
-            const matchesSearch = 
+            const matchesSearch =
                 pub.titulo.toLowerCase().includes(searchTerm.toLowerCase()) ||
                 pub.descripcion.toLowerCase().includes(searchTerm.toLowerCase()) ||
                 pub.creador.nombre.toLowerCase().includes(searchTerm.toLowerCase()) ||
                 pub.creador.apellido.toLowerCase().includes(searchTerm.toLowerCase());
-            
-            const matchesLocation = !locationFilter || 
+
+            const matchesLocation = !locationFilter ||
                 pub.ubicacion.toLowerCase().includes(locationFilter.toLowerCase());
-            
-            const matchesPrice = pub.dineroOfrecido >= priceRange[0] && 
+
+            const matchesPrice = pub.dineroOfrecido >= priceRange[0] &&
                 pub.dineroOfrecido <= priceRange[1];
-            
+
             return matchesSearch && matchesLocation && matchesPrice;
         });
 
@@ -256,9 +251,9 @@ export default function Tareas() {
                             />
 
                             {/* Filtros en línea */}
-                            <Stack 
-                                direction={{ xs: 'column', sm: 'row' }} 
-                                spacing={2} 
+                            <Stack
+                                direction={{ xs: 'column', sm: 'row' }}
+                                spacing={2}
                                 alignItems={{ sm: 'center' }}
                             >
                                 <FormControl size="small" className={estilos.filterControl}>
@@ -325,7 +320,7 @@ export default function Tareas() {
                                 No se encontraron tareas
                             </Typography>
                             <Typography variant="body2" className={estilos.emptySubtitle}>
-                                {publicaciones.length === 0 
+                                {publicaciones.length === 0
                                     ? 'No hay tareas disponibles en este momento'
                                     : 'Prueba ajustando los filtros de búsqueda'
                                 }

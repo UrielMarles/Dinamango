@@ -58,8 +58,9 @@ export default function Perfil() {
                 try {
                     const blob = await getProfilePicture(data.id);
                     profilePictureUrl = blob ? URL.createObjectURL(blob) : undefined;
-                } catch (e) {
-                    profilePictureUrl = undefined;
+                }
+                catch (error) {
+                    console.error("Error al obtener la imagen de perfil:", error);
                 }
             }
 

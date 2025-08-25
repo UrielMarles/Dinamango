@@ -18,18 +18,19 @@ public class OfertaController : ControllerBase
         _userService = userService;
     }
 
+    // 📌 Crear una nueva oferta para una tarea
     [HttpPost("{idTarea}")]
     public async Task<IActionResult> CrearOferta(Guid idTarea, [FromHeader(Name = "Authorization")] string token, [FromBody] CreateOfertaDTO request)
     {
-        User? user = await _userService.ValidateToken(token);
+        var user = await _userService.ValidateToken(token);
         if (user == null)
             return Unauthorized(new { message = "Token inválido" });
 
-        Tarea? tarea = await _context.Tareas.FindAsync(idTarea);
+        var tarea = await _context.Tareas.FindAsync(idTarea);
         if (tarea == null)
             return NotFound(new { message = "Tarea no encontrada" });
 
-        Oferta oferta = new Oferta
+        var oferta = new Oferta
         {
             Id = Guid.NewGuid(),
             IdTarea = idTarea,
@@ -48,20 +49,24 @@ public class OfertaController : ControllerBase
     public async Task<IActionResult> GetPostulacionesEnMisTareas([FromHeader(Name = "Authorization")] string token)
     {
         var user = await _userService.ValidateToken(token);
-        if ( user == null)
+        if (user == null)
         {
             return Unauthorized(new { message = "Token inválido" });
         }
 
         var postulaciones = await _context.Ofertas
             .Include(o => o.Tarea)
+            .Include(o => o.CreadorOferta)
             .Where(o => o.Tarea.IdCreador == user.Id)
             .Select(o => new
             {
                 o.Id,
                 o.MensajeOferta,
                 o.FechaCreacion,
-                IdPostulante = o.IdCreadorOferta,
+                o.CreadorOferta.isGoogleUser,
+                IdPostulante = o.CreadorOferta.Id,
+                NombrePostulante = o.CreadorOferta.Nombre,
+                ApellidoPostulante = o.CreadorOferta.Apellido,
                 Tarea = new
                 {
                     o.Tarea.Id,

@@ -27,7 +27,10 @@ interface Ofertas {
     id: string;
     mensajeOferta: string;
     fechaCreacion: string;
-    postulante: string;
+    idPostulante: string;
+    nombrePostulante: string;
+    apellidoPostulante: string;
+    isGoogleUser: boolean;
     tarea: {
         id: string;
         titulo: string;
@@ -70,9 +73,6 @@ export default function DetallePublicacion() {
             if (data.id) {
                 setPublicacion(data);
             }
-            else {
-                console.warn("No se encontró la tarea con ID:", id);
-            }
         }
         catch (err) {
             console.error("Error en la obtencion del id: ", err);
@@ -108,6 +108,7 @@ export default function DetallePublicacion() {
             const responseData = await apiHelper.mandarOferta(idTarea, mensaje)
 
             toast.success("Postulación enviada con éxito.");
+
             setMensajeOferta("");
 
             await tareaConOferta(idTarea);
@@ -127,7 +128,7 @@ export default function DetallePublicacion() {
                 <h1>{publicacion?.titulo}</h1>
                 <p>{publicacion?.descripcion}</p>
                 <p>
-                    Publicado por: <strong>{publicacion?.creador.isGoogleUser ? publicacion?.creador.nombre : `${publicacion?.creador.nombre} ${publicacion?.creador.apellido}`}</strong>
+                    Publicado por: {publicacion?.creador.id === userId ? publicacion.creador.nombre : `${publicacion?.creador.nombre} ${publicacion?.creador.apellido}`}
                 </p>
                 <p>Cantidad de Ofertas: <span>{publicacion?.ofertas.length}</span></p>
             </div>
@@ -147,7 +148,7 @@ export default function DetallePublicacion() {
                     <div>
                         {ofertas.map((oferta) => (
                             <div key={oferta.id}>
-                                <h2>Postulante: {oferta.postulante ?? "??"}</h2>
+                                <h2>Postulante: {oferta.isGoogleUser ? oferta.nombrePostulante : `${oferta.nombrePostulante} ${oferta.apellidoPostulante}`}</h2>
                                 <p>Mensaje: {oferta.mensajeOferta}</p>
                                 <button>Rechazar</button>
                                 {/* Agregar logica para aceptar o rechazar*/}

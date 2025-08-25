@@ -15,6 +15,9 @@ namespace MangoDB.Models
         [Required]
         public Guid IdCreadorOferta { get; set; }
 
+        //[Required]
+        //public string creadorOfertaNombre { get; set; }
+
         [Required]
         public string MensajeOferta { get; set; }
 

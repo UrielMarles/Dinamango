@@ -21,8 +21,8 @@ namespace MangoDB.Models
         [Required, MaxLength(255)]
         public string Ubicacion { get; set; }
 
-        [Required]
-        public string EstadoTarea { get; set; }
+        //[Required]
+        //public string EstadoTarea { get; set; }
         public DateTime FechaPublicacion { get; set; } = DateTime.UtcNow;
 
         [Required, MaxLength(50)]

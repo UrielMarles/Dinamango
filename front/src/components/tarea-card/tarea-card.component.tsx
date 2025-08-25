@@ -1,16 +1,4 @@
-import {
-    Card,
-    CardContent,
-    Typography,
-    Chip,
-    Divider,
-    IconButton,
-    Badge,
-    Stack,
-    Box,
-    Avatar,
-    Button
-} from '@mui/material';
+import { Card, CardContent, Typography, Chip, Divider, IconButton, Badge, Stack, Box, Avatar, Button } from '@mui/material';
 import {
     LocationOn as LocationIcon,
     Schedule as ScheduleIcon,
@@ -61,14 +49,14 @@ interface TareaCardProps {
 
 const MotionCard = motion(Card);
 
-export default function TareaCard({ 
-    tarea, 
-    index = 0, 
+export default function TareaCard({
+    tarea,
+    index = 0,
     variant = 'owned',
-    onView, 
-    onEdit, 
+    onView,
+    onEdit,
     onDelete,
-    onApply 
+    onApply
 }: TareaCardProps) {
     const cardVariants = {
         hidden: { opacity: 0, y: 20 },
@@ -104,7 +92,7 @@ export default function TareaCard({
         }
     };
 
-    const cardClassName = variant === 'external' 
+    const cardClassName = variant === 'external'
         ? `${estilos.tareaCard} ${estilos.externalCard}`
         : estilos.tareaCard;
 
@@ -121,15 +109,16 @@ export default function TareaCard({
                 {variant === 'external' && tarea.creador && (
                     <Box className={estilos.creadorHeader}>
                         <Stack direction="row" alignItems="center" spacing={2}>
-                            <Avatar 
-                                src={tarea.creador.profilePictureUrl} 
+                            <Avatar
+                                src={tarea.creador.profilePictureUrl}
+                                alt='Avatar del creador'
                                 className={estilos.creadorAvatar}
                             >
                                 <PersonIcon />
                             </Avatar>
                             <Box>
                                 <Typography variant="subtitle2" className={estilos.creadorNombre}>
-                                    {tarea.creador.nombre} {tarea.creador.apellido}
+                                    {tarea.creador.isGoogleUser ? tarea.creador.nombre : `${tarea.creador.nombre} ${tarea.creador.apellido}`}
                                 </Typography>
                                 <Typography variant="caption" className={estilos.creadorLabel}>
                                     Publicado por
@@ -141,20 +130,20 @@ export default function TareaCard({
 
                 {/* Header principal */}
                 <Box className={estilos.cardHeader}>
-                    <Typography 
-                        variant="h5" 
+                    <Typography
+                        variant="h5"
                         className={estilos.titulo}
                     >
                         {tarea.titulo}
                     </Typography>
-                    
+
                     {/* Acciones según el variant */}
                     <Stack direction="row" spacing={1}>
                         {variant === 'owned' ? (
                             <>
                                 {onView && (
-                                    <IconButton 
-                                        size="small" 
+                                    <IconButton
+                                        size="small"
                                         className={estilos.actionButton}
                                         onClick={() => onView(tarea.id)}
                                     >
@@ -162,8 +151,8 @@ export default function TareaCard({
                                     </IconButton>
                                 )}
                                 {onEdit && (
-                                    <IconButton 
-                                        size="small" 
+                                    <IconButton
+                                        size="small"
                                         className={estilos.actionButtonSecondary}
                                         onClick={() => onEdit(tarea.id)}
                                     >
@@ -171,8 +160,8 @@ export default function TareaCard({
                                     </IconButton>
                                 )}
                                 {onDelete && (
-                                    <IconButton 
-                                        size="small" 
+                                    <IconButton
+                                        size="small"
                                         className={estilos.actionButtonDanger}
                                         onClick={() => onDelete(tarea.id)}
                                     >
@@ -183,8 +172,8 @@ export default function TareaCard({
                         ) : (
                             <>
                                 {onView && (
-                                    <IconButton 
-                                        size="small" 
+                                    <IconButton
+                                        size="small"
                                         className={estilos.actionButton}
                                         onClick={() => onView(tarea.id)}
                                     >
@@ -196,8 +185,8 @@ export default function TareaCard({
                     </Stack>
                 </Box>
 
-                <Typography 
-                    variant="body1" 
+                <Typography
+                    variant="body1"
                     className={estilos.descripcion}
                 >
                     {tarea.descripcion}
@@ -210,25 +199,25 @@ export default function TareaCard({
                             {tarea.ubicacion}
                         </Typography>
                     </Stack>
-                    
+
                     <Stack direction="row" alignItems="center" spacing={1}>
                         <CalendarIcon className={estilos.icon} />
                         <Typography variant="body2" color="text.secondary">
                             {tarea.fechaDeseada}
                         </Typography>
                     </Stack>
-                    
+
                     <Stack direction="row" alignItems="center" spacing={1}>
                         <ScheduleIcon className={estilos.icon} />
                         <Typography variant="body2" color="text.secondary">
                             {tarea.horarioDeseado}
                         </Typography>
                     </Stack>
-                    
+
                     <Stack direction="row" alignItems="center" spacing={1}>
                         <PeopleIcon className={estilos.icon} />
-                        <Badge 
-                            badgeContent={tarea.cantidadOfertas || 0} 
+                        <Badge
+                            badgeContent={tarea.cantidadOfertas || 0}
                             className={estilos.badge}
                         >
                             <Typography variant="body2" color="text.secondary">
@@ -240,9 +229,9 @@ export default function TareaCard({
 
                 <Divider className={estilos.divider} />
 
-                <Stack 
-                    direction="row" 
-                    justifyContent="space-between" 
+                <Stack
+                    direction="row"
+                    justifyContent="space-between"
                     alignItems="center"
                     className={estilos.footer}
                 >
@@ -251,7 +240,7 @@ export default function TareaCard({
                         label={`$${tarea.dineroOfrecido.toLocaleString()}`}
                         className={estilos.moneyChip}
                     />
-                    
+
                     <Box className={estilos.chipGroup}>
                         {tarea.estado && (
                             <Chip
