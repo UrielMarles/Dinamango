@@ -45,31 +45,26 @@ export default function Tareas() {
             setLoading(true);
             try {
                 const data = await apiHelper.getTareas();
+
                 if (!data) return;
 
-                const publicacionesActualizadas = await Promise.all(
+                const publicacionesActualizadas = await Promise.all( // Arreglar error imagenes sin iniciar sesion
                     data.map(async (pub: Publicacion) => {
                         let profilePictureUrl;
 
                         if (!pub.creador.isGoogleUser) {
-                            try {
-                                const urlImage = await getImage(pub.creador.id);
-                                profilePictureUrl = urlImage ? URL.createObjectURL(urlImage) : undefined; // BUG segun la cuenta muestra una imagen u otra
-
-                            } catch (error) {
-                                console.error("Error al obtener la imagen de perfil:", error);
-                            }
+                            const blob = await getImage(pub.creador.id);
+                            profilePictureUrl = blob ? URL.createObjectURL(blob) : undefined;
                         }
                         else {
                             profilePictureUrl = pub.creador.profilePictureUrl;
                         }
-
                         return {
                             ...pub,
                             creador: {
                                 ...pub.creador,
-                                profilePictureUrl,
-                            },
+                                profilePictureUrl
+                            }
                         };
                     })
                 );

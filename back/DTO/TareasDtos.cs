@@ -9,12 +9,14 @@
         public string FechaDeseada { get; set; }
         public decimal DineroOfrecido { get; set; }
     }
+
     public class ParamsGetTareasDTO
     {
         public decimal? MinDinero { get; set; }
         public decimal? MaxDinero { get; set; }
         public int? Cantidad { get; set; }
     }
+    
     public class ResultTareaConOfertasDTO
     {
         public Guid Id { get; set; }

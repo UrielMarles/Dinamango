@@ -86,62 +86,66 @@ namespace MangoDB.Controllers
         public async Task<IActionResult> UploadProfilePicture([FromHeader(Name = "Authorization")] string token, IFormFile file)
         {
             string? serverURL = $"{Request.Scheme}://{Request.Host}";
-
             User? user = await _userService.ValidateToken(token);
             if (user == null)
+            {
                 return Unauthorized(new { message = "Token inválido" });
-
+            }
             if (file == null || file.Length == 0)
+            {
                 return BadRequest(new { message = "Archivo inválido" });
-
-
+            }
             var allowedExtensions = new[] { ".jpg", ".jpeg", ".png", ".gif" };
             var extension = Path.GetExtension(file.FileName).ToLower();
             if (!allowedExtensions.Contains(extension))
+            {
                 return BadRequest(new { message = "Formato de imagen no permitido" });
-
-
+            }
             var solutionFolder = Directory.GetParent(AppContext.BaseDirectory)?.Parent?.Parent?.Parent?.FullName;
             var uploadsFolder = Path.Combine(solutionFolder, "ProfilePictures");
-
             if (!Directory.Exists(uploadsFolder))
+            {
                 Directory.CreateDirectory(uploadsFolder);
-
+            }
             string fileName = $"{user.Id}{extension}";
             string filePath = Path.Combine(uploadsFolder, fileName);
-
             using (var stream = new FileStream(filePath, FileMode.Create))
             {
                 await file.CopyToAsync(stream);
             }
-
-            user.ProfilePictureUrl = $"{serverURL}/getImages/profile/{fileName}";
+            user.ProfilePictureUrl = $"{serverURL}/api/user/getImages/profile/{user.Id}";
             await _context.SaveChangesAsync();
-
             return Ok(new { message = "Foto de perfil actualizada", profilePictureUrl = user.ProfilePictureUrl });
         }
 
         [HttpGet("getImages/profile/{id}")]
-        public async Task<IActionResult> getProfilePicture(Guid id, [FromHeader(Name = "Authorization")] string token)
+        public async Task<IActionResult> GetProfilePicture(Guid id, [FromHeader(Name = "Authorization")] string token)
         {
             User? currentUser = await _userService.ValidateToken(token);
             if (currentUser == null)
+            {
                 return Unauthorized(new { message = "Token inválido" });
-
+            }
             string? folder = Directory.GetParent(AppContext.BaseDirectory)?.Parent?.Parent?.Parent?.FullName;
             string folderImages = Path.Combine(folder, "ProfilePictures");
 
             if (!Directory.Exists(folderImages))
+            {
                 return NotFound("Directorio de imágenes no existe");
+            }
 
             string? file = Directory.GetFiles(folderImages)
-                .FirstOrDefault(f => Path.GetFileNameWithoutExtension(f).Equals(currentUser.Id.ToString(), StringComparison.OrdinalIgnoreCase));
+                .FirstOrDefault(f => Path.GetFileNameWithoutExtension(f).Equals(id.ToString(), StringComparison.OrdinalIgnoreCase));
 
             if (file == null)
+            {
                 return NotFound("Imagen no encontrada");
+            }
 
-            string? mime = "image/jpeg"; // o usar lógica para detectar MIME
+            string ext = Path.GetExtension(file).ToLower();
+            string mime = ext == ".png" ? "image/png" : ext == ".gif" ? "image/gif" : "image/jpeg";
             FileStream archivo = System.IO.File.OpenRead(file);
+
             return File(archivo, mime);
         }
 
