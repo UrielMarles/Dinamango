@@ -30,6 +30,10 @@ function getOfertas() {
     return apiHelper.getMisOfertas();
 }
 
+function editarTarea(id: string, data: any) {
+    return apiHelper.updateTareas(id, data);
+}
+
 const MotionCard = motion(Card);
 const MotionBox = motion(Box);
 
@@ -125,7 +129,7 @@ export default function MisTareas() {
 
     //Subir cambios del edit
     const onSubmit = async (data: any) => {
-        await apiHelper.updateTareas(idTarea!, data);
+        await editarTarea(idTarea!, data);
 
         toast.success("¡Tarea actualizada correctamente!", {
             duration: 2000,
@@ -379,7 +383,7 @@ export default function MisTareas() {
                     )}
                 </Box>
             </motion.div>
-            <Popup isOpen={popupOpen} onClose={cerrarPopup} title="Editar Tarea"> {/* Arreglar el bug de la modificacion */}
+            <Popup isOpen={popupOpen} onClose={cerrarPopup} title="Editar Tarea">
                 {tareas.map(tarea => {
                     if (tarea.id === idTarea) {
                         return (

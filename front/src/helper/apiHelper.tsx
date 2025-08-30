@@ -78,12 +78,7 @@ export const apiHelper = {
     },
 
     async getProfilePicture(id: string): Promise<Blob | null> {
-        const token = sessionStorage.getItem("authToken");
         const headers: Record<string, string> = {};
-        
-        if (token) {
-            headers.Authorization = token;
-        }
 
         const res = await fetch(`${API}/user/getImages/profile/${id}`, {
             method: "GET",

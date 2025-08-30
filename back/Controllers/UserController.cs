@@ -119,13 +119,8 @@ namespace MangoDB.Controllers
         }
 
         [HttpGet("getImages/profile/{id}")]
-        public async Task<IActionResult> GetProfilePicture(Guid id, [FromHeader(Name = "Authorization")] string token)
+        public async Task<IActionResult> GetProfilePicture(Guid id)
         {
-            User? currentUser = await _userService.ValidateToken(token);
-            if (currentUser == null)
-            {
-                return Unauthorized(new { message = "Token inválido" });
-            }
             string? folder = Directory.GetParent(AppContext.BaseDirectory)?.Parent?.Parent?.Parent?.FullName;
             string folderImages = Path.Combine(folder, "ProfilePictures");
 

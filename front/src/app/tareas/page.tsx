@@ -48,7 +48,7 @@ export default function Tareas() {
 
                 if (!data) return;
 
-                const publicacionesActualizadas = await Promise.all( // Arreglar error imagenes sin iniciar sesion
+                const publicacionesActualizadas = await Promise.all(
                     data.map(async (pub: Publicacion) => {
                         let profilePictureUrl;
 
@@ -59,6 +59,7 @@ export default function Tareas() {
                         else {
                             profilePictureUrl = pub.creador.profilePictureUrl;
                         }
+
                         return {
                             ...pub,
                             creador: {
