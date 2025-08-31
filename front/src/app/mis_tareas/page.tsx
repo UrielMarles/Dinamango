@@ -18,6 +18,7 @@ import { Tarea } from "@/types/Dto/Tarea";
 import { Oferta } from "@/types/Dto/Oferta";
 import toast from "react-hot-toast";
 import Popup from "./popup";
+import Swal from "sweetalert2"
 
 type FilterType = 'todas' | 'activas' | 'terminadas' | 'buscando_ofertas' | 'en_progreso';
 type TabType = 'tareas' | 'ofertas';
@@ -80,6 +81,7 @@ export default function MisTareas() {
                 setLoading(false);
             }
         };
+
         fetchData();
     }, []);
 
@@ -128,37 +130,53 @@ export default function MisTareas() {
     };
 
     //Subir cambios del edit
-    const onSubmit = async (data: any) => {
-        await editarTarea(idTarea!, data);
+    const onSubmit = async (data: any) => { // ARREGLAR
+        const id = idTarea;
+
+        const updateData = await editarTarea(id!, data);
+
+        console.log("ID", id);
+
+        setTareas(prev => prev.map(t => t.id === id ? { ...t, ...updateData } : t));
 
         toast.success("¡Tarea actualizada correctamente!", {
-            duration: 2000,
+            duration: 4000,
             icon: '🎉'
         });
 
-        console.table(data);
-
-        getTareas().then((tareasData) => {
-            setTareas(tareasData);
-        });
+        // getTareas() // Intentar optimizar
+        //     .then((tareasData) => {
+        //         setTareas(tareasData);
+        //     });
 
         cerrarPopup();
     }
 
     // Eliminar tarea
     const handleDeleteTarea = async (id: string) => {
-        console.log('Eliminar tarea:', id);
+        Swal.fire({
+            icon: 'warning',
+            title: '¿Está seguro que desea eliminar la tarea?',
+            text: 'Esta acción no se puede deshacer.',
+            showCancelButton: true,
+            confirmButtonText: 'Eliminar', // negro letras blancas
+            cancelButtonText: 'Mantener' // blanco letras negras
+        })
+            .then(async (results) => {
+                if (results.isConfirmed) {
+                    toast.success("¡Tarea eliminada correctamente!", {
+                        duration: 2000,
+                        icon: '🎉'
+                    });
 
-        await apiHelper.deleteTareas(id)
+                    await apiHelper.deleteTareas(id);
 
-        toast.success("¡Tarea eliminada correctamente!", {
-            duration: 2000,
-            icon: '🎉'
-        });
-
-        getTareas().then((tareasData) => {
-            setTareas(tareasData);
-        });
+                    getTareas() // Intentar optimizar
+                        .then((tareasData) => {
+                            setTareas(tareasData);
+                        });
+                }
+            });
     };
 
     if (loading) {

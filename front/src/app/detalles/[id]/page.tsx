@@ -35,7 +35,7 @@ export default function DetallePublicacion() { // Bug/error sin iniciar sesion n
     const tareaConOferta = async (id: string) => {
         try {
             const data = await apiHelper.ObtenerTareaConOfertas(id);
-
+            
             if (data.id) {
                 setPublicacion(data);
             }
@@ -94,7 +94,7 @@ export default function DetallePublicacion() { // Bug/error sin iniciar sesion n
                 <h1>{publicacion?.titulo}</h1>
                 <p>{publicacion?.descripcion}</p>
                 <p>
-                    Publicado por: {publicacion?.creador.id === userId ? publicacion.creador.nombre : `${publicacion?.creador.nombre} ${publicacion?.creador.apellido}`}
+                    Publicado por: {publicacion?.creador.id === userId ? publicacion?.creador.nombre : `${publicacion?.creador.nombre} ${publicacion?.creador.apellido}`}
                 </p>
                 <p>Cantidad de Ofertas: <span>{publicacion?.ofertas.length}</span></p>
             </div>
