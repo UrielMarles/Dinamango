@@ -2,7 +2,8 @@
 
 import { apiHelper } from "@/helper/apiHelper";
 import { useEffect, useState } from "react";
-import { Box, Card, CardContent, Typography, Chip, Avatar, Container, Paper, Stack, Tabs, Tab, FormControl, InputLabel, Select, MenuItem, Badge } from '@mui/material';
+import { useForm } from "react-hook-form";
+import { Box, Card, CardContent, Typography, Chip, Avatar, Container, Paper, Stack, Tabs, Tab, FormControl, InputLabel, Select, MenuItem, Badge, Button } from '@mui/material';
 import {
     Task as TaskIcon,
     Assignment as AssignmentIcon,
@@ -13,6 +14,11 @@ import {
 import { motion } from 'framer-motion';
 import TareaCard from "../../components/tarea-card/tarea-card.component"
 import estilos from "./mis_tareas.module.css";
+import { Tarea } from "@/types/Dto/Tarea";
+import { Oferta } from "@/types/Dto/Oferta";
+import toast from "react-hot-toast";
+import Popup from "./popup";
+import Swal from "sweetalert2"
 
 type FilterType = 'todas' | 'activas' | 'terminadas' | 'buscando_ofertas' | 'en_progreso';
 type TabType = 'tareas' | 'ofertas';
@@ -25,6 +31,10 @@ function getOfertas() {
     return apiHelper.getMisOfertas();
 }
 
+function editarTarea(id: string, data: any) {
+    return apiHelper.updateTareas(id, data);
+}
+
 const MotionCard = motion(Card);
 const MotionBox = motion(Box);
 
@@ -34,6 +44,21 @@ export default function MisTareas() {
     const [loading, setLoading] = useState(true);
     const [activeTab, setActiveTab] = useState<TabType>('tareas');
     const [filter, setFilter] = useState<FilterType>('todas');
+    const [popupOpen, setPopupOpen] = useState(false);
+    const [idTarea, setIdTarea] = useState<string | null>(null);
+
+    const {
+        handleSubmit,
+        register
+    } = useForm();
+
+    function abrirPopup() {
+        setPopupOpen(true);
+    }
+
+    function cerrarPopup() {
+        setPopupOpen(false);
+    }
 
     useEffect(() => {
         const fetchData = async () => {
@@ -56,6 +81,7 @@ export default function MisTareas() {
                 setLoading(false);
             }
         };
+
         fetchData();
     }, []);
 
@@ -90,18 +116,67 @@ export default function MisTareas() {
         setFilter(event.target.value as FilterType);
     };
 
+    // Ver detalles de la tarea
     const handleViewTarea = (id: string) => {
         window.location.href = `/detalles/${id}`;
     };
 
+    // Editar tarea
     const handleEditTarea = (id: string) => {
-        console.log('Editar tarea:', id);
+        const tareaToEdit = tareas.find(t => t.id === id);
+        setIdTarea(tareaToEdit?.id || null);
 
+        abrirPopup();
     };
 
-    const handleDeleteTarea = (id: string) => {
-        console.log('Eliminar tarea:', id);
+    //Subir cambios del edit
+    const onSubmit = async (data: any) => { // ARREGLAR
+        const id = idTarea;
 
+        const updateData = await editarTarea(id!, data);
+
+        console.log("ID", id);
+
+        setTareas(prev => prev.map(t => t.id === id ? { ...t, ...updateData } : t));
+
+        toast.success("¡Tarea actualizada correctamente!", {
+            duration: 4000,
+            icon: '🎉'
+        });
+
+        // getTareas() // Intentar optimizar
+        //     .then((tareasData) => {
+        //         setTareas(tareasData);
+        //     });
+
+        cerrarPopup();
+    }
+
+    // Eliminar tarea
+    const handleDeleteTarea = async (id: string) => {
+        Swal.fire({
+            icon: 'warning',
+            title: '¿Está seguro que desea eliminar la tarea?',
+            text: 'Esta acción no se puede deshacer.',
+            showCancelButton: true,
+            confirmButtonText: 'Eliminar', // negro letras blancas
+            cancelButtonText: 'Mantener' // blanco letras negras
+        })
+            .then(async (results) => {
+                if (results.isConfirmed) {
+                    toast.success("¡Tarea eliminada correctamente!", {
+                        duration: 2000,
+                        icon: '🎉'
+                    });
+
+                    await apiHelper.deleteTareas(id);
+
+                    getTareas() // Intentar optimizar
+                        .then((tareasData) => {
+                            setTareas(tareasData);
+                        });
+                }
+            });
     };
 
     if (loading) {
@@ -326,6 +401,43 @@ export default function MisTareas() {
                     )}
                 </Box>
             </motion.div>
+            <Popup isOpen={popupOpen} onClose={cerrarPopup} title="Editar Tarea">
+                {tareas.map(tarea => {
+                    if (tarea.id === idTarea) {
+                        return (
+                            <form key={tarea.id} onSubmit={handleSubmit(onSubmit)}>
+                                <div>
+                                    <label htmlFor="titulo">Título: </label>
+                                    <input type="text" id="titulo" {...register("titulo")} defaultValue={tarea.titulo} />
+                                </div>
+                                <div>
+                                    <label htmlFor="descripcion">Descripción: </label>
+                                    <input type="text" id="descripcion" {...register("descripcion")} defaultValue={tarea.descripcion} />
+                                </div>
+                                <div>
+                                    <label htmlFor="ubicacion">Ubicacion: </label>
+                                    <input type="text" id="ubicacion" {...register("ubicacion")} defaultValue={tarea.ubicacion} />
+                                </div>
+                                <div>
+                                    <label htmlFor="horarioDeseado">Horario:</label>
+                                    <input type="text" id="horarioDeseado" {...register("horarioDeseado")} defaultValue={tarea.horarioDeseado} />
+                                </div>
+                                <div>
+                                    <label htmlFor="fechaDeseada">Fecha:</label>
+                                    <input type="text" id="fechaDeseada" {...register("fechaDeseada")} defaultValue={tarea.fechaDeseada} />
+                                </div>
+                                <div>
+                                    <label htmlFor="precio">Precio: </label>
+                                    <input type="number" id="precio" {...register("dineroOfrecido")} defaultValue={tarea.dineroOfrecido} />
+                                </div>
+                                <Button variant="contained" color="primary" type="submit">
+                                    Guardar cambios
+                                </Button>
+                            </form>
+                        )
+                    }
+                })}
+            </Popup>
         </Container>
     );
 }

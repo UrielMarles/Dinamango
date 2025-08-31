@@ -77,21 +77,23 @@ export const apiHelper = {
         return this.request("/user/profile-picture", { method: "POST", formData, includeToken: true });
     },
 
-    async getProfilePicture(id: string): Promise<Blob> {
-        const token = sessionStorage.getItem("authToken");
+    async getProfilePicture(id: string): Promise<Blob | null> {
+        const headers: Record<string, string> = {};
 
-        return fetch(`${API}/user/getImages/profile/${id}`, {
+        const res = await fetch(`${API}/user/getImages/profile/${id}`, {
             method: "GET",
-            headers: {
-                Authorization: token || "",
-            }
-        }).then((res) => {
-            if (!res.ok) {
-                throw new Error("No se pudo obtener la imagen de perfil");
-            }
-
-            return res.blob();
+            headers
         });
+
+        if (res.status === 404) {
+            return null;
+        }
+
+        if (!res.ok) {
+            return null;
+        }
+
+        return res.blob();
     },
 
     updateUser(data: any) {
@@ -115,11 +117,11 @@ export const apiHelper = {
         return this.request("/tareas", { method: "POST", body: data, includeToken: true });
     },
 
-    updateTareas(id: number, data: any) {
+    updateTareas(id: string, data: any) {
         return this.request(`/tareas/${id}`, { method: "PUT", body: data, includeToken: true });
     },
 
-    deleteTareas(id: number) {
+    deleteTareas(id: string) {
         return this.request(`/tareas/${id}`, { method: "DELETE", includeToken: true });
     },
 

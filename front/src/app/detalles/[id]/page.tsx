@@ -4,41 +4,8 @@ import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { apiHelper } from "@/helper/apiHelper";
 import toast from "react-hot-toast";
-
-interface Publicacion {
-    id: string;
-    titulo: string;
-    descripcion: string;
-    ubicacion: string;
-    horarioDeseado: string;
-    fechaDeseada: string;
-    dineroOfrecido: number;
-    creador: {
-        id: string;
-        nombre: string;
-        apellido: string;
-        email: string;
-        isGoogleUser: boolean;
-    };
-    ofertas: string[];
-}
-
-interface Ofertas {
-    id: string;
-    mensajeOferta: string;
-    fechaCreacion: string;
-    idPostulante: string;
-    nombrePostulante: string;
-    apellidoPostulante: string;
-    isGoogleUser: boolean;
-    tarea: {
-        id: string;
-        titulo: string;
-        descripcion: string;
-        fechaPublicacion: string;
-        dineroOfrecido: number;
-    };
-}
+import { Publicacion } from "@/types/Dto/Publicacion";
+import { Oferta } from "@/types/Dto/Oferta";
 
 async function dataUser() {
     try {
@@ -56,20 +23,19 @@ async function dataUser() {
     }
 }
 
-export default function DetallePublicacion() {
+export default function DetallePublicacion() { // Bug/error sin iniciar sesion no poder entrar
     const params = useParams();
     const id = params.id as string;
 
     const [userId, setUserId] = useState<string | null>(null);
-
     const [publicacion, setPublicacion] = useState<Publicacion | null>(null);
-    const [ofertas, setOfertas] = useState<Ofertas[]>([]);
+    const [ofertas, setOfertas] = useState<Oferta[]>([]);
     const [mensajeOferta, setMensajeOferta] = useState<string>("");
 
     const tareaConOferta = async (id: string) => {
         try {
             const data = await apiHelper.ObtenerTareaConOfertas(id);
-
+            
             if (data.id) {
                 setPublicacion(data);
             }
@@ -91,7 +57,7 @@ export default function DetallePublicacion() {
 
         async function fetchOfertas() {
             const postulaciones = await apiHelper.GetPostulacionesEnMisTareas();
-            const filtradas = postulaciones.filter((p: Ofertas) => p.tarea?.id === id);
+            const filtradas = postulaciones.filter((p: Oferta) => p.tarea?.id === id);
 
             setOfertas(filtradas);
         }
@@ -128,7 +94,7 @@ export default function DetallePublicacion() {
                 <h1>{publicacion?.titulo}</h1>
                 <p>{publicacion?.descripcion}</p>
                 <p>
-                    Publicado por: {publicacion?.creador.id === userId ? publicacion.creador.nombre : `${publicacion?.creador.nombre} ${publicacion?.creador.apellido}`}
+                    Publicado por: {publicacion?.creador.id === userId ? publicacion?.creador.nombre : `${publicacion?.creador.nombre} ${publicacion?.creador.apellido}`}
                 </p>
                 <p>Cantidad de Ofertas: <span>{publicacion?.ofertas.length}</span></p>
             </div>
@@ -148,7 +114,7 @@ export default function DetallePublicacion() {
                     <div>
                         {ofertas.map((oferta) => (
                             <div key={oferta.id}>
-                                <h2>Postulante: {oferta.isGoogleUser ? oferta.nombrePostulante : `${oferta.nombrePostulante} ${oferta.apellidoPostulante}`}</h2>
+                                <h2>Postulante: {oferta.postulante?.isGoogleUser ? oferta.postulante?.nombre : `${oferta.postulante?.nombre} ${oferta.postulante?.apellido}`}</h2>
                                 <p>Mensaje: {oferta.mensajeOferta}</p>
                                 <button>Rechazar</button>
                                 {/* Agregar logica para aceptar o rechazar*/}

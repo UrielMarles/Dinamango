@@ -1,25 +1,6 @@
 "use client";
 
-import { 
-    TextField, 
-    Button, 
-    Box, 
-    Typography, 
-    InputAdornment,
-    Card,
-    CardContent,
-    Stepper,
-    Step,
-    StepLabel,
-    StepButton,
-    Container,
-    IconButton,
-    Chip,
-    Stack,
-    Paper,
-    Avatar,
-    Badge
-} from "@mui/material";
+import { TextField, Button, Box, Typography, InputAdornment, Card, CardContent, Stepper, Step, StepLabel, StepButton, Container, IconButton, Chip, Stack, Paper, Avatar, } from "@mui/material";
 import {
     Title as TitleIcon,
     LocationOn as LocationIcon,
@@ -37,7 +18,6 @@ import {
 import { LocalizationProvider, DatePicker, TimePicker } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { es } from 'date-fns/locale';
-import Image from "next/image";
 import { useForm } from "react-hook-form";
 import { useState, useCallback } from "react";
 import { apiHelper } from "@/helper/apiHelper";
@@ -103,7 +83,7 @@ export default function TareasForm() {
     // Manejar carga de imágenes
     const handleImageUpload = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
         const files = Array.from(event.target.files || []);
-        
+
         files.forEach(file => {
             if (file.type.startsWith('image/')) {
                 const reader = new FileReader();
@@ -118,7 +98,7 @@ export default function TareasForm() {
                 reader.readAsDataURL(file);
             }
         });
-        
+
         // Reset input
         event.target.value = '';
     }, []);
@@ -131,7 +111,7 @@ export default function TareasForm() {
     // Validar sección actual
     const validateCurrentSection = async (): Promise<boolean> => {
         const sectionFields = getSectionFields(currentSection);
-        
+
         // Validaciones especiales
         if (currentSection === 0) {
             if (!fechaSeleccionada) {
@@ -145,7 +125,7 @@ export default function TareasForm() {
                 return false;
             }
         }
-        
+
         if (currentSection === 1) {
             if (!ubicacionTipo) {
                 setValue("ubicacionTipo", "");
@@ -238,8 +218,8 @@ export default function TareasForm() {
     // Animaciones
     const containerVariants = {
         hidden: { opacity: 0, y: 20 },
-        visible: { 
-            opacity: 1, 
+        visible: {
+            opacity: 1,
             y: 0,
             transition: { duration: 0.5, staggerChildren: 0.1 }
         }
@@ -287,14 +267,14 @@ export default function TareasForm() {
                                 <Typography variant="h6" className={estilos.sidebarTitle}>
                                     Progreso
                                 </Typography>
-                                
-                                <Stepper 
-                                    activeStep={currentSection} 
+
+                                <Stepper
+                                    activeStep={currentSection}
                                     orientation="vertical"
                                     className={estilos.stepper}
                                 >
                                     {steps.map((step, index) => (
-                                        <Step 
+                                        <Step
                                             key={step.label}
                                             completed={completedSections[index]}
                                             className={estilos.step}
@@ -304,26 +284,25 @@ export default function TareasForm() {
                                                 className={estilos.stepButton}
                                                 disabled={index > currentSection + 1}
                                             >
-                                                <StepLabel 
+                                                <StepLabel
                                                     icon={
                                                         <motion.div
                                                             variants={stepVariants}
                                                             animate={
-                                                                completedSections[index] 
-                                                                    ? "completed" 
-                                                                    : index === currentSection 
-                                                                        ? "active" 
+                                                                completedSections[index]
+                                                                    ? "completed"
+                                                                    : index === currentSection
+                                                                        ? "active"
                                                                         : "inactive"
                                                             }
                                                         >
-                                                            <Avatar 
-                                                                className={`${estilos.stepIcon} ${
-                                                                    completedSections[index] 
+                                                            <Avatar
+                                                                className={`${estilos.stepIcon} ${completedSections[index]
                                                                         ? estilos.completed
-                                                                        : index === currentSection 
+                                                                        : index === currentSection
                                                                             ? estilos.active
                                                                             : estilos.inactive
-                                                                }`}
+                                                                    }`}
                                                             >
                                                                 {completedSections[index] ? <CheckIcon /> : step.icon}
                                                             </Avatar>
@@ -331,11 +310,10 @@ export default function TareasForm() {
                                                     }
                                                     className={estilos.stepLabel}
                                                 >
-                                                    <Typography 
-                                                        variant="body1" 
-                                                        className={`${estilos.stepText} ${
-                                                            index === currentSection ? estilos.activeText : ''
-                                                        }`}
+                                                    <Typography
+                                                        variant="body1"
+                                                        className={`${estilos.stepText} ${index === currentSection ? estilos.activeText : ''
+                                                            }`}
                                                     >
                                                         {step.label}
                                                     </Typography>
@@ -351,10 +329,10 @@ export default function TareasForm() {
                                         {completedSections.filter(Boolean).length} de {steps.length} completado
                                     </Typography>
                                     <Box className={estilos.progressBar}>
-                                        <Box 
+                                        <Box
                                             className={estilos.progressFill}
-                                            style={{ 
-                                                width: `${(completedSections.filter(Boolean).length / steps.length) * 100}%` 
+                                            style={{
+                                                width: `${(completedSections.filter(Boolean).length / steps.length) * 100}%`
                                             }}
                                         />
                                     </Box>
@@ -364,11 +342,11 @@ export default function TareasForm() {
 
                         {/* Formulario principal */}
                         <MotionBox className={estilos.formContainer}>
-                            <MotionCard 
+                            <MotionCard
                                 className={estilos.formCard}
                                 elevation={4}
                             >
-                                <CardContent 
+                                <CardContent
                                     className={estilos.cardContent}
                                     component="form"
                                     onSubmit={handleSubmit(onSubmit)}
@@ -399,7 +377,7 @@ export default function TareasForm() {
                                                         <TextField
                                                             fullWidth
                                                             placeholder="Ejemplo: Pintar mi casa, Diseñar un logo..."
-                                                            {...register("titulo", { 
+                                                            {...register("titulo", {
                                                                 required: "El título es obligatorio",
                                                                 minLength: {
                                                                     value: 10,
@@ -438,9 +416,8 @@ export default function TareasForm() {
                                                                     onClick={() => handleChangeFecha(option.value)}
                                                                     color={fechaSeleccionada === option.value ? "primary" : "default"}
                                                                     variant={fechaSeleccionada === option.value ? "filled" : "outlined"}
-                                                                    className={`${estilos.chip} ${
-                                                                        fechaSeleccionada === option.value ? estilos.chipSelected : ''
-                                                                    }`}
+                                                                    className={`${estilos.chip} ${fechaSeleccionada === option.value ? estilos.chipSelected : ''
+                                                                        }`}
                                                                 />
                                                             ))}
                                                         </Stack>
@@ -543,9 +520,8 @@ export default function TareasForm() {
                                                             ].map((option) => (
                                                                 <Paper
                                                                     key={option.value}
-                                                                    className={`${estilos.locationCard} ${
-                                                                        ubicacionTipo === option.value ? estilos.locationCardSelected : ''
-                                                                    }`}
+                                                                    className={`${estilos.locationCard} ${ubicacionTipo === option.value ? estilos.locationCardSelected : ''
+                                                                        }`}
                                                                     onClick={() => {
                                                                         setUbicacionTipo(option.value);
                                                                         setValue("ubicacionTipo", option.value, { shouldValidate: true });
@@ -555,7 +531,7 @@ export default function TareasForm() {
                                                                         backgroundColor: ubicacionTipo === option.value ? `${option.color}10` : 'white'
                                                                     }}
                                                                 >
-                                                                    <Avatar 
+                                                                    <Avatar
                                                                         className={estilos.locationIcon}
                                                                         style={{ backgroundColor: option.color }}
                                                                     >
@@ -632,7 +608,7 @@ export default function TareasForm() {
                                                             minRows={4}
                                                             maxRows={8}
                                                             placeholder="Describe con detalle qué necesitas, materiales, requisitos específicos, experiencia necesaria, etc."
-                                                            {...register("descripcion", { 
+                                                            {...register("descripcion", {
                                                                 required: "La descripción es obligatoria",
                                                                 minLength: {
                                                                     value: 50,
@@ -659,7 +635,7 @@ export default function TareasForm() {
                                                             Imágenes de referencia
                                                             <Chip label="Opcional" size="small" className={estilos.optionalChip} />
                                                         </Typography>
-                                                        
+
                                                         <Paper className={estilos.uploadArea}>
                                                             <input
                                                                 type="file"
@@ -695,9 +671,9 @@ export default function TareasForm() {
                                                                             animate={{ opacity: 1, scale: 1 }}
                                                                             className={estilos.imagePreview}
                                                                         >
-                                                                            <img 
-                                                                                src={image.preview} 
-                                                                                alt="Preview" 
+                                                                            <img
+                                                                                src={image.preview}
+                                                                                alt="Preview"
                                                                                 className={estilos.previewImage}
                                                                             />
                                                                             <IconButton
@@ -745,12 +721,12 @@ export default function TareasForm() {
                                                         <Typography variant="body1" color="text.secondary" className={estilos.budgetSubtext}>
                                                             Siempre puedes negociar el precio final con el profesional
                                                         </Typography>
-                                                        
+
                                                         <TextField
                                                             fullWidth
                                                             type="number"
                                                             placeholder="0"
-                                                            {...register("dineroOfrecido", { 
+                                                            {...register("dineroOfrecido", {
                                                                 required: "El presupuesto es obligatorio",
                                                                 min: {
                                                                     value: 100,
@@ -866,7 +842,7 @@ export default function TareasForm() {
                                                     Atrás
                                                 </Button>
                                             )}
-                                            
+
                                             {currentSection < steps.length - 1 ? (
                                                 <Button
                                                     onClick={handleNext}
