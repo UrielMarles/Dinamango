@@ -36,6 +36,9 @@ namespace MangoDB.Models
 
         public List<UserToken> UserTokens { get; set; } = new List<UserToken>();
         public List<Tarea> Tareas { get; set; } = new List<Tarea>();
+
+        public ICollection<ChatUsuario> ChatUsuarios { get; set; }
+        public ICollection<Mensaje> MensajesEnviados { get; set; }
     }
 
 

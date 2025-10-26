@@ -49,7 +49,8 @@ export default function MisTareas() {
 
     const {
         handleSubmit,
-        register
+        register,
+        setValue,
     } = useForm();
 
     function abrirPopup() {
@@ -75,6 +76,7 @@ export default function MisTareas() {
                 } else {
                     setActiveTab('tareas');
                 }
+
             } catch (error) {
                 console.error("Error al obtener los datos:", error);
             } finally {
@@ -84,6 +86,20 @@ export default function MisTareas() {
 
         fetchData();
     }, []);
+
+    useEffect(() => {
+        if (popupOpen && idTarea) {
+            const tarea = tareas.find((t: any) => t.id === idTarea);
+            if (tarea) {
+                setValue("titulo", tarea.titulo);
+                setValue("descripcion", tarea.descripcion);
+                setValue("ubicacion", tarea.ubicacion);
+                setValue("horarioDeseado", tarea.horarioDeseado);
+                setValue("fechaDeseada", tarea.fechaDeseada);
+                setValue("dineroOfrecido", tarea.dineroOfrecido);
+            }
+        }
+    });
 
     const filteredTareas = tareas.filter(tarea => {
         if (filter === 'todas') return true;
@@ -131,23 +147,17 @@ export default function MisTareas() {
 
     //Subir cambios del edit
     const onSubmit = async (data: any) => { // ARREGLAR
-        const id = idTarea;
-
-        const updateData = await editarTarea(id!, data);
-
-        console.log("ID", id);
-
-        setTareas(prev => prev.map(t => t.id === id ? { ...t, ...updateData } : t));
+        await editarTarea(idTarea!, data);
 
         toast.success("¡Tarea actualizada correctamente!", {
             duration: 4000,
             icon: '🎉'
         });
 
-        // getTareas() // Intentar optimizar
-        //     .then((tareasData) => {
-        //         setTareas(tareasData);
-        //     });
+        getTareas() // Intentar optimizar
+            .then((tareasData) => {
+                setTareas(tareasData);
+            });
 
         cerrarPopup();
     }
@@ -402,11 +412,12 @@ export default function MisTareas() {
                 </Box>
             </motion.div>
             <Popup isOpen={popupOpen} onClose={cerrarPopup} title="Editar Tarea">
-                {tareas.map(tarea => {
+                {/* {tareas.map(tarea => {
                     if (tarea.id === idTarea) {
                         return (
                             <form key={tarea.id} onSubmit={handleSubmit(onSubmit)}>
                                 <div>
+                                    <h1>{tarea.titulo}</h1>
                                     <label htmlFor="titulo">Título: </label>
                                     <input type="text" id="titulo" {...register("titulo")} defaultValue={tarea.titulo} />
                                 </div>
@@ -429,6 +440,41 @@ export default function MisTareas() {
                                 <div>
                                     <label htmlFor="precio">Precio: </label>
                                     <input type="number" id="precio" {...register("dineroOfrecido")} defaultValue={tarea.dineroOfrecido} />
+                                </div>
+                                <Button variant="contained" color="primary" type="submit">
+                                    Guardar cambios
+                                </Button>
+                            </form>
+                        )
+                    }
+                })} */}
+                {tareas.map(tarea => {
+                    if (tarea.id === idTarea) {
+                        return (
+                            <form key={tarea.id} onSubmit={handleSubmit(onSubmit)}>
+                                <div>
+                                    <label htmlFor="titulo">Título: </label>
+                                    <input type="text" id="titulo" {...register("titulo")} />
+                                </div>
+                                <div>
+                                    <label htmlFor="descripcion">Descripción: </label>
+                                    <input type="text" id="descripcion" {...register("descripcion")} />
+                                </div>
+                                <div>
+                                    <label htmlFor="ubicacion">Ubicacion: </label>
+                                    <input type="text" id="ubicacion" {...register("ubicacion")} />
+                                </div>
+                                <div>
+                                    <label htmlFor="horarioDeseado">Horario:</label>
+                                    <input type="text" id="horarioDeseado" {...register("horarioDeseado")} />
+                                </div>
+                                <div>
+                                    <label htmlFor="fechaDeseada">Fecha:</label>
+                                    <input type="text" id="fechaDeseada" {...register("fechaDeseada")} />
+                                </div>
+                                <div>
+                                    <label htmlFor="precio">Precio: </label>
+                                    <input type="number" id="precio" {...register("dineroOfrecido")} />
                                 </div>
                                 <Button variant="contained" color="primary" type="submit">
                                     Guardar cambios

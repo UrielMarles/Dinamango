@@ -126,18 +126,12 @@ export const apiHelper = {
     },
 
     // Ofertas
-    /**
-     * @param id id Publicidad
-     */
-    mandarOferta(id: string, data: any) {
-        return this.request(`/ofertas/${id}`, { method: "POST", body: data, includeToken: true });
+    mandarOferta(idPublicacion: string, data: any) {
+        return this.request(`/ofertas/${idPublicacion}`, { method: "POST", body: data, includeToken: true });
     },
 
-    /**
-     * @param id id Tarea
-     */
-    getOfertas(id: number) {
-        return this.request(`/ofertas/${id}`, { method: "GET" });
+    getOfertas(idTarea: number) {
+        return this.request(`/ofertas/${idTarea}`, { method: "GET" });
     },
 
     getMisOfertas() {
@@ -154,6 +148,44 @@ export const apiHelper = {
 
     rechazarOferta(idOferta: string) {
         return this.request(`/ofertas/${idOferta}/rechazar`, { method: "POST", includeToken: true })
-    }
+    },
 
-};
+    //Mensajes
+    crearChat(data: { UsuarioIds: string[] }) {
+        return this.request('/chat/crear', { method: "POST", body: data, includeToken: true });
+    },
+
+    listarChats(idUsuario: string) {
+        return this.request(`/chat/usuario/${idUsuario}/chats`, { method: "GET", includeToken: true });
+    },
+
+    // Obtener chat entre dos usuarios
+    obtenerChatEntreUsuarios(idUsuario1: string, idUsuario2: string) {
+        return this.request(`/chat/entre/${idUsuario1}/${idUsuario2}`, { method: "GET", includeToken: true });
+    },
+
+    // enviarMensaje(chatId: number, remitenteId: string, contenido: string) {
+    //     return this.request('/chat/enviar', { method: "POST", body: { chatId, remitenteId, contenido }, includeToken: true });
+    // },
+    enviarMensaje(chatId: number, remitenteId: string, contenido: string) {
+        return this.request('/chat/enviar', {
+            method: "POST",
+            body: {
+                chatId,
+                remitenteId,
+                contenido
+            },
+            // includeToken: true
+        });
+    },
+
+    // Listar mensajes de un chat
+    listarMensajes(idChat: number) {
+        return this.request(`/chat/${idChat}/mensajes`, { method: "GET", includeToken: true });
+    },
+
+    // Leido
+    mensajeLeido(idChat: number, idUsuario: string) {
+        return this.request(`/chat/${idChat}/leido/${idUsuario}`, { method: "POST", includeToken: true });
+    }
+}
