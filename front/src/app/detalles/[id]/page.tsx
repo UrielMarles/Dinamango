@@ -23,7 +23,7 @@ async function dataUser() {
     }
 }
 
-export default function DetallePublicacion() { // Bug/error sin iniciar sesion no poder entrar
+export default function DetallePublicacion() {
     const params = useParams();
     const id = params.id as string;
 
@@ -35,7 +35,7 @@ export default function DetallePublicacion() { // Bug/error sin iniciar sesion n
     const tareaConOferta = async (id: string) => {
         try {
             const data = await apiHelper.ObtenerTareaConOfertas(id);
-            
+
             if (data.id) {
                 setPublicacion(data);
             }
@@ -71,7 +71,7 @@ export default function DetallePublicacion() { // Bug/error sin iniciar sesion n
 
             const mensaje = { MensajeOferta: mensajeOferta };
 
-            const responseData = await apiHelper.mandarOferta(idTarea, mensaje)
+            const response = await apiHelper.mandarOferta(idTarea, mensaje)
 
             toast.success("Postulación enviada con éxito.");
 
@@ -79,12 +79,39 @@ export default function DetallePublicacion() { // Bug/error sin iniciar sesion n
 
             await tareaConOferta(idTarea);
 
-            return responseData;
+            return response;
         }
         catch (err) {
             console.error("Error al obtener las ofertas: ", err);
 
             toast.error("Hubo un problema con la postulación.");
+        }
+    }
+
+    const newChat = async () => {
+        try {
+            const user2 = publicacion?.creador.id;
+
+            if (!userId || !user2) {
+                toast.error("Los datos del usuario no están listos.");
+
+                return;
+            }
+
+            const userIds = [userId, user2];
+
+            const response = await apiHelper.crearChat({ UsuarioIds: userIds });
+
+            window.location.href = `/prueba_chat`;
+
+            console.log(response);
+
+            return response;
+        }
+        catch (err) {
+            console.error("Error al iniciar la conversación ", err);
+
+            toast.error("Hubo un problema al iniciar la sesión.");
         }
     }
 
@@ -107,6 +134,10 @@ export default function DetallePublicacion() { // Bug/error sin iniciar sesion n
                     onChange={(e) => setMensajeOferta(e.target.value)}
                 />
                 <button onClick={onSubmit}>Ofertar</button>
+            </div>
+
+            <div>
+                <button onClick={newChat}>Iniciar conversacion</button>
             </div>
 
             <div>

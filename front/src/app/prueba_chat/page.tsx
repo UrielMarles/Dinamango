@@ -24,10 +24,10 @@ const ChatApiTest: React.FC = () => {
         try {
             const userIds = [usuarioId1, usuarioId2];
 
-            const res = await apiHelper.crearChat({ UsuarioIds: userIds });
+            const response = await apiHelper.crearChat({ UsuarioIds: userIds });
 
             console.log("Enviando para crear chat con usuarios:", userIds);
-            setResult(res);
+            setResult(response);
         }
         catch (error) {
             setResult(error);
@@ -37,8 +37,8 @@ const ChatApiTest: React.FC = () => {
     // Listar chats de usuario
     const handleListarChats = async () => {
         try {
-            const res = await apiHelper.listarChats(idUsuario);
-            setResult(res);
+            const response = await apiHelper.listarChats(idUsuario);
+            setResult(response);
         } catch (e) {
             setResult(e);
         }
@@ -47,8 +47,8 @@ const ChatApiTest: React.FC = () => {
     // Obtener chat entre dos usuarios
     const handleObtenerChatEntreUsuarios = async () => {
         try {
-            const res = await apiHelper.obtenerChatEntreUsuarios(usuarioId1, usuarioId2);
-            setResult(res);
+            const response = await apiHelper.obtenerChatEntreUsuarios(usuarioId1, usuarioId2);
+            setResult(response);
         } catch (e) {
             setResult(e);
         }
@@ -59,19 +59,11 @@ const ChatApiTest: React.FC = () => {
         try {
             console.log("Preparando para enviar mensaje:", { chatId, remitenteId, contenido });
 
-            // const res = await apiHelper.request("/chat/enviar", {
-            //     method: "POST",
-            //     body: { ChatId: Number(chatId), RemitenteId: remitenteId, Contenido: contenido },
-            //     includeToken: true
-            // });
-
-            const res = await apiHelper.enviarMensaje(Number(chatId), remitenteId, contenido);
+            const response = await apiHelper.enviarMensaje(Number(chatId), remitenteId, contenido);
 
             console.log("Enviando mensaje:", { chatId, remitenteId, contenido });
 
-            // const res = await apiHelper.enviarMensaje(chatId, remitenteId, contenido);
-
-            setResult(res);
+            setResult(response);
         } catch (e) {
             setResult(e);
         }
@@ -80,8 +72,8 @@ const ChatApiTest: React.FC = () => {
     // Listar mensajes de un chat
     const handleListarMensajes = async () => {
         try {
-            const res = await apiHelper.listarMensajes(Number(chatId));
-            setResult(res);
+            const response = await apiHelper.listarMensajes(Number(chatId));
+            setResult(response);
         } catch (e) {
             setResult(e);
         }
@@ -90,8 +82,8 @@ const ChatApiTest: React.FC = () => {
     // Marcar mensaje como leído
     const handleMensajeLeido = async () => {
         try {
-            const res = await apiHelper.mensajeLeido(Number(chatId), remitenteId);
-            setLeidoResult(res);
+            const response = await apiHelper.mensajeLeido(Number(chatId), remitenteId);
+            setLeidoResult(response);
         } catch (e) {
             setLeidoResult(e);
         }
