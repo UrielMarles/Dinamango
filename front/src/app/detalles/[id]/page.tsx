@@ -102,7 +102,9 @@ export default function DetallePublicacion() {
 
             const response = await apiHelper.crearChat({ UsuarioIds: userIds });
 
-            window.location.href = `/prueba_chat`;
+            const [id1, id2] = [userId, user2].sort();
+
+            window.location.href = `/chat/${id1}/${id2}`;
 
             console.log(response);
 
@@ -111,7 +113,7 @@ export default function DetallePublicacion() {
         catch (err) {
             console.error("Error al iniciar la conversación ", err);
 
-            toast.error("Hubo un problema al iniciar la sesión.");
+            toast.error("No puedes crear un chat contigo mismo.");
         }
     }
 

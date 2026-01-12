@@ -14,9 +14,6 @@ const ChatApiTest: React.FC = () => {
     const [idUsuario, setIdUsuario] = useState("");
     const [leidoResult, setLeidoResult] = useState<any>(null);
 
-    //F2772CAC-AE42-475C-861F-51F82FF36D01
-    //EB5DA335-C507-4D2C-BA11-1231D99AA429
-
     // Ver que onda la base de datos
 
     // Crear chat
