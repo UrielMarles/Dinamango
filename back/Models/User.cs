@@ -22,7 +22,7 @@ namespace MangoDB.Models
         [Required]
         public string Apellido { get; set; }
 
-        public string? ProfilePictureUrl { get; set; } // URL de la imagen de perfil
+        public string? ProfilePictureUrl { get; set; }
 
         public bool isGoogleUser {  get; set; }
 

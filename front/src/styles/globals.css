@@ -5,6 +5,29 @@
   --color-texto: #212121;
   --color-contraste: #F694C1;
   --color-oscuro: #153B50;
+  --verde-principal: #1ADB1A;
+  --verde-secundario: #16c216;
+  --verde-claro: #e8f5e8;
+  --sombra-verde: rgba(26, 219, 26, 0.2);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(26, 219, 26, 0.3);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(26, 219, 26, 0.5);
 }
 
 body {
